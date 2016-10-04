@@ -1,0 +1,178 @@
+.sumk-clearfix:before,
+.sumk-clearfix:after {
+    display: table;
+    content: "";
+}
+.sumk-clearfix:after { clear: both; }
+#visibility,
+.misc-pub-section.curtime { display: none; }
+form#post { margin: 0; }
+#a-sumk-metabox.postbox .inside {
+    margin: 6px 0 0;
+    padding: 0;
+}
+#a-sumk-metabox .placeholder { color: #aaa; }
+.sumk-field {
+	padding: 6px 10px 8px;
+	border-bottom: 1px dotted #ddd;
+}
+.sumk-field > p > label {
+    position: relative;
+    font-weight: 700;
+}
+.sumk-req-field > p > label:after {
+    position: absolute;
+    top: -7px;
+    right: -12px;
+    color: #f03;
+    content: '*';
+    font-weight: 700;
+}
+.sumk-invalid-field { background: #ffe3e3; }
+.sumk-invalid-field > p > label { color: #f33; }
+.sumk-req-field > p.sumk-code-type  >  label:after { display: none; }
+.sumk-field > p.sumk-code-type  >  label {
+    margin-right: 1em;
+    font-weight: 400;
+}
+.sumk-invalid-field > p.sumk-code-type  >  label { color: #333; }
+.sumk-field-icon { }
+.sumk-field-icon img {
+    width: 32px;
+    height: 32px;
+    margin: 0 1em 0 0;
+    vertical-align: middle;
+}
+.sumk-field-attributes { padding-bottom: 0; }
+.sumk-attribute {
+    margin: 0 -10px;
+    padding: 0 10px;
+    border-top: 1px dotted #ccc;
+}
+.sumk-attribute-editable { background: #ffffe0; }
+.sumk-attribute-removing,
+.sumk-attribute-removing .sumk-attr-head { background: #f33!important; }
+.sumk-sort-helper {
+    display: inline-block;
+    width: auto!important;
+    height: auto!important;
+    padding: 5px 10px;
+    border: 1px solid #e6db55;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: #ffffe0;
+}
+.sumk-sort-placeholder {
+    height: 27px;
+    margin: 2px -8px;
+    border: 1px dashed #ddd;
+    background: #fff;
+}
+.sumk-attribute .sumk-attr-main > div,
+.sumk-attribute .sumk-attr-detailed-settings > div,
+.sumk-attribute .sumk-attr-number-settings > div {
+    width: 33.33%;
+    float: left;
+}
+.sumk-attribute label {
+    display: inline-block;
+    margin-bottom: 5px;
+    color: #777;
+    font-weight: 700;
+    font-size: .9em;
+}
+.sumk-attr-head {
+    height: 32px;
+    margin: 0 -10px;
+    padding: 0 10px;
+    line-height: 32px;
+}
+.sumk-attribute-editable .sumk-attr-head {
+    border-bottom: 1px dotted #ccc;
+    background: #dbf1f9;
+}
+.sumk-attr-head:hover { background-color: #dbf1f9; }
+.sumk-attribute-editable .sumk-attr-head:hover { background-color: #dbf1f9; }
+.sumk-attr-head em {
+    font-weight: 700;
+    font-style: normal;
+}
+.sumk-attr-head a,
+.sumk-attr-head span {
+    display: block;
+    height: 32px;
+    padding: 0 10px;
+    float: right;
+    line-height: 32px;
+}
+.sumk-attr-head a.sumk-attr-close,
+.sumk-attribute-editable .sumk-attr-head a.sumk-attr-open { display: none; }
+.sumk-attribute-editable .sumk-attr-head a.sumk-attr-close { display: inline; }
+.sumk-attr-head span {
+    margin-right: -10px;
+    color: #f33;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.sumk-attr-head span:hover {
+    background: #f33;
+    color: #fff;
+    text-decoration: none;
+}
+.sumk-attribute .sumk-attr-form {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    transition: all .2s;
+}
+.sumk-attribute.sumk-attribute-editable .sumk-attr-form {
+    height: auto;
+    padding: 5px 0;
+    overflow: visible;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    transition: all .2s;
+}
+.sumk-attr-form { }
+.sumk-attr-main,
+.sumk-attr-additional { margin: 1em 0; }
+.sumk-attribute .sumk-attr-main input[type=text],
+.sumk-attribute .sumk-attr-detailed-settings input[type=text],
+.sumk-attribute .sumk-attr-number-settings input[type=number] { width: 90%; }
+.sumk-attribute .sumk-attr-main select,
+.sumk-attribute .sumk-attr-detailed-settings div:last-child input[type=text],
+.sumk-attribute .sumk-attr-number-settings div:last-child input[type=number] { width: 100%; }
+.sumk-attr-additional { display: none; }
+.sumk-attribute-type-select .sumk-attr-select-settings { display: block; }
+.sumk-attribute-type-number .sumk-attr-number-settings { display: block; }
+.sumk-attr-detailed-settings,
+.sumk-attribute-detailed .sumk-attr-toggle-details { display: none; }
+.sumk-attribute-detailed .sumk-attr-detailed-settings { display: block; }
+#sumk-code-field-editor { height: 360px; }
+#sumk-code-field-editor .ace_scrollbar { overflow-y: auto!important; }
+.sumk-help-popup {
+    position: relative;
+    width: 80%;
+    height: 90%;
+    max-width: 500px;
+    margin: 68px auto 40px;
+    padding: 1em 2em;
+    outline: 5px solid rgba(255,255,255,.5);
+    border: 1px solid #555;
+    background: #fff;
+    box-shadow: 0 0 20px #000;
+}
+
+.sumk-variables.description a {
+	border-bottom: 1px dotted #555;
+	font-style: normal;
+	cursor: pointer;
+	text-decoration: none;
+}

@@ -1,0 +1,602 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gn_themes\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-11-09 17:53+0400\n"
+"PO-Revision-Date: 2014-11-09 17:54+0400\n"
+"Last-Translator: Vladimir Anokhin <ano.vladimir@gmail.com>\n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ./inc\n"
+
+#: classes/sunrise.class.php:279
+msgid "Settings"
+msgstr "Настройки"
+
+#: inc/assets.php:16
+msgid "Select icon"
+msgstr "Выберите иконку"
+
+#: inc/assets.php:17
+msgid "Use this image"
+msgstr "Использовать изображение"
+
+#: inc/check.php:9
+msgid ""
+"Please install and activate latest version of <b>Shortcodes Ultimate</b> to "
+"use it's addon <b>Shortcodes Ultimate: Maker</b>.<br />Deactivate this addon "
+"to hide message."
+msgstr ""
+"Пожалуйста установите и активируйте последнюю версию плагина <b>Shortcodes "
+"Ultimate</b> чтобы использовать дополнение <b>Shortcodes Ultimate: Maker</b>."
+"<br />Деактивируйте это дополнение, чтобы скрыть сообщение"
+
+#: inc/check.php:10
+msgid "Install Sortcodes Ultimate"
+msgstr "Установить Shortcodes Ultimate"
+
+#: inc/help.php:6 inc/metabox.php:34 inc/metabox.php:122
+msgid "Short name (slug)"
+msgstr "Короткое имя (slug)"
+
+#: inc/help.php:7
+msgid ""
+"Allowed characters: a-z, 0-9, '_' (underscore). Enter attribute name that "
+"will be used in resulting shortcode. For example: if you type 'style', you "
+"will get next shortcode [shortcode style=\"\"]."
+msgstr ""
+"Допустимые символы: a-z, 0-9, '_' (подчеркивание). Введите имя атрибута, "
+"которое будет использовано в получившемся шорткоде. Например: если вы "
+"введете 'style', то в результате получите следующий шорткод [shortcode style="
+"\"\"]."
+
+#: inc/help.php:8 inc/metabox.php:129
+msgid "Default value"
+msgstr "Значение по умолчанию"
+
+#: inc/help.php:9
+msgid ""
+"Enter default value for attribute. This value will be used in shortcode if "
+"value not specified. Also, this value will be selected by default in "
+"shortcode generator."
+msgstr ""
+"Введите значение по умолчанию для атрибута. Это значение будет использовано "
+"в шорткоде, если при использовании шорткода значение задано не было. А "
+"также, это значение будет выделено по умолчанию в генереторе шорткодов."
+
+#: inc/help.php:10 inc/metabox.php:136
+msgid "Field type"
+msgstr "Тип поля"
+
+#: inc/help.php:11
+msgid ""
+"You can use different attribute field types to make use of the shortcode "
+"easier. Field types will be used in shortcode generator window (Insert "
+"shortcode button at post editing screen)."
+msgstr ""
+"Вы можете использовать различные типы полей для атрибутов, чтобы сделать "
+"использование шорткода более удобным. Типы полей будут использованы в "
+"генераторе шорткодов (кнопка Вставка шорткода на странице редактирования "
+"записи)."
+
+#: inc/help.php:12 inc/helpers.php:101
+msgid "Text"
+msgstr "Текст"
+
+#: inc/help.php:13
+msgid ""
+"Simple text field. Specified default value will be used as plain text in "
+"this field."
+msgstr ""
+"Простое текстовое поле. Указанное значение по умолчанию будет использовано "
+"как простой текст в этом поле"
+
+#: inc/help.php:14 inc/helpers.php:102
+msgid "Number"
+msgstr "Число"
+
+#: inc/help.php:15
+msgid ""
+"Integer value. You can specify minimum and maximum values available in this "
+"field and step size."
+msgstr ""
+"Числовое значение. Вы можете также указать минимальное и максимальное "
+"значения, которые могут быть заданы в этом поле. Также можно указать шаг "
+"изменения значения."
+
+#: inc/help.php:16 inc/helpers.php:103
+msgid "Color"
+msgstr "Цвет"
+
+#: inc/help.php:17
+msgid ""
+"Color picker. Please set default value with # symbol in beginning. For "
+"example: #ffcc00 (yellow), #000 (black)."
+msgstr ""
+"Пипетка (поле выбора цвета). Пожалуйста используйте символ # (решетка) в "
+"начале значения по умолчанию. Примеры: #ffcc00 (желтый), #000 (черный)."
+
+#: inc/help.php:18 inc/helpers.php:104
+msgid "Dropdown"
+msgstr "Выпадающий список"
+
+#: inc/help.php:19
+msgid ""
+"Dropdown list. You can enter unlimited options for this list in special "
+"field \"Dropdown options\". Use next format:"
+msgstr ""
+"Выпадающий список. Вы можете ввести неограниченное кол-во опций для такого "
+"списка в специальном поле \"Варианты выпадающего списка\". Используйте "
+"следующий формат:"
+
+#: inc/help.php:20
+msgid "Red color"
+msgstr "Красный цвет"
+
+#: inc/help.php:20
+msgid "Blue color"
+msgstr "Синий цвет"
+
+#: inc/help.php:20
+msgid "Green color"
+msgstr "Зеленый цвет"
+
+#: inc/help.php:21
+msgid ""
+"Use option value (not label) to specify default selected value. For example: "
+"'red'"
+msgstr ""
+"Используйте значение опции (не заголовок), чтобы указать значение по "
+"умолчанию. Например: 'red'"
+
+#: inc/help.php:22 inc/helpers.php:105
+msgid "Switch"
+msgstr "Переключатель"
+
+#: inc/help.php:23
+msgid ""
+"This field works like a check box. It allows you to select the Yes or No "
+"option when creating a shortcode. As a default value, use 'yes' or 'no'."
+msgstr ""
+"Это поле работает как флажок. Оно позволяет выбрать вариант Да, либо вариант "
+"Нет при создании шорткода. В качестве значения по умолчанию используйте "
+"'yes' либо 'no'."
+
+#: inc/help.php:24
+msgid "Upload"
+msgstr "Загрузка файла"
+
+#: inc/help.php:25
+msgid ""
+"This field allows you to upload files from computer and use uploaded file "
+"link as value."
+msgstr ""
+"Данное поле позволяет загружать файлы с компьтера и использовать ссылку "
+"загруженного файла в качестве значения атрибута."
+
+#: inc/help.php:28 inc/metabox.php:67
+msgid "HTML mode"
+msgstr "Режим HTML"
+
+#: inc/help.php:29
+msgid ""
+"In this mode, you can only use HTML code and a specific set of variables. "
+"The set of variables depends on the added attributes. For example, if you "
+"add the attribute 'color', you can use the variable {{color}} in your code. "
+"Independently of added attributes, you can use the variable {{content}}, "
+"which will be replaced by the contents of the shortcode (the text between "
+"the opening and closing shortcode tags)."
+msgstr ""
+"В этом режиме вы можете использовать только HTML код и определенный набор "
+"переменных. Набор переменных зависит от добавленных атрибутов. Так, "
+"например, если вы добавите атрибут с коротким именем color, то сможете "
+"использовать в коде переменную {{color}}. Независимо от добавленных "
+"атрибутов, вы можете использовать переменную {{content}}, которая будет "
+"заменена на содержимое шорткода (текст между открывающим и закрывающим "
+"тегами шорткода)."
+
+#: inc/help.php:30 inc/help.php:35 inc/help.php:39
+msgid "Example code"
+msgstr "Пример кода"
+
+#: inc/help.php:32 inc/metabox.php:68
+msgid "PHP return"
+msgstr "PHP return"
+
+#: inc/help.php:33
+msgid ""
+"This mode is a bit complicated than the previous. Using this mode, you need "
+"to write code in PHP. The output of the code must be returned, but not "
+"displayed. To do this, use 'return' operator. In this mode you can not use "
+"functions such as print_r, echo or die. If you do not understand the "
+"difference between the return and echo in PHP, then better to use the HTML "
+"mode or PHP echo."
+msgstr ""
+"Этот режим немного сложнее предыдущего. Используя этот режим, нужно писать "
+"код на PHP. Результат выполнения кода должен быть возвращен, а не выведен. "
+"Чтобы сделать это, используйте оператор 'return' . В этом режиме вы не "
+"можете использовать такие функции, как print_r, echo или die. Если вы не "
+"понимаете разницы между операторами return и echo в PHP, то лучше "
+"использовать режим HTML или PHP echo."
+
+#: inc/help.php:34
+msgid ""
+"All added attributes are available as variables. For example, if you add an "
+"attribute with short name 'color', then the code can use a variable named "
+"$color. Variable $content will contain actual shortcode content (the text "
+"between the opening and closing shortcode tags)."
+msgstr ""
+"Все добавленные атрибуты будут доступны в коде в виде переменных. Например, "
+"если вы добавите атрибут с коротким именем 'color', то в коде можно будет "
+"использовать переменную $color. Переменная $content будет содержать контент "
+"шорткода (текст между открывающим и закрывающим тегами шорткода)."
+
+#: inc/help.php:37 inc/metabox.php:69
+msgid "PHP echo"
+msgstr "PHP echo"
+
+#: inc/help.php:38
+msgid ""
+"This mode is similar to the previous (PHP return). However, in this mode you "
+"can use any of the functions and operators that display text. It is "
+"recommended to use the echo statement to output the code. All attributes are "
+"available as variables."
+msgstr ""
+"Этот режим аналогичен предыдущему (PHP return). Но в данном режиме вы можете "
+"использовать любые функции и операторы, которые выводят текст. Рекомендуется "
+"использовать оператор echo для вывода кода. Все аттрибуты также доступны в "
+"виде переменных."
+
+#: inc/helpers.php:106 inc/metabox.php:50 inc/posttype.php:86
+msgid "Icon"
+msgstr "Иконка"
+
+#: inc/helpers.php:107
+msgid "Media library"
+msgstr "Медаи библиотека"
+
+#: inc/helpers.php:108
+msgid "Image source"
+msgstr "Источник изображений"
+
+#: inc/helpers.php:120
+msgid "Customer support"
+msgstr "Поддержка покупателей"
+
+#: inc/import.php:7 inc/import.php:12
+msgid "Demo shortcode #1: HTML code example"
+msgstr "Демо шорткод #1: пример HTML кода"
+
+#: inc/import.php:14
+msgid ""
+"This shortcode written with simple HTML and allows you to change the color "
+"of selected text"
+msgstr ""
+"Этот шорткод написан с использованием простого HTML кода и позволяет вам "
+"изменять цвет выделенного текста"
+
+#: inc/import.php:15 inc/import.php:36 inc/import.php:57 inc/metabox.php:45
+msgid "Default content"
+msgstr "Содержимое по умолчанию"
+
+#: inc/import.php:18 inc/import.php:39
+msgid "Text color"
+msgstr "Цвет текста"
+
+#: inc/import.php:19 inc/import.php:40
+msgid "Color of selected text"
+msgstr "Цвет выделенного текста"
+
+#: inc/import.php:27 inc/import.php:32
+msgid "Demo shortcode #2: PHP return code example"
+msgstr "Демо шорткод #2: пример кода  PHP return"
+
+#: inc/import.php:34
+msgid ""
+"This shortcode does the same thing as a shortcode #1 but written in PHP and "
+"uses PHP return mode"
+msgstr ""
+"Этот шорткод делает тоже самое что и шорткод #1, но написан на PHP и "
+"использует режим кода PHP return"
+
+#: inc/import.php:48 inc/import.php:53
+msgid "Demo shortcode #3: PHP echo code example"
+msgstr "Демо шорткод #3: пример кода PHP echo"
+
+#: inc/import.php:55
+msgid ""
+"This shortcode is more complex than shortcodes #1 and #2. This example will "
+"show you how to use PHP echo mode, as well as how to use several different "
+"types of attributes"
+msgstr ""
+"Этот шорткод более сложный чем шорткоды #1 и #2. Данный пример покажет вам "
+"как использовать режим кода PHP echo, а также как использовать различные "
+"типы атрибутов"
+
+#: inc/import.php:60
+msgid "Style"
+msgstr "Стиль"
+
+#: inc/import.php:61
+msgid "Select box style"
+msgstr "Выберите стиль блока"
+
+#: inc/import.php:65
+msgid "Info"
+msgstr "Информация"
+
+#: inc/import.php:65
+msgid "Error"
+msgstr "Ошибка"
+
+#: inc/import.php:65
+msgid "Success"
+msgstr "Успех"
+
+#: inc/import.php:67
+msgid "Size"
+msgstr "Размер"
+
+#: inc/import.php:68
+msgid "Choose box size"
+msgstr "Укажите размер блока"
+
+#: inc/import.php:96
+msgid "3 demo shortcodes added to the database"
+msgstr "3 демо-шорткода добавлены в базу данных"
+
+#: inc/import.php:97
+msgid "View"
+msgstr "Посмотреть"
+
+#: inc/metabox.php:4
+msgid "Shortcode details"
+msgstr "Параметры шорткода"
+
+#: inc/metabox.php:26
+msgid "Please fill all required fields. They marked with red asterisk."
+msgstr ""
+"Пожалуйста заполните все обязательные поля. Они отмечены красной звездочкой."
+
+#: inc/metabox.php:29
+msgid "Shortcode name"
+msgstr "Имя шорткода"
+
+#: inc/metabox.php:31
+msgid "Enter shortcode name (1-2 words)"
+msgstr "Введите имя шорткода (1-2 слова)"
+
+#: inc/metabox.php:36
+msgid "Allowed characters: a-z, 0-9, '_' (underscore)"
+msgstr "Допустимые символы: a-z, 0-9, '_' (подчркивание)"
+
+#: inc/metabox.php:37
+msgid ""
+"Specify short name for this shortcode. This name will be used for resulting "
+"shortcode. For example: type 'div' and you will get shortcode [div]"
+msgstr ""
+"Введите короткое имя шорткода. Это имя будет использовано для создания "
+"самого шорткода. Например: введите 'div' и получите шорткод [div]"
+
+#: inc/metabox.php:40
+msgid "Shortcode description"
+msgstr "Описание шорткода"
+
+#: inc/metabox.php:42
+msgid ""
+"Enter short description for this shortcode. 3-7 words is more than enough"
+msgstr "Введите описание для этого шорткода. 3-7 слов более чем достаточно"
+
+#: inc/metabox.php:47
+msgid ""
+"This text will be added to Content field in shortcode generator. This field "
+"is not required and used not by all shortcodes. Content of this field will "
+"be placed between open and close shortcode tags by default"
+msgstr ""
+"Этот текст будет размещен в поле Содержимое в генераторе шорткодов. Это не "
+"обязательное поле и используется не всеми шорткодами. Содержимое этого поля "
+"будет по умолчанию размещено между открывающим и закрывающим тегами шорткода"
+
+#: inc/metabox.php:53
+msgid "Change icon"
+msgstr "Сменить иконку"
+
+#: inc/metabox.php:56
+msgid ""
+"You can change shortcode icon. This icon will be used in shortcode generator "
+"window"
+msgstr ""
+"Вы можете изменить иконку этого шорткода. Она будет использована в окне "
+"генератора шорткодов"
+
+#: inc/metabox.php:59
+msgid "Attributes"
+msgstr "Атрибуты"
+
+#: inc/metabox.php:59
+msgid "Open attributes documentation"
+msgstr "Открыть документацию по атрибутам"
+
+#: inc/metabox.php:60
+msgid "Add attribute"
+msgstr "Добавить атрибут"
+
+#: inc/metabox.php:60
+msgid "Drag and drop attributes to re-order"
+msgstr "Перетащите атрибуты, чтобы изменить их порядок"
+
+#: inc/metabox.php:64
+msgid "Code"
+msgstr "Код"
+
+#: inc/metabox.php:64
+msgid "Open code editor documentation"
+msgstr "Открыть документацию по редактору кода"
+
+#: inc/metabox.php:77
+msgid "You can use next variables"
+msgstr "Вы можете использовать следующие переменные"
+
+#: inc/metabox.php:77
+msgid "click to insert variable"
+msgstr "Нажмите чтобы вставить переменную"
+
+#: inc/metabox.php:77
+msgid "They will be replaced with shortcode content and attributes values"
+msgstr "Они будут заменены на содержимое шорткода и на значения атрибутов"
+
+#: inc/metabox.php:85
+msgid "Update shortcode"
+msgstr "Обновить шорткод"
+
+#: inc/metabox.php:87
+msgid "Save draft"
+msgstr "Сохранить черновик"
+
+#: inc/metabox.php:87
+msgid "Publish"
+msgstr "Опубликовать"
+
+#: inc/metabox.php:115
+msgid "Delete"
+msgstr "Удалить"
+
+#: inc/metabox.php:116
+msgid "Edit"
+msgstr "Изменить"
+
+#: inc/metabox.php:117
+msgid "Close"
+msgstr "Закрыть"
+
+#: inc/metabox.php:150 inc/metabox.php:154
+msgid "Attribute name"
+msgstr "Имя атрибута"
+
+#: inc/metabox.php:158 inc/metabox.php:162
+msgid "Attribute description"
+msgstr "Описание атрибута"
+
+#: inc/metabox.php:167
+msgid "Dropdown options"
+msgstr "Варианты выпадающего списка"
+
+#: inc/metabox.php:176
+msgid "Minimal value"
+msgstr "Минимальное значение"
+
+#: inc/metabox.php:182
+msgid "Maximal value"
+msgstr "Максимальное значение"
+
+#: inc/metabox.php:188
+msgid "Step number"
+msgstr "Шаг"
+
+#: inc/metabox.php:194
+msgid "Add full name and description"
+msgstr "Добавить полное имя и описание"
+
+#: inc/metabox.php:195
+msgid "not required but recommended"
+msgstr "не обязательно, но рекомендуется"
+
+#: inc/posttype.php:8 inc/posttype.php:14
+msgid "Custom shortcodes"
+msgstr "Пользовательские шорткоды"
+
+#: inc/posttype.php:9 inc/posttype.php:84
+msgid "Shortcode"
+msgstr "Шорткод"
+
+#: inc/posttype.php:10
+msgid "Create shortcode"
+msgstr "Создать шорткод"
+
+#: inc/posttype.php:11
+msgid "Add new Shortcode"
+msgstr "Добавить новый шорткод"
+
+#: inc/posttype.php:12
+msgid "Edit shortcode"
+msgstr "Редактировать шорткод"
+
+#: inc/posttype.php:13
+msgid "New shortcode"
+msgstr "Новый шорткод"
+
+#: inc/posttype.php:15 inc/posttype.php:66 inc/posttype.php:105
+msgid "View shortcode"
+msgstr "Просмотр шорткода"
+
+#: inc/posttype.php:16
+msgid "Search shortcodes"
+msgstr "Поиск шорткодов"
+
+#: inc/posttype.php:17
+msgid "No shortcodes found"
+msgstr "Шорткоды не найдены"
+
+#: inc/posttype.php:18
+msgid "No shortcodes in Trash"
+msgstr "В корзине нет шорткодов"
+
+#: inc/posttype.php:20
+msgid "Shortcodes"
+msgstr "Шорткоды"
+
+#: inc/posttype.php:72
+msgid "Shortcode updated"
+msgstr "Шорткод обновлен"
+
+#: inc/posttype.php:73
+msgid "Shortcode added"
+msgstr "Шорткод добавлен"
+
+#: inc/posttype.php:74
+msgid "Shortcode saved"
+msgstr "Шорткод сохранен"
+
+#: inc/posttype.php:75
+msgid "Shortcode submitted"
+msgstr "Шорткод отправлен"
+
+#: inc/posttype.php:76
+msgid "Shortcode draft updated"
+msgstr "Черновик шорткода обновлен"
+
+#: inc/register.php:71
+msgid "Custom"
+msgstr "Пользовательские"
+
+#: inc/update.php:86
+msgid ""
+"An Unexpected HTTP Error occurred during the API request.</p> <p><a href=\"?"
+"\" onclick=\"document.location.reload(); return false;\">Try again</a>"
+msgstr ""
+
+#: inc/update.php:90
+msgid "An unknown error occurred"
+msgstr ""
+
+#: shortcodes-ultimate-maker.php:60
+msgid "Shortcodes Ultimate: Maker addon"
+msgstr "Пользовательские шорткоды"
+
+#: shortcodes-ultimate-maker.php:61
+msgid "Vladimir Anokhin"
+msgstr "Владимир Анохин"
+
+#: shortcodes-ultimate-maker.php:62
+msgid "Shortcodes Ultimate add-on. Provides UI for creating custom shortcodes"
+msgstr ""
+"Дополнение для плагина Shortcodes Ultimate. Позволяет создавать "
+"пользовательские шорткоды"
