@@ -1,0 +1,1 @@
+<span class="news-meta"><?php the_category(', '); ?> <span class="sep">&diams;</span> <time pubdate datetime="<?php the_time('Y:m:d'); ?>"><?php the_time('d F Y'); ?></time></span>

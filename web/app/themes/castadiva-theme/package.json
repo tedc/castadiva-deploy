@@ -1,0 +1,66 @@
+{
+  "name": "sage",
+  "version": "8.4.2",
+  "author": "Ben Word <ben@benword.com>",
+  "homepage": "https://roots.io/sage/",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/roots/sage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/roots/sage/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "scripts": {
+    "build": "bower install && gulp",
+    "jshint": "gulp jshint",
+    "jscs": "jscs gulpfile.js assets/scripts/*.js"
+  },
+  "engines": {
+    "node": ">= 0.12.0",
+    "npm": ">=2.1.5"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.4.0",
+    "browser-sync": "^2.8.2",
+    "coffeeify": "^2.0.1",
+    "es5-shim": "^4.5.9",
+    "grunt": "^1.0.1",
+    "grunt-angular-templates": "^1.1.0",
+    "grunt-browserify": "^5.0.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-compass": "^1.1.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-pug": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-modernizr": "^1.0.2",
+    "grunt-newer": "^1.2.0",
+    "grunt-postcss": "^0.8.0",
+    "postcss-flexibility": "^1.1.0",
+    "time-grunt": "^1.4.0"
+  },
+  "browser": {
+    "angular": "./source/javascript/js/src/angular/angular-index.js",
+    "angular-route": "./source/javascript/js/src/angular/angular.route.min.js",
+    "angular-router": "./source/javascript/js/src/angular/angular-ui-router.min.js",
+    "angular-resource": "./source/javascript/js/src/angular/angular.resource.min.js",
+    "angular-sanitize": "./source/javascript/js/src/angular/angular.sanitize.min.js",
+    "angular-animate": "./source/javascript/js/src/angular/angular-animate.min2.js",
+    "angular-touch": "./source/javascript/js/src/angular/angular-touch.min.js",
+    "angular-datepicker": "./source/javascript/js/src/angular/angular-datepicker.min.js",
+    "angular-locale": "./source/javascript/js/src/angular/angular-locale_it.js",
+    "angular-group": "./source/javascript/js/src/angular/angular-ngGroup.js",
+    "angular-cookies": "./source/javascript/js/src/angular/angular-cookies.min.js",
+    "angulike": "./source/javascript/js/src/angular/angulike.js",
+    "dirDisqus": "./source/javascript/js/src/angular/dirDisqus.js",
+    "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",
+    "es5-shim": "./node_modules/es5-shim/es5-shim.min.js"
+  }
+}
