@@ -3,7 +3,7 @@
 !web/app/plugins/.gitkeep
 #web/app/mu-plugins/*/
 #web/app/upgrade
-#web/app/uploads/*
+web/app/uploads/*
 #!web/app/uploads/.gitkeep
 web/app/themes/castadiva-theme/node_modules
 
@@ -19,7 +19,7 @@ sql-dump-*.sql
 # Dotenv
 .env
 .env.*
-!.env.example
+.env.example
 
 # Vendor (e.g. Composer)
 #vendor/*
@@ -33,9 +33,20 @@ bin
 .vagrant
 
 
-.editorconfig.env.env.example.git/*.github/*.gitignore.travis.yml
+.editorconfig
+.env
+.env.example
+.git/*
+.github/*
+.gitignore
+.travis.yml
 
-web/app/themes/castadiva-theme/**/**/.git/*web/app/themes/castadiva-theme/**/**/.gitignoreweb/app/themes/castadiva-theme/**/**/.travis.ymlweb/app/themes/castadiva-theme/**/**/composer.jsonweb/app/themes/castadiva-theme/**/**/composer.lockweb/app/themes/castadiva-theme/**/**/README.md
+web/app/themes/castadiva-theme/**/**/.git/*
+web/app/themes/castadiva-theme/**/**/.gitignore
+web/app/themes/castadiva-theme/**/**/.travis.yml
+web/app/themes/castadiva-theme/**/**/composer.json
+web/app/themes/castadiva-theme/**/**/composer.lock
+web/app/themes/castadiva-theme/**/**/README.md
 web/app/themes/castadiva-theme/node_modules
 web/app/themes/castadiva-theme/.sass-cache
 web/app/themes/castadiva-theme/source
