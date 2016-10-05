@@ -6,7 +6,7 @@ if(have_rows('header')) : ?>
 <?php 
 $total = count(get_field('header'));
 if($total > 1) : ?>
-<div class="carousel-wrapper slider-wrapper full-slider" ng-swipe-left="dir(false, pos, <?php echo $total - 1; ?>)" ng-swipe-right="dir(true, pos, <?php echo $total - 1; ?>)" ng-carousel full-slider="true">
+<div class="carousel-wrapper slider-wrapper full-slider" ng-swipe-right="dir(false, pos, <?php echo $total - 1; ?>)" ng-swipe-left="dir(true, pos, <?php echo $total - 1; ?>)" ng-carousel full-slider="true">
 <?php endif; ?>
 
 <?php $count = 0;
@@ -45,7 +45,11 @@ if($total > 1) : ?>
         </div>
         <?php 
                // ENDVIDEO
-               endif; ?>
+               else : ?>
+        <div class="product-cover" style="background-image: url(<?php the_sub_field('slider_img'); ?>)">
+            
+        </div>
+        <?php endif; ?>
     <?php if(!is_singular('product')) : ?><div class="main-header-content"<?php echo $style; ?>><?php endif; ?>
     <?php endif; ?>
         

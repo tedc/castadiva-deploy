@@ -822,7 +822,7 @@ module.exports = function($window) {
   var sm;
   return sm = {
     link: function(scope, element, attrs) {
-      var duration, el, from, hook, offset, props, speed, to, trigger, tween, w;
+      var duration, from, hook, offset, props, speed, to, trigger, tween, w;
       if (require('../../core/isMobile')) {
         return false;
       }
@@ -830,8 +830,7 @@ module.exports = function($window) {
       duration = attrs.duration && attrs.duration.indexOf('%') !== -1 ? attrs.duration : (attrs.duration ? scope.$eval(attrs.duration) : false);
       trigger = attrs.triggerElement ? attrs.triggerElement : element[0];
       trigger = trigger === 'parent' ? element.parent()[0] : trigger;
-      el = attrs.triggerElement ? document.querySelector(trigger) : trigger;
-      duration = attrs.heightDuration ? el.offsetHeight * attrs.heightDuration : duration;
+      duration = attrs.heightDuration ? trigger.offsetHeight * attrs.heightDuration : duration;
       hook = attrs.triggerHook ? attrs.triggerHook : 0.5;
       offset = attrs.offset ? scope.$eval(attrs.offset) : 0;
       from = attrs.from ? scope.$eval(attrs.from) : false;

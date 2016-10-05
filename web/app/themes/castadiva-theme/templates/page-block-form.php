@@ -38,7 +38,7 @@ function template($body) {
 endif;
 ?>
 <form novalidate ng-submit="onSubmit(contactForm.$valid, '<?php the_permalink(); ?>')" casta-form name="contactForm" ng-carousel>
-    <div class="carousel-wrapper form-carousel" ng-swipe-left="dir(false, pos, 4, false, false)" ng-swipe-right="dir(true, pos, 4, steps, false)" ng-class="{'message-slide' : pos == 4}">
+    <div class="carousel-wrapper form-carousel" ng-swipe-right="dir(false, pos, 4, false, false)" ng-swipe-left="dir(true, pos, 4, steps, false)" ng-class="{'message-slide' : pos == 4}">
         <div class="carousel-item">
             <div class="form-container">
                 <input type="text" placeholder="Nome e cognome (campo obbligatorio)" ng-model="formData.sender" name="sender" required ng-focus="isDisabled = contactForm.sender.$invalid" ng-blur="isDisabled = contactForm.sender.$invalid" />

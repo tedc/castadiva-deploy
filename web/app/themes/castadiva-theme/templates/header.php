@@ -1,7 +1,7 @@
 <?php use Roots\Sage\Extras; 
-    $ov = (is_front_page() || is_page_template('template-custom.php') || is_singular('ricette') || is_singular('itinerari') || is_post_type_archive('itinerari')) ? ' overlay-nav' : '';
+    $ov = (is_front_page() || is_page_template('template-custom.php') || is_singular('ricette') || is_singular('itinerari') || is_post_type_archive('itinerari') || is_tax('product_cat')) ? ' overlay-nav' : '';
 ?>
-<nav class="nav<?php echo $ov; ?>"<?php if(is_front_page() || is_page_template('template-custom.php') || is_singular('ricette') || is_singular('itinerari') || is_post_type_archive('itinerari')) : ?> ng-sticky-menu<?php endif; ?>>
+<nav class="nav<?php echo $ov; ?>"<?php if(is_front_page() || is_page_template('template-custom.php') || is_singular('ricette') || is_singular('itinerari') || is_post_type_archive('itinerari') || is_tax('product_cat')) : ?> ng-sticky-menu<?php endif; ?>>
     <div class="container">
         <div class="brand">
             <a href="<?php bloginfo('url'); ?>" class="logo"><?php bloginfo('name'); ?></a>

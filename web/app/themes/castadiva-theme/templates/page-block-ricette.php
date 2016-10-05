@@ -18,7 +18,7 @@
     ));
     $count = 0;
     if($query->have_posts()) : ?>
-        <ul class="carousel-wrapper slider-wrapper" ng-class="{'slider-completed' : isCompleted}" ng-swipe-left="dir(false, pos, <?php echo $total - 1; ?>, false, false)" ng-swipe-right="dir(true, pos, <?php echo $total - 1; ?>, false, false)">
+        <ul class="carousel-wrapper slider-wrapper" ng-class="{'slider-completed' : isCompleted}" ng-swipe-right="dir(false, pos, <?php echo $total - 1; ?>, false, false)" ng-swipe-left="dir(true, pos, <?php echo $total - 1; ?>, false, false)">
         <?php while($query->have_posts()) : $query->the_post(); ?>
             <li class="carousel-item recipe-item<?php echo ($count == 0) ? ' current' : ''; ?>" ng-class="{current : pos == <?php echo $count; ?>}" style="background-image: url(<?php echo the_post_thumbnail_url('full'); ?>)">
                 <div class="recipe-content">

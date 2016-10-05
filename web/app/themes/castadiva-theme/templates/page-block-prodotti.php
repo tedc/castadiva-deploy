@@ -8,7 +8,7 @@
 <?php endwhile; ?>
 <?php $args = get_sub_field('prodotti'); $count_product = 0; $total_product = count($args) - 1; $products = new WP_Query(array('post_type' => 'product', 'post__in' => $args)); if(get_sub_field('is_carousel')) : ?>
 <div class="carousel products" ng-carousel>
-    <ul class="carousel-wrapper" ng-swipe-left="dir(false, pos, <?php echo $total_product; ?>, false, false)" ng-swipe-right="dir(true, pos, <?php echo $total_product; ?>, false, false)">
+    <ul class="carousel-wrapper" ng-swipe-right="dir(false, pos, <?php echo $total_product; ?>, false, false)" ng-swipe-left="dir(true, pos, <?php echo $total_product; ?>, false, false)">
         <?php while($products->have_posts()) : $products->the_post(); ?>
         <li class="carousel-item product-show-more product <?php echo ($count_product == 0) ? ' current' : ''; ?>" ng-class="{current : pos == <?php echo $count_product; ?>}">
             <figure class="carousel-img">

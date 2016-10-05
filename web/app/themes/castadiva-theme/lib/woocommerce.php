@@ -44,8 +44,10 @@ function colors() {
         }
         <?php endif; ?>
         <?php if(get_field('pattern', 'product_cat_'.$cat->term_id) != '') : ?>
-        .product-show-more.product_cat-<?php echo $cat->slug; ?> .btn .pattern {
-            background-image: <?php the_field('pattern', 'product_cat_'.$cat->term_id); ?>;
+        .product-show-more.product_cat-<?php echo $cat->slug; ?> .product-more .pattern:before, .product_cat-<?php echo $cat->slug; ?> .related-header {
+            background-image: url(<?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['url']; ?>);
+            -moz-background-size: <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['width']/2; ?>px <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['height']/2; ?>px;
+            background-size: <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['width']/2; ?>px <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['height']/2; ?>px;
         }
         <?php endif; ?>
         <?php endforeach; ?>
@@ -82,9 +84,8 @@ function grd_woocommerce_script_cleaner() {
     //wp_dequeue_script( 'wc-cart-fragments' );
     wp_dequeue_script( 'wc-credit-card-form' );
     wp_dequeue_script( 'wc-checkout' );
-    //wp_dequeue_script( 'wc-add-to-cart-variation' );
-    //wp_dequeue_script( 'wc-single-product' );
-    //wp_dequeue_script( 'wc-cart' );
+    wp_dequeue_script( 'wc-add-to-cart-variation' );
+    wp_dequeue_script( 'wc-cart' );
     wp_dequeue_script( 'wc-chosen' );
     wp_dequeue_script( 'woocommerce' );
     wp_dequeue_script( 'prettyPhoto' );

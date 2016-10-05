@@ -48,14 +48,14 @@ $count_product = 0; $total_product = count($posts_per_page) - 1;
 
 if ( $products->have_posts() ) : ?>
 
-	<section class="related products row row-lg">
+	<div class="related products row row-lg">
         <header class="related-header container trapeze pattern">
             <div class="row row-md">
                 <h2 class="title xl-size light"><?php _e( 'Prodotti simili', 'castadiva' ); ?></h2>
             </div>
         </header>    
-        <div class="products" ng-products>
-            <ul class="products-row" ng-swipe-left="dir(false, pos, <?php echo $total_product; ?>)" ng-swipe-right="dir(true, pos, <?php echo $total_product; ?>)">
+        <div class="products row-top row-lg-top" ng-products>
+            <ul class="products-row" ng-swipe-right="dir(false, pos, <?php echo $total_product; ?>)" ng-swipe-left="dir(true, pos, <?php echo $total_product; ?>)">
                 <?php while($products->have_posts()) : $products->the_post(); ?>
                 <li <?php post_class("products-row-item product-show-more"); ?> ng-class="{current : pos == <?php echo $count_product; ?>}">
                     <?php get_template_part('templates/content', 'product'); ?>      
@@ -65,12 +65,12 @@ if ( $products->have_posts() ) : ?>
             <nav class="buttons products-row-buttons">
                 <div class="carousel-nav">
                     <span class="arrow arrow-left" ng-click="dir(false, pos, <?php echo $total_product; ?>)" ng-class="{inactive : pos == 0}"><span class="arrow-text">&lsaquo;</span></span>
-                    <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn"><span class="btn-text"><?php the_sub_field('button_text'); ?></span></a>
+                    <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn"><span class="btn-text"><?php echo __('Guarda<br/>tutti', 'castadiva'); ?></span></a>
                     <span class="arrow arrow-right" ng-click="dir(true, pos, <?php echo $total_product; ?>)" ng-class="{inactive : pos == <?php echo $total_product; ?>}"><span class="arrow-text">&rsaquo;</span></span>
                 </div>
             </nav>
         </div>   
-	</section>
+	</div>
 
 <?php endif;
 

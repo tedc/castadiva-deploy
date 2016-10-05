@@ -6,8 +6,8 @@ $posts_count = $GLOBALS['wp_query']->post_count;
 $posts_per_page = get_option('posts_per_page');
 ?>
 <?php if(have_posts()) : ?>
-<div ng-load-more>
 <?php get_product_search_form(); ?>
+<div ng-load-more>
 <ul class="grid-4 container flx wrap row-btm<?php if($posts_count < $posts_per_page){?> row-lg-btm<?php } ?> products">
 <?php $my_query = new WP_Query(); while(have_posts()) : the_post(); ?>
 <li <?php post_class('col-1 product-show-more'); ?> ng-sm from="{y : '20%', opacity: 0, ease: Back.easeOut.config(1.7)}" trigger-hook="1" speed="1">

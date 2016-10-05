@@ -6,11 +6,12 @@
 <div class="container">
     <ul class="<?php echo $elementClass; ?>columns columns grid-<?php echo count($items); ?>">
         <?php foreach($items as $item) : ?>
-        <li class="columns-item <?php echo $elementClass; ?>column-item col-1">
+        <?php $thumbnail_id = ($kind < 1) ? get_woocommerce_term_meta( $item, 'thumbnail_id', true ) : false; $bg = (get_field('video', 'product_cat_'.$item) == '' && $kind < 1 ) ? ' style="background-image:url('.wp_get_attachment_url($thumbnail_id).');"' : ''; ?>
+        <li class="columns-item <?php echo $elementClass; ?>column-item col-1"<?php echo $bg; ?>>
             <?php 
                    // VIDEO
-                   if(get_sub_field('video') != '') : ?>
-            <?php $file = preg_replace('/\\.[^.\\s]{3,4}$/', '', get_sub_field('video')['url']); ?>
+                   if(get_field('video', 'product_cat_'.$item) != '' && $kind < 1) : ?>
+            <?php $file = preg_replace('/\\.[^.\\s]{3,4}$/', '', get_field('video', 'product_cat_'.$item)['url']); ?>
             <div class="video-cover" style="background-image:url(<?php echo $file; ?>.jpg)">
                 <video class="video-item" ng-video loop poster="<?php echo $file; ?>.jpg">
                     <source src="<?php echo $file; ?>.mp4" type="video/mp4" />

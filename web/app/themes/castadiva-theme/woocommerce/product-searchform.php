@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 use Roots\Sage\Extras;
 ?>
 <form class="row row-lg" role="search" action="<?php echo esc_url(home_url( '/' )); ?>" method="get">
+    <?php if(!is_tax()):?>
     <div class="search-filters">
         <div class="container">
             <div class="select" ng-click="isFilters=!isFilters">
@@ -16,6 +17,7 @@ use Roots\Sage\Extras;
         </div>
         <div class="divider-inv"></div>
     </div>
+    <?php endif; ?>
     <div class="form-container">
         <input type="search" name="s" placeholder="<?php echo __('Ti interessa un prodotto particolare?', 'castadiva'); ?>" value="<?php echo get_search_query(); ?>" />
         <input type="hidden" name="post_type" value="product" />

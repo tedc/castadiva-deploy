@@ -3,7 +3,7 @@
     $imgs = get_field('gallery');
     $total = count($imgs);
     $count = 0; ?>
-    <ul class="carousel-wrapper slider-wrapper" ng-swipe-left="dir(false, pos, <?php echo $total - 1; ?>)" ng-swipe-right="dir(true, pos, <?php echo $total - 1; ?>)">
+    <ul class="carousel-wrapper slider-wrapper" ng-swipe-right="dir(false, pos, <?php echo $total - 1; ?>)" ng-swipe-left="dir(true, pos, <?php echo $total - 1; ?>)">
         <?php foreach($imgs as $img) : ?>
             <li class="carousel-item recipe-item<?php echo ($count == 0) ? ' current' : ''; ?>" ng-class="{current : pos == <?php echo $count; ?>}" style="background-image: url(<?php echo $img['url']; ?>)">
                 <img src="<?php echo $img[0]['full']; ?>" class="hidden-img" alt="<?php echo $img['alt']; ?>" />

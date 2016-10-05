@@ -1,3 +1,8 @@
+# 3.5.3.1
+
+## Fixes
+* [wpmlcore-3392] Fixed performance issue with SSO when language per domain is configured. 
+
 # 3.5.3
 
 ## Fixes
