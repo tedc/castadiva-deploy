@@ -8,10 +8,13 @@ use Roots\Sage\Extras;
         <div class="container" ng-search-filters>
             <div class="select" ng-click="isFilters=!isFilters">
                 <i class="select-arrow"></i>
-                <span class="select-text"><?php echo __('Filtra', 'castadiva'); ?></span>
+                <span class="select-text">
+                    <?php echo __('Filtra', 'castadiva'); ?><span class="filters-active-text" ng-bind-html="filtersText('<?php echo __('Filtri attivi', 'castadiva'); ?>')" ng-show="countFilters > 0"></span>
+                </span>
             </div>
-            <div class="select" ng-click="isOrderFilters=!isOrderFilters">
-                <span class="select-text"><?php echo __('Ordina per', 'castadiva'); ?></span>
+            <div class="select" ng-click="isOrderFilters=!isOrderFilters">                
+                <span class="select-text"><?php echo __('Ordina per', 'castadiva'); ?>: <strong ng-bind-html="(filterData.orderby == 'price') ? '<?php echo __('Prezzo', 'castadiva'); ?>' : (filterData.orderby == 'date') ? '<?php echo __('Data', 'castadiva'); ?>' : '<?php echo __('Nome', 'castadiva'); ?>'"></strong>
+                </span>
                 <i class="select-arrow select-arrow-inv"></i>     
             </div>
         </div>

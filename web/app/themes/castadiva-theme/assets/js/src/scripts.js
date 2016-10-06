@@ -149,67 +149,10 @@ var castadiva;
 
 castadiva = angular.module('castadiva');
 
-castadiva.animation('.single_add_to_cart_button', [require('./cart-btn.coffee')]).animation('.cart-table-item', [require('./cart-remove-item.coffee')]).animation('.checkout_coupon', [require('./shipping.coffee')]).animation('.shipping_address', [require('./shipping.coffee')]).animation('.cart-menu-total-text', [require('./cart-count.coffee')]).animation('.order-list', [require('./order.coffee')]).animation('.cart-wrapper', [require('./cart.coffee')]);
+castadiva.animation('.single_add_to_cart_button', [require('./cart-btn.coffee')]).animation('.cart-table-item', [require('./cart-remove-item.coffee')]).animation('.checkout_coupon', [require('./shipping.coffee')]).animation('.shipping_address', [require('./shipping.coffee')]).animation('.cart-menu-total-text', [require('./cart-count.coffee')]).animation('.cart-wrapper', [require('./cart.coffee')]);
 
 
-},{"./cart-btn.coffee":1,"./cart-count.coffee":2,"./cart-remove-item.coffee":3,"./cart.coffee":4,"./order.coffee":6,"./shipping.coffee":7}],6:[function(require,module,exports){
-module.exports = function() {
-  var order;
-  return order = {
-    addClass: function(element, className, done) {
-      var items, w;
-      if (className !== 'current') {
-        return;
-      }
-      items = element[0].querySelectorAll('.filters-list-item');
-      TweenMax.set(element, {
-        display: 'block'
-      });
-      w = element[0].offsetWidth / 16;
-      TweenMax.set(items, {
-        width: w + "em"
-      });
-      TweenMax.set(element, {
-        width: "0em"
-      });
-      TweenMax.to(element, .5, {
-        width: w + "em",
-        onComplete: function() {
-          TweenMax.set([element, items], {
-            clearProps: 'width'
-          });
-          done();
-        }
-      });
-    },
-    removeClass: function(element, className, done) {
-      var items, w;
-      if (className !== 'current') {
-        return;
-      }
-      items = element[0].querySelectorAll('.filters-list-item');
-      w = element[0].offsetWidth / 16;
-      TweenMax.set([items, element], {
-        width: w + "em"
-      });
-      TweenMax.set(element, {
-        display: 'block'
-      });
-      TweenMax.to(element, .5, {
-        width: "0em",
-        onComplete: function() {
-          TweenMax.set(element, {
-            clearProps: 'display,width'
-          });
-          done();
-        }
-      });
-    }
-  };
-};
-
-
-},{}],7:[function(require,module,exports){
+},{"./cart-btn.coffee":1,"./cart-count.coffee":2,"./cart-remove-item.coffee":3,"./cart.coffee":4,"./shipping.coffee":6}],6:[function(require,module,exports){
 module.exports = function() {
   var shipping;
   return shipping = {
@@ -253,7 +196,7 @@ module.exports = function() {
 };
 
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = function() {
   var carousel;
   return carousel = {
@@ -336,7 +279,7 @@ module.exports = function() {
 };
 
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var get_url;
 
 get_url = function(params, endpoint) {
@@ -516,7 +459,7 @@ module.exports = function() {
 };
 
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = function($timeout) {
   var error;
   return error = {
@@ -537,7 +480,7 @@ module.exports = function($timeout) {
 };
 
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function() {
   var filters;
   return filters = {
@@ -545,6 +488,7 @@ module.exports = function() {
       '$rootScope', "getSearch", function($rootScope, getSearch) {
         var offset, type;
         offset = posts_per_page;
+        $rootScope.countFilters = 0;
         $rootScope.filterData = {
           orderby: 'date',
           order: 'desc',
@@ -558,13 +502,19 @@ module.exports = function() {
         $rootScope.filters = function(array, value, cond) {
           var idx;
           if (cond) {
+            $rootScope.countFilters += 1;
             array.push(value);
           } else {
+            $rootScope.countFilters -= 1;
             idx = array.indexOf(value);
             if (idx !== -1) {
               array.splice(idx, 1);
             }
           }
+        };
+        $rootScope.filtersText = function(string) {
+          var value;
+          return value = $rootScope.countFilters > 0 ? string + ": <strong>" + $rootScope.countFilters + "</strong> " : '';
         };
         type = 'product';
         $rootScope.applyFilters = function(lang) {
@@ -612,7 +562,7 @@ module.exports = function() {
 };
 
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = function() {
   var flowers;
   return flowers = {
@@ -631,7 +581,7 @@ module.exports = function() {
 };
 
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = function() {
   var form;
   return form = {
@@ -671,7 +621,7 @@ module.exports = function() {
 };
 
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var castadiva;
 
 castadiva = angular.module('castadiva');
@@ -679,7 +629,7 @@ castadiva = angular.module('castadiva');
 castadiva.directive('ngCarousel', [require('./carousel.coffee')]).directive('ngProducts', [require('./products.coffee')]).directive('ngFlowers', [require('./flowers.coffee')]).directive('ngStickyMenu', ["$compile", require('./sticky.coffee')]).directive('ngPs', ["$window", require('./ps.coffee')]).directive('ngSm', ["$window", require('./sm.coffee')]).directive('castaForm', [require('./form.coffee')]).directive('ngMap', ["$timeout", "loadGoogleMapAPI", "$compile", require('./map.coffee')]).directive('ngCart', [require('./cart.coffee')]).directive('ngVideo', [require('./video.coffee')]).directive('ngInstagram', [require('./instagram.coffee')]).directive('ngMyMessages', ["$timeout", require('./error.coffee')]).directive('ngLoadMore', [require('./posts.coffee')]).directive('ngSearchFilters', [require('./filters.coffee')]);
 
 
-},{"./carousel.coffee":8,"./cart.coffee":9,"./error.coffee":10,"./filters.coffee":11,"./flowers.coffee":12,"./form.coffee":13,"./instagram.coffee":15,"./map.coffee":16,"./posts.coffee":17,"./products.coffee":18,"./ps.coffee":19,"./sm.coffee":20,"./sticky.coffee":21,"./video.coffee":22}],15:[function(require,module,exports){
+},{"./carousel.coffee":7,"./cart.coffee":8,"./error.coffee":9,"./filters.coffee":10,"./flowers.coffee":11,"./form.coffee":12,"./instagram.coffee":14,"./map.coffee":15,"./posts.coffee":16,"./products.coffee":17,"./ps.coffee":18,"./sm.coffee":19,"./sticky.coffee":20,"./video.coffee":21}],14:[function(require,module,exports){
 module.exports = function() {
   var instagram;
   return instagram = {
@@ -700,7 +650,7 @@ module.exports = function() {
 };
 
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var mapInit;
 
 mapInit = require('../../core/map.coffee');
@@ -731,7 +681,7 @@ module.exports = function($timeout, loadGoogleMapAPI, $compile) {
 };
 
 
-},{"../../core/map.coffee":32}],17:[function(require,module,exports){
+},{"../../core/map.coffee":31}],16:[function(require,module,exports){
 module.exports = function() {
   var load;
   return load = {
@@ -771,7 +721,7 @@ module.exports = function() {
 };
 
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var em, onResize;
 
 em = function(val) {
@@ -863,7 +813,7 @@ module.exports = function() {
 };
 
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports = function($window) {
   var ps;
   return ps = {
@@ -899,7 +849,7 @@ module.exports = function($window) {
 };
 
 
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var em;
 
 em = function(val) {
@@ -961,7 +911,7 @@ module.exports = function($window) {
 };
 
 
-},{"../../core/isMobile":31}],21:[function(require,module,exports){
+},{"../../core/isMobile":30}],20:[function(require,module,exports){
 module.exports = function($compile) {
   var sticky;
   return sticky = {
@@ -983,7 +933,7 @@ module.exports = function($compile) {
 };
 
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 module.exports = function() {
   var video;
   return video = {
@@ -1011,7 +961,7 @@ module.exports = function() {
 };
 
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var castadiva;
 
 castadiva = angular.module('castadiva');
@@ -1019,14 +969,14 @@ castadiva = angular.module('castadiva');
 castadiva.run(["$templateCache", require('./templates')]);
 
 
-},{"./templates":24}],24:[function(require,module,exports){
+},{"./templates":23}],23:[function(require,module,exports){
 module.exports = function($templateCache) {  'use strict';
 
   $templateCache.put('' + assetsPath + 'tpl/assets/tpl/instagram.tpl.html',
     "<figure class=\"instagram-item\" ng-repeat=\"item in items | limitTo : 1\" ng-sm=\"ng-sm\" from=\"{y: '30%'}\" to=\"{y: '-40%'}\" duration=\"200%\" offset=\"-100\" trigger-hook=\"onEnter\" trigger-element=\"#instagram\"><a ng-href=\"{{item.link}}\"><img ng-src=\"{{resize(item.images.thumbnail.url)}}\" alt=\"Castadiva Instagram\"/></a></figure><figure class=\"instagram-item\" ng-sm=\"ng-sm\" from=\"{y: '-20%'}\" to=\"{y: '15%'}\" duration=\"200%\" offset=\"-100\" trigger-hook=\"onEnter\" trigger-element=\"#instagram\"><a ng-href=\"{{item.link}}\" ng-repeat=\"item in items | limitTo : 3\" ng-if=\"$index&gt;0\"><img ng-src=\"{{resize(item.images.thumbnail.url)}}\" alt=\"Castadiva Instagram\"/></a></figure><figure class=\"instagram-item\" ng-repeat=\"item in items | limitTo : 5\" ng-if=\"$index&gt;2\" ng-sm=\"ng-sm\" from=\"{y: '20%'}\" to=\"{y: '-25%'}\" duration=\"200%\" offset=\"-100\" trigger-hook=\"onEnter\" trigger-element=\"#instagram\"><span class=\"instagram-square\" ng-if=\"$index == items.length - 1\" ng-sm=\"ng-sm\" from=\"{y: '50%'}\" to=\"{y: '-100%'}\" duration=\"200%\" offset=\"-100\" trigger-hook=\"onEnter\" trigger-element=\"#instagram\"></span><a ng-href=\"{{item.link}}\"><img ng-src=\"{{resize(item.images.thumbnail.url)}}\" alt=\"Castadiva Instagram\"/></a></figure>"
   );
 ;}
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 module.exports = function() {
   var serializeData, transformRequest;
   serializeData = function(data) {
@@ -1055,7 +1005,7 @@ module.exports = function() {
 };
 
 
-},{"angular":36}],26:[function(require,module,exports){
+},{"angular":35}],25:[function(require,module,exports){
 var castadiva;
 
 castadiva = angular.module('castadiva');
@@ -1209,7 +1159,7 @@ castadiva.service('loadGoogleMapAPI', [
 ]).factory('transformRequestAsFormPost', [require('./form.coffee')]).factory('InstagramPosts', ["$resource", "cacheService", require('./instagram.coffee')]).factory('getPosts', ["$resource", "cacheService", require('./more.coffee')]).factory('getSearch', ["$resource", require('./search.coffee')]);
 
 
-},{"./form.coffee":25,"./instagram.coffee":27,"./more.coffee":28,"./search.coffee":29}],27:[function(require,module,exports){
+},{"./form.coffee":24,"./instagram.coffee":26,"./more.coffee":27,"./search.coffee":28}],26:[function(require,module,exports){
 module.exports = function($resource, cacheService) {
   var getResults, source;
   self.url = "/wp-json/api/v1/instagram";
@@ -1250,7 +1200,7 @@ module.exports = function($resource, cacheService) {
 };
 
 
-},{}],28:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 module.exports = function($resource, cacheService) {
   var getPost, post;
   post = $resource(baseUrl + "/wp-json/wp/v2/:types/?offset=:offset:term:tag&per_page=:more&filter[order]=:order&filter[orderby]=:orderby&lang=:lang:checkbox", {
@@ -1308,7 +1258,7 @@ module.exports = function($resource, cacheService) {
 };
 
 
-},{}],29:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 module.exports = function($resource) {
   var getSearch, search, self;
   self = this;
@@ -1348,7 +1298,7 @@ module.exports = function($resource) {
 };
 
 
-},{}],30:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 var angular, castadiva;
 
 window.controller = new ScrollMagic.Controller();
@@ -1378,7 +1328,7 @@ require('./angular/animations/index.coffee');
 require('./angular/models/index.coffee');
 
 
-},{"./angular/animations/index.coffee":5,"./angular/directives/index.coffee":14,"./angular/models/index.coffee":23,"./angular/resources/index.coffee":26,"angular":36,"angular-animate":34,"angular-cookies":35,"angular-locale":37,"angular-resource":40,"angular-sanitize":41,"angular-touch":38}],31:[function(require,module,exports){
+},{"./angular/animations/index.coffee":5,"./angular/directives/index.coffee":13,"./angular/models/index.coffee":22,"./angular/resources/index.coffee":25,"angular":35,"angular-animate":33,"angular-cookies":34,"angular-locale":36,"angular-resource":39,"angular-sanitize":40,"angular-touch":37}],30:[function(require,module,exports){
 // MOBILE CHECKER
 
 function mobilecheck() {
@@ -1390,7 +1340,7 @@ function mobilecheck() {
 module.exports = mobilecheck()
 
 ////
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 var em, mapInit;
 
 em = function(val) {
@@ -1636,7 +1586,7 @@ module.exports = function(id, lat, scope, compile) {
 };
 
 
-},{"./isMobile":31,"./marker.coffee":33}],33:[function(require,module,exports){
+},{"./isMobile":30,"./marker.coffee":32}],32:[function(require,module,exports){
 var Marker;
 
 Marker = (function() {
@@ -1690,7 +1640,7 @@ Marker = (function() {
 module.exports = Marker;
 
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /*
  AngularJS v1.5.2
  (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1748,7 +1698,7 @@ O)(void 0),b(void 0))},cancel:function(){v||((d||O)(!0),b(!0))}});c.chain(e,b);r
 d.push(r.start());c.all(d,function(a){e.complete(a)});var e=new c({end:a(),cancel:a()});return e}}}else return d(a)}}]}])})(window,window.angular);
 
 
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /*
  AngularJS v1.5.2
  (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1759,10 +1709,10 @@ f+" > 4096 bytes)!");k.cookie=e}}c.module("ngCookies",["ng"]).provider("$cookies
 ["$cookies",function(b){return{get:function(a){return b.getObject(a)},put:function(a,c){b.putObject(a,c)},remove:function(a){b.remove(a)}}}]);l.$inject=["$document","$log","$browser"];c.module("ngCookies").provider("$$cookieWriter",function(){this.$get=l})})(window,window.angular);
 
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 require('./angular.min2.js');
 module.exports = angular;
-},{"./angular.min2.js":39}],37:[function(require,module,exports){
+},{"./angular.min2.js":38}],36:[function(require,module,exports){
 'use strict';
 angular.module("ngLocale", [], ["$provide", function($provide) {
 var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
@@ -1906,7 +1856,7 @@ $provide.value("$locale", {
 });
 }]);
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 /*
  AngularJS v1.5.3
  (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1922,7 +1872,7 @@ c,m=(f.changedTouches&&f.changedTouches.length?f.changedTouches:f.touches&&f.tou
 {$event:b||a})})});d.on("mousedown",function(a){d.addClass("ng-click-active")});d.on("mousemove mouseup",function(a){d.removeClass("ng-click-active")})}}];v("ngSwipeLeft",-1,"swipeleft");v("ngSwipeRight",1,"swiperight")})(window,window.angular);
 
 
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /*
  AngularJS v1.5.3
  (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -2235,7 +2185,7 @@ b.length<=e}}}}},Gc=function(){return{restrict:"A",require:"?ngModel",link:funct
 c){var e=a|0,f=c;u===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0==f?"one":"other"}})}]),H(P).ready(function(){de(P,yc)}))})(window,document);!window.angular.$$csp().noInlineStyle&&window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /*
  AngularJS v1.4.7
  (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -2250,7 +2200,7 @@ e){var h=this,c=e||h.template,k,d,r="",b=h.urlParams={};u(c.split(/\W/),function
 "&").replace(/%3D/gi,"=").replace(/%2B/gi,"+"),c=c.replace(new RegExp(":"+e+"(\\W|$)","g"),function(a,b){return d+b})):c=c.replace(new RegExp("(/?):"+e+"(\\W|$)","g"),function(a,b,c){return"/"==c.charAt(0)?c:b+c})});h.defaults.stripTrailingSlashes&&(c=c.replace(/\/+$/,"")||"/");c=c.replace(/\/\.(?=\w+($|\?))/,".");l.url=r+c.replace(/\/\\\./,"/.");u(g,function(b,c){h.urlParams[c]||(l.params=l.params||{},l.params[c]=b)})}};return z}]})})(window,window.angular);
 
 
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /*
  AngularJS v1.4.7
  (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -2268,4 +2218,4 @@ p=g("accent-height,accumulate,additive,alphabetic,arabic-form,ascent,baseProfile
 c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.replace(/"/g,"&quot;"),'">');k(c);g.push("</a>")}if(!c)return c;for(var m,l=c,g=[],n,p;m=l.match(f);)n=m[0],m[2]||m[4]||(n=(m[3]?"http://":"mailto:")+n),p=m.index,k(l.substr(0,p)),e(n,m[0].replace(d,"")),l=l.substring(p+m[0].length);k(l);return a(g.join(""))}}])})(window,window.angular);
 
 
-},{}]},{},[30]);
+},{}]},{},[29]);

@@ -63,7 +63,7 @@
             </nav>
             <p class="buttons filters-buttons">
                 <span class="btn" ng-click="applyFilters('<?php echo ICL_LANGUAGE_CODE; ?>')">
-                    <span class="btn-text"><?php echo __('Applica<br/>filtri', 'castadiva'); ?></span>
+                    <span class="btn-text" ng-click="$event.stopPropagation()"><?php echo __('Applica<br/>filtri', 'castadiva'); ?></span>
                 </span>
             </p>
         </div>
