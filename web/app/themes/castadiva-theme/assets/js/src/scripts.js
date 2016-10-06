@@ -860,7 +860,7 @@ module.exports = function($window) {
   var sm;
   return sm = {
     link: function(scope, element, attrs) {
-      var duration, from, hook, offset, props, speed, to, trigger, tween, w;
+      var duration, el, from, hook, offset, props, speed, to, trigger, tween, w, winPer;
       if (require('../../core/isMobile')) {
         return false;
       }
@@ -868,8 +868,21 @@ module.exports = function($window) {
       duration = attrs.duration && attrs.duration.indexOf('%') !== -1 ? attrs.duration : (attrs.duration ? scope.$eval(attrs.duration) : false);
       trigger = attrs.triggerElement ? attrs.triggerElement : element[0];
       trigger = trigger === 'parent' ? element.parent()[0] : trigger;
-      duration = attrs.heightDuration ? trigger.offsetHeight * attrs.heightDuration : duration;
+      el = attrs.triggerElement && attrs.triggerElement.indexOf('#') !== -1 ? document.querySelector(attrs.triggerElement) : trigger;
       hook = attrs.triggerHook ? attrs.triggerHook : 0.5;
+      if (typeof hook === "number") {
+        winPer = hook + 1;
+      } else {
+        if (hook === 'onEnter') {
+          winPer = 2;
+        } else if (hook === 'onLeave') {
+          winPer = 1;
+        } else if (hook === 'onCenter') {
+          winPer = 1.5;
+        }
+      }
+      duration = attrs.heightDuration ? el.offsetHeight * attrs.heightDuration + (window.innerHeight * winPer) : duration;
+      console.log(duration);
       offset = attrs.offset ? scope.$eval(attrs.offset) : 0;
       from = attrs.from ? scope.$eval(attrs.from) : false;
       to = attrs.to ? scope.$eval(attrs.to) : false;
@@ -1299,9 +1312,13 @@ module.exports = function($resource) {
 
 
 },{}],29:[function(require,module,exports){
-var angular, castadiva;
+var angular, castadiva, html;
 
 window.controller = new ScrollMagic.Controller();
+
+html = document.getElementsByTagName('html');
+
+html[0].className += require('./core/isMobile') ? ' mobile' : ' no-mobile';
 
 angular = require('angular');
 
@@ -1328,7 +1345,7 @@ require('./angular/animations/index.coffee');
 require('./angular/models/index.coffee');
 
 
-},{"./angular/animations/index.coffee":5,"./angular/directives/index.coffee":13,"./angular/models/index.coffee":22,"./angular/resources/index.coffee":25,"angular":35,"angular-animate":33,"angular-cookies":34,"angular-locale":36,"angular-resource":39,"angular-sanitize":40,"angular-touch":37}],30:[function(require,module,exports){
+},{"./angular/animations/index.coffee":5,"./angular/directives/index.coffee":13,"./angular/models/index.coffee":22,"./angular/resources/index.coffee":25,"./core/isMobile":30,"angular":35,"angular-animate":33,"angular-cookies":34,"angular-locale":36,"angular-resource":39,"angular-sanitize":40,"angular-touch":37}],30:[function(require,module,exports){
 // MOBILE CHECKER
 
 function mobilecheck() {

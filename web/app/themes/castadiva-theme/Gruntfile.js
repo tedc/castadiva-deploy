@@ -122,6 +122,16 @@ module.exports = function(grunt) {
                 dest: '<%= dev %>/coffee/angular/models/templates.js'
             }
         },
+        tinypng: {
+            options: {
+                apiKey: "d3cCkETrqGcKnv2uEyWrnb5Qb_1rsghT"
+            },
+            compress: {
+                expand: true, 
+                src: '<%= dest %>/img/*.{png,jpg}', 
+                dest: '<%= dest %>/img/'
+            }
+        },
         watch: {
             configFiles: {
                 files: [ 'Gruntfile.js'],
@@ -161,6 +171,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-tinypng');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-newer');
     grunt.registerTask('scripts', ['browserify','newer:concat','newer:uglify']);

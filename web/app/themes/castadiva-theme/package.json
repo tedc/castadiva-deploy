@@ -35,8 +35,10 @@
     "grunt-angular-templates": "^1.1.0",
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-compass": "^1.1.1",
     "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-pug": "^1.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
@@ -44,6 +46,7 @@
     "grunt-modernizr": "^1.0.2",
     "grunt-newer": "^1.2.0",
     "grunt-postcss": "^0.8.0",
+    "grunt-tinypng": "^0.6.1",
     "postcss-flexibility": "^1.1.0",
     "time-grunt": "^1.4.0"
   },

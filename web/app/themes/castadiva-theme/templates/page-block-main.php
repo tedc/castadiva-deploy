@@ -1,13 +1,19 @@
 <?php if(get_sub_field('colonne') < 2) : ?>
-<?php while(the_flexible_field('contenuti')) :  ?>
-<?php get_template_part('templates/block', 'main-'.get_row_layout()); ?>
-<?php endwhile; ?>
+<?php $count_field = 0; while(the_flexible_field('contenuti')) :  ?>
+    <?php if(get_row_layout() == 'forme') :
+            $id = 'shapes_'.$count_field;
+        ?>
+        <?php include(locate_template('templates/block-main-'.get_row_layout().'.php', false, false ) ); ?>
+    <?php else : ?>
+        <?php get_template_part('templates/block', 'main-'.get_row_layout()); ?>
+    <?php endif; ?>
+<?php $count_field++; endwhile; ?>
 <?php else : ?>
 <ul class="grid-2 shapes-cols">
     <?php while(the_flexible_field('contenuti') || the_flexible_field('contenuti_2')) :  ?>
-	<li class="col-1">
-        <?php get_template_part('templates/block', 'main-'.get_row_layout()); ?>
-    <?php endwhile; ?>
+    <li class="col-1">
+    <?php get_template_part('templates/block', 'main-'.get_row_layout()); ?>
     </li>
+    <?php endwhile; ?>
 </ul>
 <?php endif; ?>
