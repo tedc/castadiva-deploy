@@ -1,4 +1,4 @@
-<li class="col-1 product-show-more produc-item" ng-class="post.post_class" ng-sm from="{y : '20%', opacity: 0, ease: Back.easeOut.config(1.7)}" trigger-hook="1" speed="1" ng-repeat="post in posts">
+<li class="col-1 ajax-product product-show-more produc-item" ng-class="post.post_class" ng-sm from="{y : '20%', opacity: 0, ease: Back.easeOut.config(1.7)}" trigger-hook="1" speed="1" ng-repeat="post in posts">
     <div class="offset">
         <figure ng-bind-html="post.product_attrs.thumb"></figure>
         <div class="product-more">

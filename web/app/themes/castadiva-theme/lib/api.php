@@ -65,13 +65,15 @@
             $product = wc_get_product($object['id']);
             $id = get_post_thumbnail_id($object['id']);
             $attrs = array(
+                'price_value' => $product->get_price(),
                 'price' => $product->get_price_html(),
-                'onsale' => ($product->is_on_sale()) ? __('Offerta', 'castadiva') : false,
+                'onsale' => $product->is_on_sale(),
                 'weight' => ($product->has_weight()) ? wc_format_localized_decimal( $product->get_weight() . ' ' . esc_attr( get_option( 'woocommerce_weight_unit' ) ) ) : false,
                 'attributes' => $product->get_attributes(),
                 'thumb' => $thumb,
                 'desc' => (has_excerpt($object['id'])) ? apply_filters( 'woocommerce_short_description', $post->post_excerpt ) : false 
             );
+
             return $attrs;
         }
         register_rest_route('api/v1', '/instagram', array(
@@ -108,23 +110,94 @@
 //            }
         }
     }
+add_filter( 'rest_query_vars', 'flux_allow_meta_query' );
+function flux_allow_meta_query( $valid_vars )
+{
+    $valid_vars = array_merge( $valid_vars, array( 'meta_query', 'meta_key', 'meta_value', 'meta_compare' ) );
+    return $valid_vars;
+}
 
-    function custom_rest_query( $args, $request ) {
-        if ( array_key_exists( 'product_cat', $args) ) {
-            $tax_query = array(
-                'relation' => 'AND'
-            );
-            $terms = explode( ',', $args['product_cat'] );  // NOTE: Assumes comma separated taxonomies
-            for ( $i = 0; $i < count( $terms ); $i++) {
-                array_push( $tax_query, array(
-                    'taxonomy' => $args[ 'product_cat' ],
-                    'field' => 'slug',
-                    'terms' => array( $terms[ $i ] )
-                ));            
-            }
-            unset( $args[ 'taxonomy' ] );  // We are replacing with our tax_query
-            $args[ 'tax_query' ] = $tax_query;
+function custom_rest_query( $args, $request ) {
+    if ( array_key_exists( 'product_cat', $args) ) {
+        $tax_query = array(
+            'relation' => 'AND'
+        );
+        $terms = explode( ',', $args['product_cat'] );  // NOTE: Assumes comma separated taxonomies
+        for ( $i = 0; $i < count( $terms ); $i++) {
+            array_push( $tax_query, array(
+                'taxonomy' => $args[ 'product_cat' ],
+                'field' => 'slug',
+                'terms' => array( $terms[ $i ] )
+            ));            
         }
-        return $args;
+        unset( $args[ 'taxonomy' ] );  // We are replacing with our tax_query
+        $args[ 'tax_query' ] = $tax_query;
     }
-add_action( 'rest_glossary_query', 'custom_rest_query', 10, 2 );
+    if ( array_key_exists( 'product_tag', $args) ) {
+        $tax_query = array(
+            'relation' => 'AND'
+        );
+        $terms = explode( ',', $args['product_tag'] );  // NOTE: Assumes comma separated taxonomies
+        for ( $i = 0; $i < count( $terms ); $i++) {
+            array_push( $tax_query, array(
+                'taxonomy' => $args[ 'product_tag' ],
+                'field' => 'slug',
+                'terms' => array( $terms[ $i ] )
+            ));            
+        }
+        unset( $args[ 'taxonomy' ] );  // We are replacing with our tax_query
+        $args[ 'tax_query' ] = $tax_query;
+    }
+    if ( array_key_exists( 'meta_query', $args) ) {
+    $relation = 'AND';
+    if( isset($args['meta_query']['relation']) && in_array($args['meta_query']['relation'], array('AND', 'OR'))) {
+        $relation = sanitize_text_field( $args['meta_query']['relation'] );
+    }
+    $meta_query = array(
+        'relation' => $relation
+    );
+
+    foreach ( $args['meta_query'] as $inx => $query_req ) {
+    /*
+        Array (
+
+            [key] => test
+            [value] => testing
+            [compare] => =
+        )
+    */
+        $query = array();
+
+        if( is_numeric($inx)) {
+
+            if( isset($query_req['key'])) {
+                $query['key'] = sanitize_text_field($query_req['key']);
+            }
+            if( isset($query_req['value'])) {
+                $query['value'] = sanitize_text_field($query_req['value']);
+            }
+            if( isset($query_req['type'])) {
+                $query['type'] = sanitize_text_field($query_req['type']);
+            }
+            if( isset($query_req['compare']) && in_array($query_req['compare'], array('=', '!=', '>','>=','<','<=','LIKE','NOT LIKE','IN','NOT IN','BETWEEN','NOT BETWEEN', 'NOT EXISTS')) ) {
+                $query['compare'] = sanitize_text_field($query_req['compare']);
+            }
+        }
+
+        if( ! empty($query) ) $meta_query[] = $query;
+    }
+
+    // replace with sanitized query args
+    $args['meta_query'] = $meta_query;
+    }
+    
+    if(array_key_exists('orderby', $args)) {
+        if($args['orderby'] === 'price') {
+            $args['meta_key'] = '_price';
+            $args['orderby'] = 'meta_value_num';
+        }
+    }
+    return $args;
+}
+add_action( 'rest_product_query', 'custom_rest_query', 10, 2 );
+

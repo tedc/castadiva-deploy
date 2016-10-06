@@ -5,7 +5,7 @@ use Roots\Sage\Extras;
 <form class="row row-lg" role="search" action="<?php echo esc_url(home_url( '/' )); ?>" method="get">
     <?php if(!is_tax()):?>
     <div class="search-filters">
-        <div class="container">
+        <div class="container" ng-search-filters>
             <div class="select" ng-click="isFilters=!isFilters">
                 <i class="select-arrow"></i>
                 <span class="select-text"><?php echo __('Filtra', 'castadiva'); ?></span>
