@@ -23,7 +23,6 @@ add_filter('woocommerce_add_to_cart_fragments', __NAMESPACE__ . '\\my_mini_cart'
 
 function my_added_msg() { ?>
     <script>
-    var baseUrl = '<?php bloginfo('url'); ?>';
     var go_to_cart = '<?php echo __('Vai al<br />Carrello', 'castadiva'); ?>';
     </script>
 <?php }

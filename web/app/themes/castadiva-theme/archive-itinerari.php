@@ -4,14 +4,15 @@
     <div class="main-header-content">
         <i class="flowers"></i>
         <h1 class="title light"><?php echo __('Gli <strong>Itinerari</strong>', 'castadiva'); ?></h1>
-        <em><?php echo __('Vi offriamo itinerari turistici alla scoperta del territorio per regalarvi esperienze uniche e profonde attraverso le meraviglie dei nostri paesaggi siciliani.', 'castadiva'); ?></em>
+        <div class="content row-top row-md-top">
+        <em><?php echo __('Vi offriamo itinerari turistici alla scoperta del territorio per regalarvi esperienze uniche e profonde attraverso le meraviglie dei nostri paesaggi siciliani.', 'castadiva'); ?></em></div>
     </div>
 </header>
-<section class="container row row-lg">
+<section class="container row row-lg" ng-load-more>
 <?php while(have_posts()) : the_post(); ?>
 <article <?php post_class(); ?> id="tour_<?php the_ID(); ?>">
     <figure class="tour-figure">
-        <?php the_post_thumbnail(array(300,300, true)); ?>
+        <?php the_post_thumbnail(array(600,600, true)); ?>
     </figure>
     <div class="tour-content-single row-top row-md-top">
         <h2 class="title">
@@ -27,4 +28,12 @@
     </figure>
 </article>
 <?php endwhile; ?>
+<?php get_template_part('templates/ajax', get_post_type()); ?>
+<span class="btn more-btn" ng-click="loadMorePosts('itinerari', 12, false, false, 12)">
+    <span class="btn-text"><?php echo __('Altri<br/>itinerari', 'castadiva'); ?></span>
+</span>
+<div class="triangle">
+    <div class="pattern-main" ng-sm from="{y: '-100%'}" to="{y : '0%'}" trigger-element=".triangle" duration="150" trigger-hook="1"></div>
+</div>
 </section>
+<?php get_template_part('templates/page', 'block-newsletter'); ?>

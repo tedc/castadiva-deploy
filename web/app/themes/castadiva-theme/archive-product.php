@@ -19,8 +19,8 @@ $posts_per_page = get_option('posts_per_page');
 <?php 
 // stuff
 if($posts_count >= $posts_per_page) :  ?>
-<div class="buttons">
-    <span class="btn" ng-click="loadMorePosts('product', <?php echo $posts_per_page; ?>, false, false, <?php echo $product_count; ?>)">
+<div class="buttons" ng-show="!hideMore">
+    <span class="btn" ng-click="loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count; ?>)">
         <span class="btn-text"><?php echo __('Altri', 'castadiva'); ?></span>
     </span>
 </div>

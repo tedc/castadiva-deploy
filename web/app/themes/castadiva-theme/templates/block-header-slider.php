@@ -75,17 +75,21 @@ if($total > 1) : ?>
             <?php echo '<'.$h .' class="title">'.$title.'</'.$h.'>'; ?>
             <?php endif; ?>
             <?php if(get_sub_field('contenuto') != '') : ?>
+                <?php if(get_sub_field('contenuto') == 1) : ?>
+                <?php if(trim(str_replace(array('&nbsp;', '\n'),'',strip_tags($post->post_content))) !== '') : ?>
                 <div class="content row row-md">
-                    <?php if(get_sub_field('contenuto') == 1) : ?>
                     <?php the_content(); ?>
-                    <?php else : ?>
-                    <?php the_sub_field('testo'); ?>
-                    <?php while(the_flexible_field('bottone')) : ?>      
-                    <?php Extras\btn($text = get_sub_field('btn-text'), $link = get_sub_field('link'), null, null, null, 'inverted-btn'); ?>
-                    <?php endwhile; ?>
-                    <?php endif; ?>
                 </div>
+                <?php endif; ?>
+                    <?php else : ?>
+                <div class="content row row-md">
+                    <?php the_sub_field('testo'); ?>
+                </div>
+                <?php endif; ?>
             <?php endif; ?>
+            <?php while(the_flexible_field('bottone')) : ?>      
+            <?php Extras\btn($text = get_sub_field('btn-text'), $link = get_sub_field('link'), null, null, null, 'inverted-btn'); ?>
+            <?php endwhile; ?>
     <?php if($total > 1) : ?>
         <?php if(!is_singular('product')) : ?></div><?php endif; ?>
     </div>

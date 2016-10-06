@@ -114,9 +114,9 @@ module.exports = function(grunt) {
                 options : {
                     module : 'castadiva',
                     bootstrap: function(module, script) {
-                        return 'module.exports = function($templateCache, urls) {' + script + ';}';
+                        return 'module.exports = function($templateCache) {' + script + ';}';
                     },
-                    prefix: "' + urls.TPL_URL + '/"
+                    prefix: "' + assetsPath + 'tpl/"
                 },
                 src:  [ '<%= dest %>/tpl/*.tpl.html'],
                 dest: '<%= dev %>/coffee/angular/models/templates.js'

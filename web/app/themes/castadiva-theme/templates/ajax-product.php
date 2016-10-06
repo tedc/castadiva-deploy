@@ -10,7 +10,7 @@
     </div>
 <div class="offset row row-md">
     <span class="onsale" ng-if="post.product_attrs.onsale"><?php echo __('Offerta', 'castadiva'); ?></span>
-    <h3 class="title" ng-bind-html="post.title.rendered"><?php the_title(); ?></h3>
+    <h3 class="title" ng-bind-html="post.title.rendered"></h3>
     <div class="description light upper" ng-if="post.product_attrs.desc" ng-bind-html="post.product_attrs.desc">
     </div>
     <span class="light upper attribute" ng-if="post.product_attrs.weight" ng-bind-html="post.product_attrs.weight"></span>

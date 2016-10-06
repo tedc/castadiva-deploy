@@ -19,6 +19,27 @@
     add_action( 'rest_api_init', 'api_init' );
     
     function api_init() {
+        register_api_field(  array('post', 'ricette'),
+            'post_cat',
+            array(
+                'get_callback'    => __NAMESPACE__.'\\register_cat_field',
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+        function register_cat_field($object) {
+            $cat = '';
+            $tax = ($object['type'] == 'post') ? 'category' : 'recipe_cat';
+            $className = ($object['type'] == 'post') ? '' : ' class="recipe-cat"';
+            $categories = wp_get_post_terms($object['id'], $tax);
+            $count = 0;
+            foreach($categories as $c){
+                $comma = ($count < count($categories) - 1) ? ', ' : '';
+                $cat .= '<a href='.get_term_link($c->term_id).'"'.$className.'>'.$c->name.'</a>'.$comma;
+                $count++;
+            }
+            return $cat;
+        }
         // ADD THUMB
         // POST THUMBNAIL
         register_api_field(  array('post', 'itinerari', 'ricette'),
@@ -201,3 +222,23 @@ function custom_rest_query( $args, $request ) {
 }
 add_action( 'rest_product_query', 'custom_rest_query', 10, 2 );
 
+//function category_rest_query( $args, $request ) {
+//    if ( array_key_exists( '', $args) ) {
+//        print_r($args);
+//        $cat_query = array(
+//            'relation' => 'AND'
+//        );
+//        $cats = explode( ',', $args['category'] );  // NOTE: Assumes comma separated taxonomies
+//        for ( $i = 0; $i < count( $cats ); $i++) {
+//            array_push( $cat_query, array(
+//                'taxonomy' => $args[ 'category' ],
+//                'field' => 'slug',
+//                'terms' => array( $cats[ $i ] )
+//            ));            
+//        }
+//        unset( $args[ 'taxonomy' ] );  // We are replacing with our tax_query
+//        $args[ 'tax_query' ] = $cat_query;
+//    }
+//    return $args;
+//}
+//add_action( 'rest_ricette_query', 'category_rest_query', 10, 2 );

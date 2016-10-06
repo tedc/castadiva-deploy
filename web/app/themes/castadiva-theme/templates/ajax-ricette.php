@@ -6,31 +6,24 @@
     </figure>
     <div class="post-content">
         <header>
-            <?php $cats = wp_get_post_terms( get_the_ID(), 'recipe_cat');
-                    foreach($cats as $ct){ echo '<a href="'.get_term_link($ct->term_id).'" class="recipe-cat">'.$ct->name.'</a>';}
-                ?>
+            {{post.post_cat | html}}
             <h2 class="title news-title">
                 <a ng-href="{{post.link}}" ng-bind-title="post.title.rendered"></a>
             </h2>
-            <?php while(have_rows('recipe_builder')) : the_row(); 
-                if(get_row_layout() == 'first') : ?>
-            <div class="recipe-first-line">
+            <div class="recipe-first-line" ng-repeat="item as post.acf.recipe_builder | filter: q as results" ng-init="q = 'first'">
                <span>
                     <?php echo __('Difficoltà', 'castadiva'); ?>
+                    <i class="dot" ng-repeat="i in [1,2,3,4,5]" ng-class="{fill : i <= item.difficulty}"></i>
                     <?php for($i = 1; $i <= 5; $i++) : ?>
-                    <i class="dot<?php if($i <= get_sub_field('difficulty')): ?> fill<?php endif; ?>"></i>
-                    <?php endfor; ?>
                 </span>
                 <span>
                     <?php echo __('Preparazione', 'castadiva'); ?>
-                    <time class="recipe-time"><?php the_sub_field('time'); ?></time>
+                    <time class="recipe-time" ng-bind-html="item.time"></time>
                 </span>
             </div>
-            <?php endif; ?>
-            <?php endwhile; ?>
         </header>
         <div class="news-summury">
-            {{post.exerpt}}
+            {{post.exerpt | html}}
             <a ng-href="{{post.link}}" class="read-more"><?php echo __('Leggi tutto', 'castadiva'); ?></a>
         </div>
     </div>

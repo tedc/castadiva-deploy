@@ -543,7 +543,8 @@ module.exports = function() {
   return filters = {
     controller: [
       '$rootScope', "getSearch", function($rootScope, getSearch) {
-        var type;
+        var offset, type;
+        offset = posts_per_page;
         $rootScope.filterData = {
           orderby: 'date',
           order: 'desc',
@@ -566,10 +567,12 @@ module.exports = function() {
           }
         };
         type = 'product';
-        $rootScope.applyFilters = function() {
-          var checkbox, i, k, order, orderby, ref, sale_price, tag, term, v, value;
-          term = "filter[product_cat]=" + ($rootScope.filterData.cat.join());
-          tag = "&filter[product_tag]=" + ($rootScope.filterData.tag.join());
+        $rootScope.applyFilters = function(lang) {
+          var checkbox, i, k, ref, sale_price, tag, term, v, value;
+          term = $rootScope.filterData.cat.length > 0 ? "&filter[product_cat]=" + ($rootScope.filterData.cat.join()) : '';
+          tag = $rootScope.filterData.tag.length > 0 ? "&filter[product_tag]=" + ($rootScope.filterData.tag.join()) : '';
+          $rootScope.productTag = tag;
+          $rootScope.productCat = term;
           i = 0;
           checkbox = '';
           ref = $rootScope.filterData.check;
@@ -586,22 +589,21 @@ module.exports = function() {
             i++;
           }
           checkbox = checkbox !== '' ? "&filter[meta_query][relation]=and" + checkbox : '';
-          orderby = $rootScope.filterData.orderby;
-          order = $rootScope.filterData.order;
-          getSearch.get(type, term, tag, orderby, order, checkbox, 'it', function(res) {
+          $rootScope.checkbox = checkbox;
+          getSearch.get(type, term, tag, $rootScope.filterData.orderby, $rootScope.filterData.order, checkbox, lang, offset, function(res) {
             var elements;
             elements = document.querySelectorAll('.product-show-more');
             angular.forEach(elements, function(i, el) {
               var item;
               item = angular.element(i);
               item.removeAttr('ng-sm');
-              if (!item.hasClass('ajax-product')) {
-                item.remove();
-              }
+              item.remove();
             });
             $rootScope.posts = res;
+            $rootScope.hideMore = res.length <= posts_per_page ? true : false;
             $rootScope.isOrderFilters = false;
             $rootScope.isFilters = false;
+            $rootScope.count = 0;
           });
         };
       }
@@ -729,21 +731,37 @@ module.exports = function($timeout, loadGoogleMapAPI, $compile) {
 };
 
 
-},{"../../core/map.coffee":30}],17:[function(require,module,exports){
+},{"../../core/map.coffee":32}],17:[function(require,module,exports){
 module.exports = function() {
   var load;
   return load = {
     controller: [
-      '$rootScope', 'getPosts', function($rootScope, getPosts) {
+      '$rootScope', 'getPosts', "$scope", "$sce", function($rootScope, getPosts, $scope, $sce) {
+        var taxonomy;
+        taxonomy = {
+          posts: 'cat',
+          product: 'product_cat',
+          ricette: 'recipe_cat'
+        };
         $rootScope.posts = [];
         $rootScope.count = 0;
-        $rootScope.loadMorePosts = function(t, n, c, l, m) {
-          $rootScope.count += n;
-          $rootScope.hideMore = $rootScope.count >= m - n ? true : false;
+        $scope.hideMore = false;
+        $rootScope.loadMorePosts = function(t, c, l, m) {
+          var order, orderby, tag, tax, term;
+          tax = taxonomy[t];
+          term = c ? "&filter[" + taxonomy[t] + "]=" + c : '';
+          if (t === 'product') {
+            term = ($rootScope.productCat != null) && typeof $rootScope.productCat !== 'undefined' && $rootScope.productCat !== '' ? $rootScope.productCat : term;
+          }
+          tag = ($rootScope.productTag != null) && typeof $rootScope.productTag !== 'undefined' && $rootScope.productTag !== '' ? $rootScope.productTag : '';
+          orderby = ($rootScope.filterData.orderby != null) && typeof $rootScope.filterData.orderby !== 'undefined' && $rootScope.filterData.orderby !== '' ? $rootScope.filterData.orderby : 'date';
+          order = ($rootScope.filterData.order != null) && typeof $rootScope.filterData.order !== 'undefined' && $rootScope.filterData.order !== '' ? $rootScope.filterData.order : 'desc';
+          $rootScope.count += posts_per_page;
+          $rootScope.hideMore = $rootScope.count >= m - posts_per_page ? true : false;
           if ($rootScope.count >= m) {
             return;
           }
-          return getPosts.get(t, $rootScope.count, c, l, function(res) {
+          getPosts.get(t, $rootScope.count, term, tag, l, posts_per_page, order, orderby, $rootScope.checkbox, function(res) {
             $rootScope.posts = $rootScope.posts.concat(res);
           });
         };
@@ -943,7 +961,7 @@ module.exports = function($window) {
 };
 
 
-},{"../../core/isMobile":29}],21:[function(require,module,exports){
+},{"../../core/isMobile":31}],21:[function(require,module,exports){
 module.exports = function($compile) {
   var sticky;
   return sticky = {
@@ -994,6 +1012,21 @@ module.exports = function() {
 
 
 },{}],23:[function(require,module,exports){
+var castadiva;
+
+castadiva = angular.module('castadiva');
+
+castadiva.run(["$templateCache", require('./templates')]);
+
+
+},{"./templates":24}],24:[function(require,module,exports){
+module.exports = function($templateCache) {  'use strict';
+
+  $templateCache.put('' + assetsPath + 'tpl/assets/tpl/instagram.tpl.html',
+    "<figure class=\"instagram-item\" ng-repeat=\"item in items | limitTo : 1\" ng-sm=\"ng-sm\" from=\"{y: '30%'}\" to=\"{y: '-40%'}\" duration=\"200%\" offset=\"-100\" trigger-hook=\"onEnter\" trigger-element=\"#instagram\"><a ng-href=\"{{item.link}}\"><img ng-src=\"{{resize(item.images.thumbnail.url)}}\" alt=\"Castadiva Instagram\"/></a></figure><figure class=\"instagram-item\" ng-sm=\"ng-sm\" from=\"{y: '-20%'}\" to=\"{y: '15%'}\" duration=\"200%\" offset=\"-100\" trigger-hook=\"onEnter\" trigger-element=\"#instagram\"><a ng-href=\"{{item.link}}\" ng-repeat=\"item in items | limitTo : 3\" ng-if=\"$index&gt;0\"><img ng-src=\"{{resize(item.images.thumbnail.url)}}\" alt=\"Castadiva Instagram\"/></a></figure><figure class=\"instagram-item\" ng-repeat=\"item in items | limitTo : 5\" ng-if=\"$index&gt;2\" ng-sm=\"ng-sm\" from=\"{y: '20%'}\" to=\"{y: '-25%'}\" duration=\"200%\" offset=\"-100\" trigger-hook=\"onEnter\" trigger-element=\"#instagram\"><span class=\"instagram-square\" ng-if=\"$index == items.length - 1\" ng-sm=\"ng-sm\" from=\"{y: '50%'}\" to=\"{y: '-100%'}\" duration=\"200%\" offset=\"-100\" trigger-hook=\"onEnter\" trigger-element=\"#instagram\"></span><a ng-href=\"{{item.link}}\"><img ng-src=\"{{resize(item.images.thumbnail.url)}}\" alt=\"Castadiva Instagram\"/></a></figure>"
+  );
+;}
+},{}],25:[function(require,module,exports){
 module.exports = function() {
   var serializeData, transformRequest;
   serializeData = function(data) {
@@ -1022,7 +1055,7 @@ module.exports = function() {
 };
 
 
-},{"angular":34}],24:[function(require,module,exports){
+},{"angular":36}],26:[function(require,module,exports){
 var castadiva;
 
 castadiva = angular.module('castadiva');
@@ -1176,7 +1209,7 @@ castadiva.service('loadGoogleMapAPI', [
 ]).factory('transformRequestAsFormPost', [require('./form.coffee')]).factory('InstagramPosts', ["$resource", "cacheService", require('./instagram.coffee')]).factory('getPosts', ["$resource", "cacheService", require('./more.coffee')]).factory('getSearch', ["$resource", require('./search.coffee')]);
 
 
-},{"./form.coffee":23,"./instagram.coffee":25,"./more.coffee":26,"./search.coffee":27}],25:[function(require,module,exports){
+},{"./form.coffee":25,"./instagram.coffee":27,"./more.coffee":28,"./search.coffee":29}],27:[function(require,module,exports){
 module.exports = function($resource, cacheService) {
   var getResults, source;
   self.url = "/wp-json/api/v1/instagram";
@@ -1217,14 +1250,19 @@ module.exports = function($resource, cacheService) {
 };
 
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 module.exports = function($resource, cacheService) {
   var getPost, post;
-  post = $resource(baseUrl + "/wp-json/wp/v2/:types/?offset=:offset&categories=:cat&per_page=:offset&lang=:lang", {
+  post = $resource(baseUrl + "/wp-json/wp/v2/:types/?offset=:offset:term:tag&per_page=:more&filter[order]=:order&filter[orderby]=:orderby&lang=:lang:checkbox", {
     types: '@types',
     offset: '@offset',
-    cat: '@cat',
-    lang: '@lang'
+    term: '@term',
+    tag: '@tag',
+    lang: '@lang',
+    more: '@more',
+    order: '@order',
+    orderby: '@orderby',
+    checkbox: '@checkbox'
   }, {
     query: {
       method: 'GET',
@@ -1233,9 +1271,9 @@ module.exports = function($resource, cacheService) {
     }
   });
   return getPost = {
-    get: function(types, offset, cat, lang, cb) {
+    get: function(types, offset, cat, tag, lang, more, order, orderby, checkbox, cb) {
       var cached;
-      cached = cacheService.getData(types + "_" + offset);
+      cached = cacheService.getData(types + "_" + offset + "_" + cat);
       if (cached !== false) {
         if (typeof cb !== 'undefined') {
           cb(cached.data);
@@ -1244,8 +1282,13 @@ module.exports = function($resource, cacheService) {
         post.query({
           types: types,
           offset: offset,
-          cat: cat,
-          lang: lang
+          term: cat,
+          lang: lang,
+          more: more,
+          tag: tag,
+          order: order,
+          orderby: orderby,
+          checkbox: checkbox
         }).$promise.then(function(result) {
           var exp, now;
           now = new Date();
@@ -1265,18 +1308,19 @@ module.exports = function($resource, cacheService) {
 };
 
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 module.exports = function($resource) {
   var getSearch, search, self;
   self = this;
-  self.url = baseUrl + "/wp-json/wp/v2/:type/?:term:tag&filter[orderby]=:orderby&filter[order]=:order&lang=:lang&:checkbox";
+  self.url = baseUrl + "/wp-json/wp/v2/:type/?per_page=:offset:term:tag&filter[orderby]=:orderby&filter[order]=:order&lang=:lang&:checkbox";
   search = $resource(self.url, this.url = {
     term: '@term',
     tag: '@tag',
     checkbox: '@checkbox',
     orderby: '@orderby',
     lang: '@lang',
-    order: '@order'
+    order: '@order',
+    offset: '@offset'
   }, {
     query: {
       method: 'GET',
@@ -1285,14 +1329,15 @@ module.exports = function($resource) {
     }
   });
   return getSearch = {
-    get: function(type, term, tag, orderby, order, checkbox, lang, cb) {
+    get: function(type, term, tag, orderby, order, checkbox, lang, offset, cb) {
       search.query({
         type: type,
         term: term,
         orderby: orderby,
         lang: lang,
         order: order,
-        checkbox: checkbox
+        checkbox: checkbox,
+        offset: offset
       }).$promise.then(function(result) {
         if (typeof cb !== 'undefined') {
           cb(result);
@@ -1303,7 +1348,7 @@ module.exports = function($resource) {
 };
 
 
-},{}],28:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 var angular, castadiva;
 
 window.controller = new ScrollMagic.Controller();
@@ -1330,8 +1375,10 @@ require('./angular/resources/index.coffee');
 
 require('./angular/animations/index.coffee');
 
+require('./angular/models/index.coffee');
 
-},{"./angular/animations/index.coffee":5,"./angular/directives/index.coffee":14,"./angular/resources/index.coffee":24,"angular":34,"angular-animate":32,"angular-cookies":33,"angular-locale":35,"angular-resource":38,"angular-sanitize":39,"angular-touch":36}],29:[function(require,module,exports){
+
+},{"./angular/animations/index.coffee":5,"./angular/directives/index.coffee":14,"./angular/models/index.coffee":23,"./angular/resources/index.coffee":26,"angular":36,"angular-animate":34,"angular-cookies":35,"angular-locale":37,"angular-resource":40,"angular-sanitize":41,"angular-touch":38}],31:[function(require,module,exports){
 // MOBILE CHECKER
 
 function mobilecheck() {
@@ -1343,7 +1390,7 @@ function mobilecheck() {
 module.exports = mobilecheck()
 
 ////
-},{}],30:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 var em, mapInit;
 
 em = function(val) {
@@ -1589,7 +1636,7 @@ module.exports = function(id, lat, scope, compile) {
 };
 
 
-},{"./isMobile":29,"./marker.coffee":31}],31:[function(require,module,exports){
+},{"./isMobile":31,"./marker.coffee":33}],33:[function(require,module,exports){
 var Marker;
 
 Marker = (function() {
@@ -1643,7 +1690,7 @@ Marker = (function() {
 module.exports = Marker;
 
 
-},{}],32:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /*
  AngularJS v1.5.2
  (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1701,7 +1748,7 @@ O)(void 0),b(void 0))},cancel:function(){v||((d||O)(!0),b(!0))}});c.chain(e,b);r
 d.push(r.start());c.all(d,function(a){e.complete(a)});var e=new c({end:a(),cancel:a()});return e}}}else return d(a)}}]}])})(window,window.angular);
 
 
-},{}],33:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 /*
  AngularJS v1.5.2
  (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1712,10 +1759,10 @@ f+" > 4096 bytes)!");k.cookie=e}}c.module("ngCookies",["ng"]).provider("$cookies
 ["$cookies",function(b){return{get:function(a){return b.getObject(a)},put:function(a,c){b.putObject(a,c)},remove:function(a){b.remove(a)}}}]);l.$inject=["$document","$log","$browser"];c.module("ngCookies").provider("$$cookieWriter",function(){this.$get=l})})(window,window.angular);
 
 
-},{}],34:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 require('./angular.min2.js');
 module.exports = angular;
-},{"./angular.min2.js":37}],35:[function(require,module,exports){
+},{"./angular.min2.js":39}],37:[function(require,module,exports){
 'use strict';
 angular.module("ngLocale", [], ["$provide", function($provide) {
 var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
@@ -1859,7 +1906,7 @@ $provide.value("$locale", {
 });
 }]);
 
-},{}],36:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /*
  AngularJS v1.5.3
  (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1875,7 +1922,7 @@ c,m=(f.changedTouches&&f.changedTouches.length?f.changedTouches:f.touches&&f.tou
 {$event:b||a})})});d.on("mousedown",function(a){d.addClass("ng-click-active")});d.on("mousemove mouseup",function(a){d.removeClass("ng-click-active")})}}];v("ngSwipeLeft",-1,"swipeleft");v("ngSwipeRight",1,"swiperight")})(window,window.angular);
 
 
-},{}],37:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /*
  AngularJS v1.5.3
  (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -2188,7 +2235,7 @@ b.length<=e}}}}},Gc=function(){return{restrict:"A",require:"?ngModel",link:funct
 c){var e=a|0,f=c;u===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0==f?"one":"other"}})}]),H(P).ready(function(){de(P,yc)}))})(window,document);!window.angular.$$csp().noInlineStyle&&window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 
-},{}],38:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /*
  AngularJS v1.4.7
  (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -2203,7 +2250,7 @@ e){var h=this,c=e||h.template,k,d,r="",b=h.urlParams={};u(c.split(/\W/),function
 "&").replace(/%3D/gi,"=").replace(/%2B/gi,"+"),c=c.replace(new RegExp(":"+e+"(\\W|$)","g"),function(a,b){return d+b})):c=c.replace(new RegExp("(/?):"+e+"(\\W|$)","g"),function(a,b,c){return"/"==c.charAt(0)?c:b+c})});h.defaults.stripTrailingSlashes&&(c=c.replace(/\/+$/,"")||"/");c=c.replace(/\/\.(?=\w+($|\?))/,".");l.url=r+c.replace(/\/\\\./,"/.");u(g,function(b,c){h.urlParams[c]||(l.params=l.params||{},l.params[c]=b)})}};return z}]})})(window,window.angular);
 
 
-},{}],39:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 /*
  AngularJS v1.4.7
  (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -2221,4 +2268,4 @@ p=g("accent-height,accumulate,additive,alphabetic,arabic-form,ascent,baseProfile
 c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.replace(/"/g,"&quot;"),'">');k(c);g.push("</a>")}if(!c)return c;for(var m,l=c,g=[],n,p;m=l.match(f);)n=m[0],m[2]||m[4]||(n=(m[3]?"http://":"mailto:")+n),p=m.index,k(l.substr(0,p)),e(n,m[0].replace(d,"")),l=l.substring(p+m[0].length);k(l);return a(g.join(""))}}])})(window,window.angular);
 
 
-},{}]},{},[28]);
+},{}]},{},[30]);

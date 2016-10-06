@@ -1,4 +1,5 @@
-<?php use Roots\Sage\Extras;?>
+<?php use Roots\Sage\Extras; $product_count = count(get_posts(array('post_type'=>'product','posts_per_page'=>-1)));
+?>
 <div class="modal" id="login-modal" ng-class="{visible : isOrderFilters}">
     <nav class="nav">
         <div class="container">
@@ -74,7 +75,7 @@
                 </ul>
             </nav>
             <p class="buttons filters-buttons">
-                <span class="btn" ng-click="applyFilters()">
+                <span class="btn" ng-click="applyFilters(<?php echo $product_count; ?>)">
                     <span class="btn-text"><?php echo __('Ordina', 'castadiva'); ?></span>
                 </span>
             </p>
