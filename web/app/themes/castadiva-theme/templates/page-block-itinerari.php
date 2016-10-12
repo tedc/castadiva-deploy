@@ -1,5 +1,5 @@
 <?php use Roots\Sage\Extras; ?>
-<div class="tour-section container" id="tour-section">
+<div class="tour-section" id="tour-section">
     <div class="trapeze pattern" style="background-image:url(<?php echo get_sub_field('pattern')['url']; ?>); background-size: <?php echo get_sub_field('pattern')['width']/2; ?>px <?php echo get_sub_field('pattern')['height']/2; ?>px" ng-sm from="{y : '100%'}" top="{y: '0%'}" duration="200%" trigger-element="#tour-section" offset="-400"></div>
     <div class="trapeze-cover">
         <div class="trapeze-cover-in">

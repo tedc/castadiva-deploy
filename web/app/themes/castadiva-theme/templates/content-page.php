@@ -3,7 +3,8 @@
 <?php get_template_part('templates/page', 'layout'); ?>
 <?php else : ?>
 <?php if(!is_checkout() && !is_cart()) : ?>
-<div class="container row row-lg content">
+<?php $container = (is_account_page() && !is_user_logged_in()) ? '' : ' container content'; ?>
+<div class="row-lg<?php echo $container; ?>">
     
     <?php the_content(); ?>
 </div>

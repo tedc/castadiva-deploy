@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Roots\Sage\Extras;
 ?>
 
-<form method="post" class="login row row-lg">
+<form method="post" class="login row row-lg" action="<?php echo wp_login_url(); ?>">
 	<div class="form-container">
         <?php if ( $message ) echo '<div class="row-btm row-md-btm aligncenter">' .wpautop( wptexturize( $message ) ) . '</div>'; ?>
         <p class="row-btm row-md-btm">

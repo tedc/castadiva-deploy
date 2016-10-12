@@ -202,15 +202,17 @@ module.exports = function() {
   return carousel = {
     scope: true,
     controller: [
-      '$scope', "$element", "$attrs", "$timeout", function($scope, $element, $attrs, $timeout) {
-        var isFullSlider, isNewsSlider;
+      '$scope', "$element", "$attrs", "$timeout", "$window", function($scope, $element, $attrs, $timeout, $window) {
+        var isFullSlider, isNewsSlider, perc, w;
         $scope.pos = 0;
         $scope.isDisabled = true;
         isNewsSlider = false;
         $scope.isCompleted = false;
         isFullSlider = $attrs.fullSlider ? $scope.$eval($attrs.fullSlider) : false;
+        w = angular.element($window);
+        perc = 0;
         $scope.dir = function(cond, pos, max, steps, isNewsSlider) {
-          var classTimeout, perc, speed, stagger;
+          var classTimeout, speed, stagger;
           if ((pos - 1 < 0 && !cond) || (pos + 1 > max && cond)) {
             return;
           }
@@ -229,19 +231,20 @@ module.exports = function() {
               pos -= 1;
             }
           }
+          stagger = isFullSlider ? 0 : (cond ? .1 : -.1);
+          speed = isFullSlider ? 1.5 : .5;
           if (!isNewsSlider) {
-            stagger = isFullSlider ? 0 : (cond ? .1 : -.1);
-            speed = isFullSlider ? 1.5 : .5;
             $scope.pos = pos;
-            TweenMax.staggerTo($element[0].querySelectorAll('.carousel-item'), speed, {
-              x: "-" + (100 * $scope.pos) + "%",
-              ease: Power3.easeOut
-            }, stagger);
-            classTimeout = $timeout(function() {
-              $timeout.cancel(classTimeout);
-              $scope.isCompleted = true;
-            }, speed * 1000);
-          } else {
+          }
+          TweenMax.staggerTo($element[0].querySelectorAll('.carousel-item'), speed, {
+            x: "-" + (100 * $scope.pos) + "%",
+            ease: Power3.easeOut
+          }, stagger);
+          classTimeout = $timeout(function() {
+            $timeout.cancel(classTimeout);
+            $scope.isCompleted = true;
+          }, speed * 1000);
+          if (isNewsSlider) {
             perc = cond ? 100 : -100;
             if (!cond) {
               $scope.pos = pos;
@@ -882,7 +885,6 @@ module.exports = function($window) {
         }
       }
       duration = attrs.heightDuration ? el.offsetHeight * attrs.heightDuration + (window.innerHeight * winPer) : duration;
-      console.log(duration);
       offset = attrs.offset ? scope.$eval(attrs.offset) : 0;
       from = attrs.from ? scope.$eval(attrs.from) : false;
       to = attrs.to ? scope.$eval(attrs.to) : false;

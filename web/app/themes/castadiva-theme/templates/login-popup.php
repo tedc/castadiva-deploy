@@ -2,7 +2,7 @@
 <div class="modal" id="login-modal" ng-class="{visible : isLoginPopup}">
     <nav class="nav">
         <div class="container">
-            <h5 class="title xs-size"><?php echo __('Accedi', 'castadiva'); ?></h5>
+            <a href="<?php bloginfo('url'); ?>" class="logo"><?php bloginfo('name'); ?></a>
             <?php Extras\close('isLoginPopup'); ?>
         </div>
         <div class="divider"></div>
