@@ -8,6 +8,8 @@
  * Version:     1.0
  * Licence:     MIT
  */
+ 
+include_once 'password.php';
 
 const WP_OLD_HASH_PREFIX = '$P$';
 

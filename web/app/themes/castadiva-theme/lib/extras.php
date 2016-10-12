@@ -48,7 +48,24 @@ function social_add_admin_menu(  ) {
 
 function social_settings_init(  ) { 
 
-	register_setting( 'general', 'tour_settings' );
+	
+    register_setting( 'general', 'ga_settings' );
+    
+	add_settings_section(
+		'ga_section', 
+		__( 'Google Analytics', 'castadiva' ), 
+		__NAMESPACE__.'\\ga_settings_section_callback', 
+		'general'
+	);
+    add_settings_field( 
+		'ga_id', 
+		__( 'Identificativo Google Analitycs', 'castadiva' ), 
+		__NAMESPACE__.'\\ga_field', 
+		'general', 
+		'ga_section' 
+	);
+    
+    register_setting( 'general', 'tour_settings' );
 	add_settings_field( 
 		'tour_email', 
 		__( 'Indirizzo email di ricezione per gli itinerari', 'castadiva' ), 
@@ -56,17 +73,16 @@ function social_settings_init(  ) {
 		'general', 
 		'tour_section' 
 	);
-    
-    
-    register_setting( 'general', 'social_settings' );
-	register_setting( 'general', 'instagram_settings' );
-    
     add_settings_section(
 		'tour_section', 
 		__( 'Gli itinerari di Castadiva', 'castadiva' ), 
 		__NAMESPACE__.'\\tour_settings_section_callback', 
 		'general'
 	);
+    
+    register_setting( 'general', 'social_settings' );
+	register_setting( 'general', 'instagram_settings' );
+    
     
 	add_settings_section(
 		'social_section', 
@@ -129,6 +145,15 @@ function social_settings_init(  ) {
 	);
 
 }
+function ga_field(  ) { 
+
+	$options = get_option( 'ga_settings' );
+	?>
+	<input type='text' name='ga_settings[ga_id]' value='<?php echo $options['ga_id']; ?>'>
+	<?php
+
+}
+
 function tour_field(  ) { 
 
 	$options = get_option( 'tour_settings' );
@@ -196,6 +221,11 @@ function social_instagram_count_field(  ) {
 	?>
 	<input type='text' name='instagram_settings[instagram_count]' value='<?php echo $options['instagram_count']; ?>'>	
 <?php
+
+}
+function ga_settings_section_callback(  ) { 
+
+	echo __( 'Impostazioni per il codice di Google Analytics', 'castadiva' );
 
 }
 

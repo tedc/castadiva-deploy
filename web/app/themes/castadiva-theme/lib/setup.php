@@ -13,6 +13,10 @@ function setup() {
   add_theme_support('soil-clean-up');
   add_theme_support('soil-nav-walker');
   add_theme_support('soil-nice-search');
+  add_theme_support('soil-disable-trackbacks');
+if(get_option('ga_settings')['ga_id']){
+  add_theme_support('soil-google-analytics', get_option('ga_settings')['ga_id']);}
+  add_theme_support('soil-js-to-footer');
   //add_theme_support('soil-jquery-cdn');
   add_theme_support('soil-relative-urls');
 
