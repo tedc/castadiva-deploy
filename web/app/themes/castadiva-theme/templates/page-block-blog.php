@@ -27,7 +27,7 @@
             <div class="buttons">
                 <div class="news-carousel-nav">
                 <span class="arrow arrow-left" ng-click="dir(false, pos, <?php echo $total - 1; ?>, false, true)" ng-class="{inactive : pos == 0}"><span class="arrow-text">&lsaquo;</span></span>
-                    <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn news-btn"><span class="btn-text"><?php echo __('Vai<br/>al blog'); ?></span></a>
+                    <a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>" class="btn news-btn"><span class="btn-text"><?php echo __('Vai<br/>al blog'); ?></span></a>
                     <span class="arrow arrow-right" ng-click="dir(true, pos, <?php echo $total - 1; ?>, false, true)" ng-class="{inactive : pos == <?php echo $total - 1; ?>}"><span class="arrow-text">&rsaquo;</span></span>
                 </div>
             </div>
