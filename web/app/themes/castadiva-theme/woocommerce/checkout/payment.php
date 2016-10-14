@@ -49,7 +49,7 @@ if ( ! is_ajax() ) {
 
 <?php do_action( 'woocommerce_review_order_before_submit' ); ?>
 
-<?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="btn" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '"><span class="btn-text">'.__('Concludi<br />l\'ordine', 'castadiva').'</span></button>' ); ?>
+<?php echo apply_filters( 'woocommerce_order_button_html', '<button type="submit" class="btn" name="woocommerce_checkout_place_order" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '" ng-disabled="checkout.$invalid"><span class="btn-text">'.__('Concludi<br />l\'ordine', 'castadiva').'</span></button>' ); ?>
 
 <?php do_action( 'woocommerce_review_order_after_submit' ); ?>
 

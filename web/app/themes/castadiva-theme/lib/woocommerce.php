@@ -127,7 +127,7 @@ function wrap_shipping_price($price) {
 add_filter('woocommerce_cart_shipping_method_full_label', __NAMESPACE__.'\\wrap_shipping_price');
 // FILTER HTML INPUTS
 
-function my_woocommerce_form_field( $key, $args, $value = null, $name = null ) {
+function my_woocommerce_form_field( $key, $args, $value = null, $name = null, $shipping = false ) {
 		$defaults = array(
 			'type'              => 'text',
 			'label'             => '',
@@ -152,12 +152,16 @@ function my_woocommerce_form_field( $key, $args, $value = null, $name = null ) {
 		$args = apply_filters( 'woocommerce_form_field_args', $args, $key, $value );
 		if ( $args['required'] ) {
 			$args['class'][] = 'validate-required';
-            $required_filed = ' required';
+			if($name == 'checkout') {
+				$required_field = ($shipping) ? ' ng-required="isShippingAddress"' : ' required';
+			} else {
+				$required_field = ' required';
+			}
             $required_text_end = ' ('.__('Campo obbligatorio','castadiva').')';
 			$required = ' <abbr class="required" title="' . esc_attr__( 'required', 'woocommerce' ) . '">*</abbr>';
 		} else {
             $required_text_end = '';
-            $required_filed = '';
+            $required_field = '';
 			$required = '';
 		}
 		$args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
@@ -190,7 +194,7 @@ function my_woocommerce_form_field( $key, $args, $value = null, $name = null ) {
 				if ( 1 === sizeof( $countries ) ) {
 					$field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" ' . implode( ' ', $custom_attributes ) . ' class="country_to_state" />';
 				} else {
-					$field = '<div class="select options"><span class="select-text" ng-bind-html="' . esc_attr( $key ) . '" ng-init="'.esc_attr( $key ) .'=\'' . __( 'Select a country&hellip;', 'woocommerce' )  .'\'"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . $args['autocomplete'] . ' class="country_to_state country_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . '>' . '<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
+					$field = '<div class="select options"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Select a country&hellip;', 'woocommerce' )  .'\'"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . $args['autocomplete'] . ' class="country_to_state country_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . '>' . '<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
 					foreach ( $countries as $ckey => $cvalue ) {
 						$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
 					}
@@ -206,7 +210,7 @@ function my_woocommerce_form_field( $key, $args, $value = null, $name = null ) {
 				if ( is_array( $states ) && empty( $states ) ) {
 					$field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" />';
 				} elseif ( is_array( $states ) ) {
-					$field .= '<div class="select options"><span class="select-text" ng-bind-html="' . esc_attr( $key ) . '" ng-init="'.esc_attr( $key ) .'=\'' . __( 'Select a state&hellip;', 'woocommerce' )  .'\'"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="state_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . '>
+					$field .= '<div class="select options"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Select a state&hellip;', 'woocommerce' )  .'\'"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="state_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . '>
 						<option value="">' . __( 'Select a state&hellip;', 'woocommerce' ) . '</option>';
 					foreach ( $states as $ckey => $cvalue ) {
 						$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
@@ -229,7 +233,7 @@ function my_woocommerce_form_field( $key, $args, $value = null, $name = null ) {
 			case 'email' :
 			case 'tel' :
 			case 'number' :
-				$field .= '<input ng-model="'. esc_attr( $key ) .'" type="' . esc_attr( $args['type'] ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' '.$required_filed.' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . ' />';
+				$field .= '<input ng-model="'. esc_attr( $key ) .'" type="' . esc_attr( $args['type'] ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' '.$required_field.' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . ' />';
 				break;
 			case 'select' :
 				$options = $field = '';
@@ -244,7 +248,7 @@ function my_woocommerce_form_field( $key, $args, $value = null, $name = null ) {
 						}
 						$options .= '<option value="' . esc_attr( $option_key ) . '" ' . selected( $value, $option_key, false ) . '>' . esc_attr( $option_text ) . '</option>';
 					}
-					$field .= '<div class="select options"><span class="select-text" ng-bind-html="' . esc_attr( $key ) . '" ng-init="'.esc_attr( $key ) .'=\'' . $args['placeholder']  .'\'"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . '>
+					$field .= '<div class="select options"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Select a state&hellip;', 'woocommerce' )  .'\'"><<select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . '>
 							' . $options . '
 						</select><i class="select-arrow select-arrow-inv"></i></div>';
 				}

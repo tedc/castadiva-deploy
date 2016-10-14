@@ -34,7 +34,7 @@ if ( ! $checkout->enable_guest_checkout && ! is_user_logged_in() ) {
 
 ?>
 
-<form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+<form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" novalidate>
 
 	<?php if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 
