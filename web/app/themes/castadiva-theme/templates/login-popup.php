@@ -1,5 +1,6 @@
 <?php use Roots\Sage\Extras; ?>
-<div class="modal" id="login-modal" ng-class="{visible : isLoginPopup}">
+<?php $init = (isset($_GET['login_error'])) ? ' ng-init="isLoginPopup = true"' : ''; ?>
+<div class="modal" id="login-modal" ng-class="{visible : isLoginPopup}"<?php echo $init; ?>>
     <nav class="nav">
         <div class="container">
             <a href="<?php bloginfo('url'); ?>" class="logo"><?php bloginfo('name'); ?></a>

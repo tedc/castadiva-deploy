@@ -16,20 +16,27 @@
  * @version 2.4.0
  */
 
+
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 use Roots\Sage\Extras;
+global $wp;
+$current_url = home_url(add_query_arg(array(),$wp->request));
 ?>
 
-<form method="post" class="login row row-lg" action="<?php echo wp_login_url(); ?>">
-	<div class="form-container">
+<form method="post" class="login row row-lg" action="<?php echo $current_url; ?>" name="loginForm">
+    <div class="form-container">
         <?php if ( $message ) echo '<div class="row-btm row-md-btm aligncenter">' .wpautop( wptexturize( $message ) ) . '</div>'; ?>
+        <?php if(isset($_GET['login_error'])) : ?>
+        <p class="row-btm error."><?php echo __('Si è verificato un errore, assicurati di aver compilato tutti i campi correttamente', 'castadiva'); ?>
+        <?php endif; ?></p>
         <p class="row-btm row-md-btm">
-            <input type="text" class="input-text" name="username" id="username" placeholder="<?php echo __('Nome utente', 'castadiva'); ?>" />
+            <input ng-model="loginUser" required type="text" class="input-text" name="username" id="username" placeholder="<?php echo __('Nome utente', 'castadiva'); ?>" />
         </p>
         <p class="row-btm row-md-btm">
-            <input class="input-text" type="password" name="password" id="password" placeholder="<?php echo __('Password', 'castadiva'); ?>"  />
+            <input ng-model="loginPassword" required class="input-text" type="password" name="password" id="password" placeholder="<?php echo __('Password', 'castadiva'); ?>"  />
         </p>	
         <?php do_action( 'woocommerce_login_form' ); ?>
         <p class="row-btm row-md-btm">
@@ -43,7 +50,9 @@ use Roots\Sage\Extras;
         </p>
     </div>
     <p class="buttons">
-        <?php Extras\btn($text = __('Accedi', 'castadiva'), $link = '',  $btn = true, $name = 'login'); ?>
+        <button class="btn" name="login" value="<?php echo __('Accedi', 'castadiva'); ?>" type="submit" ng-disabled="loginForm.$invalid">
+                    <span class="btn-text"><?php echo __('Accedi', 'castadiva'); ?></span>
+                </button>
     </p>
     <?php echo do_shortcode(' [apsl-login-lite login_text="'.__('Oppure collegati con Faebook', 'castadiva').'"]'); ?>
 </form>

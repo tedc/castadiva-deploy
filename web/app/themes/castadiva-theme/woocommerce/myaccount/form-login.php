@@ -28,33 +28,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php do_action( 'woocommerce_before_customer_login_form' ); ?>
 
-
 <?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?>
         <h2 class="title aligncenter"><?php _e( 'Register', 'woocommerce' ); ?></h2>         
-    	<form method="post" class="register" novalidate action="<?php echo wp_login_url(); ?>?=register">
+    	<form method="post" class="register" novalidate action="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" name="registerForm">
 			<?php do_action( 'woocommerce_register_form_start' ); ?>
             <div class="form-container row-top row-md-top">
                 <?php if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) : ?>
                 <p class="row-btm row-md-btm">
-                    <input type="text" class="input-text" name="username" id="username" placeholder="<?php echo __('Nome utente', 'castadiva'); ?>" />
+                    <input ng-model="username" type="text" class="input-text" name="username" id="username" placeholder="<?php echo __('Nome utente', 'castadiva'); ?>" />
                 </p>
                 <?php endif; ?>
                 <p class="row-btm row-md-btm">
-                    <input type="email" class="input-text" name="email" id="reg_email" value="<?php if ( ! empty( $_POST['email'] ) ) echo esc_attr( $_POST['email'] ); ?>" required placeholder="<?php echo __('Indirizzo e-mail (obbligatorio)', 'castadiva'); ?>" />
+                    <input ng-model="email" type="email" class="input-text" name="email" id="reg_email" value="<?php if ( ! empty( $_POST['email'] ) ) echo esc_attr( $_POST['email'] ); ?>" required placeholder="<?php echo __('Indirizzo e-mail (obbligatorio)', 'castadiva'); ?>" />
                 </p>
                 <?php if ( 'no' === get_option( 'woocommerce_registration_generate_password' ) ) : ?>
                 <p class="row-btm row-md-btm">
-                    <input type="password" class="input-text" name="password" id="reg_password" required placeholder="<?php echo __('Password (obbligatoria)', 'castadiva'); ?>" />
+                    <input ng-model="password" type="password" class="input-text" name="password" id="reg_password" required placeholder="<?php echo __('Password (obbligatoria)', 'castadiva'); ?>" />
                 </p>
+                <?php wc_register_form_password_repeat(); ?>
                 <?php endif; ?>
                 <!-- Spam Trap -->
                 <?php do_action( 'woocommerce_login_form' ); ?>
                 <div style="<?php echo ( ( is_rtl() ) ? 'right' : 'left' ); ?>: -999em; position: absolute;"><label for="trap"><?php _e( 'Anti-spam', 'woocommerce' ); ?></label><input type="text" name="email_2" id="trap" tabindex="-1" /></div>
             </div>
-
+            
             <p class="buttons">
                 <?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?>
-                <?php Extras\btn($text = __('Accedi', 'castadiva'), $link = '',  $btn = true, $name = 'login'); ?>
+                <button class="btn" name="register" value="<?php echo __('Registrati', 'castadiva'); ?>" type="submit" ng-disabled="registerForm.$invalid">
+                    <span class="btn-text"><?php echo __('Registrati', 'castadiva'); ?></span>
+                </button>
             </p>
             <?php do_action( 'woocommerce_register_form_end' ); ?>            
             <?php echo do_shortcode(' [apsl-login-lite login_text="'.__('Oppure registrati con Faebook', 'castadiva').'"]'); ?>

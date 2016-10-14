@@ -403,3 +403,43 @@ function set_my_api() {
 }
 
 //add_action('init', __NAMESPACE__.'\\set_my_api');
+
+
+function wpse_19692_registration_redirect() {
+    return get_permalink( get_option('woocommerce_myaccount_page_id') );
+}
+
+add_filter( 'registration_redirect', __NAMESPACE__.'\\wpse_19692_registration_redirect' );
+
+add_filter('woocommerce_registration_errors', 'registration_errors_validation', 10,3);
+function registration_errors_validation($reg_errors, $sanitized_user_login, $user_email) {
+	global $woocommerce;
+	extract( $_POST );
+
+	if ( strcmp( $password, $password2 ) !== 0 ) {
+		return new WP_Error( 'registration-error', __( 'Passwords do not match.', 'woocommerce' ) );
+	}
+	return $reg_errors;
+}
+
+add_action( 'woocommerce_register_form', 'wc_register_form_password_repeat' );
+function wc_register_form_password_repeat() {
+	?>
+	<p class="frow-btm row-md-btm">
+		<input type="password" class="input-text" name="password2" id="reg_password2" ng-init="password2 =(registerForm.password2.$error.pattern && registerForm.password2.$touched && registerForm.password2.$dirty) ? '<?php echo __('La password non corrisponde', 'castadiva'); ?>' : password2" placeholder="<?php echo __('Conferma password (obbligatorio)', 'castadiva'); ?>" ng-pattern="password" ng-model="password2" required />
+        <span class="password-error" ng-show="(registerForm.password2.$error.pattern && registerForm.password2.$touched && registerForm.password2.$dirty)" ng-bind-html="'<?php echo __('La password non corrisponde', 'castadiva'); ?>'"></span>
+	</p>
+	<?php
+}
+
+add_filter( 'wp_login_failed', __NAMESPACE__. '\\my_login_fail', 10, 1 );  // hook failed login
+
+function my_login_fail( $user ) {
+	global $wp;
+	$current_url = wp_get_referer();
+	$string = "?login_error";
+    //redirect to custom login page and append login error flag
+    $redirect = str_replace($string, '', $current_url) . $string;
+    wp_redirect($redirect);
+    exit;
+}
