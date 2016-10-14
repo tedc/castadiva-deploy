@@ -1,4 +1,4 @@
-<?php $trigger = (isset($test) && ($test!=null)) ? 'parent' : '#'.$shape_id; ?>
+<?php $trigger = (isset($shape_id) && ($shape_id!=null)) ? 'parent' : '#'.$shape_id; ?>
 <div class="diamonds"<?php echo ($shape_id) ? ' id="'.$shape_id.'"' : ''; ?>>
         <?php $count = 0; while(the_flexible_field('shapes')) :  ?>
         <?php 
