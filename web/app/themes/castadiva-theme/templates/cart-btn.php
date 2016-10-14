@@ -25,5 +25,5 @@ $cart_url = $woocommerce->cart->get_cart_url();
 ?>
 
 <li class="tools-menu-item cart-menu-item"><a ng-click="$event.preventDefault(); isCartPopup= true;" href="<?php echo $cart_url; ?>">
-    <span class="cart-menu-total"><span class="cart-menu-total-text" ng-bind-html="miniCartItems.count" ng-class="{adding : isAdding}"></span></span><?php echo __('Carrello', 'castadiva'); ?></a>
+    <span class="cart-menu-total"><span class="cart-menu-total-text" ng-bind-html="(miniCartItems.count) ? miniCartItems.count : 0" ng-class="{adding : isAdding}"></span></span><?php echo __('Carrello', 'castadiva'); ?></a>
 </li>

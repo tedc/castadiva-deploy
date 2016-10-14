@@ -40,10 +40,10 @@ if ( ! defined( 'ABSPATH' ) ) {
     <section class="product-header">
         <?php get_template_part('templates/block', 'header'); ?>
         <div class="product-content grid-2 container">
-            <figure class="col-1 figure offset-right row-md row">
+            <figure class="col-1 figure offset-right row-lg row">
                 <?php woocommerce_template_loop_product_thumbnail(); ?>
             </figure>
-            <div class="col-1 offset-left row-md row">
+            <div class="col-1 offset-left row-lg row">
                 <?php woocommerce_show_product_loop_sale_flash(); ?>
                 <h3 class="title xl-size"><?php the_title(); ?></h3>
                 <?php $cats = wp_get_post_terms(get_the_ID(), 'product_cat');
