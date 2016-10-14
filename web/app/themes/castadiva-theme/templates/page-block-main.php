@@ -1,3 +1,4 @@
+<?php $shape_id = null; ?>
 <?php if(get_sub_field('colonne') < 2) : ?>
 <?php $count_field = 0; while(the_flexible_field('contenuti')) :  ?>
     <?php if(get_row_layout() == 'forme') :
@@ -5,7 +6,7 @@
         ?>
         <?php include(locate_template('templates/block-main-'.get_row_layout().'.php', false, false ) ); ?>
     <?php else : ?>
-        <?php get_template_part('templates/block', 'main-'.get_row_layout()); ?>
+       <?php include(locate_template('templates/block-main-'.get_row_layout().'.php', false, false ) ); ?>
     <?php endif; ?>
 <?php $count_field++; endwhile; ?>
 <?php else : ?>
