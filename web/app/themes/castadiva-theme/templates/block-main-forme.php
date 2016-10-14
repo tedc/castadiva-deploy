@@ -1,5 +1,5 @@
-<?php $trigger = ($id) ? '#'.$id : 'parent'; ?>
-<div class="diamonds"<?php echo ($id) ? ' id="'.$id.'"' : ''; ?>>
+<?php $trigger = ($shape_id) ? '#'.$shape_id : 'parent'; ?>
+<div class="diamonds"<?php echo ($shape_id) ? ' id="'.$shape_id.'"' : ''; ?>>
         <?php $count = 0; while(the_flexible_field('shapes')) :  ?>
         <?php 
         $plus = ($count%2==0) ? -( 10 * (rand(10, 50)/10) ) : 10 * (rand(10, 50)/10);
