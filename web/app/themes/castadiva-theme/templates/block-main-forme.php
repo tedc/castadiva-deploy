@@ -11,7 +11,7 @@
                 <img class="img" src="<?php echo get_sub_field('img_file')['sizes']['large']; ?>" />
             </figure>
         <?php endif; ?>
-        <?php if(get_row_layout() == 'pg') : ?>
+        <?php if(get_row_layout() == 'png') : ?>
             <figure class="floating <?php the_sub_field('size'); ?>" <?php echo $attrs; ?>>
                 <img class="img" src="<?php echo get_sub_field('img_file_png')['sizes']['large']; ?>" />
             </figure>
