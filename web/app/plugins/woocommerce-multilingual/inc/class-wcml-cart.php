@@ -35,8 +35,9 @@ class WCML_Cart
     /*
      *  Update cart and cart session when switch language
      */
-    public function woocommerce_calculate_totals( $cart ){
+    public function woocommerce_calculate_totals( $cart, $currency = false ){
         global $woocommerce;
+
         $current_language = $this->sitepress->get_current_language();
         $new_cart_data = array();
 
@@ -66,6 +67,10 @@ class WCML_Cart
                                                                                     $tr_product_id
                                                                                 );
                 }
+            }
+
+            if( $currency !== false ){
+                $cart->cart_contents[ $key ][ 'data' ]->price = get_post_meta( $cart_item['product_id'], '_price', 1 );
             }
 
             if( $cart_item[ 'product_id' ] == $tr_product_id ){
@@ -118,10 +123,20 @@ class WCML_Cart
             if( apply_filters( 'wcml_exception_duplicate_products_in_cart', false, $cart_content ) ){
                 continue;
             }
+
+            $quantity = $cart_content['quantity'];
+            // unset unnecessary data to generate id to check
+            unset( $cart_content['quantity'] );
+            unset( $cart_content['line_total'] );
+            unset( $cart_content['line_subtotal'] );
+            unset( $cart_content['line_tax'] );
+            unset( $cart_content['line_subtotal_tax'] );
+            unset( $cart_content['line_tax_data'] );
+
             $search_key = md5( serialize( $cart_content ) );
             if( array_key_exists( $search_key, $exists_products ) ){
                 unset( $cart_contents[ $key ] );
-                $cart_contents[ $exists_products[ $search_key ] ][ 'quantity' ] = $cart_contents[ $exists_products[ $search_key ] ][ 'quantity' ] + $cart_content[ 'quantity' ];
+                $cart_contents[ $exists_products[ $search_key ] ][ 'quantity' ] = $cart_contents[ $exists_products[ $search_key ] ][ 'quantity' ] + $quantity;
                 $woocommerce->cart->calculate_totals();
             }else{
                 $exists_products[ $search_key ] = $key;
@@ -185,6 +200,18 @@ class WCML_Cart
     }
 
     public function translate_cart_subtotal( $cart ) {
+
+        if( isset( $_SERVER['REQUEST_URI'] ) ){
+            //special case: check if attachment loading
+            $attachments = array( 'png', 'jpg', 'jpeg', 'gif', 'js', 'css' );
+
+            foreach( $attachments as $attachment ){
+                $match = preg_match( '/\.'.$attachment.'$/',  $_SERVER['REQUEST_URI'] );
+                if( !empty( $match ) ){
+                    return false;
+                }
+            }
+        }
 
         if( apply_filters( 'wcml_calculate_totals_exception', true, $cart ) ){
             $cart->calculate_totals();

@@ -3,7 +3,7 @@
  * Plugin Name:       Woo Empty Cart Button
  * Plugin URI:        http://www.wpcodelibrary.com
  * Description:       This plugin is use for empty whole cart using single click.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            WPCodelibrary
  * Author URI:        http://www.wpcodelibrary.com
  * License:           GPL-2.0+
@@ -46,7 +46,8 @@ if (!class_exists('Woo_Empty_Cart_Button')) {
         private function __construct() {
             add_action('init', array($this, 'wecb_load_plugin_textdomain'));
             add_action('woocommerce_after_cart_contents', array($this, 'woo_empty_cart_button'));
-           
+            add_shortcode('wec_button', array($this, 'wec_create_button_shortcode'));
+            add_filter('widget_text', 'do_shortcode');
         }
 
         /**
@@ -91,6 +92,16 @@ if (!class_exists('Woo_Empty_Cart_Button')) {
                 </td>
             </tr>
             <?php
+        }
+
+        public function wec_create_button_shortcode() {
+            global $woocommerce;
+            $cart_url = $woocommerce->cart->get_cart_url();
+            if (empty($_GET)) {
+                return '<a class="button wecb_emptycart" href="' . $cart_url . '?empty-cart=clearcart">Empty Cart</a>';
+            } else {
+                return '<a class="button wecb_emptycart" href="' . $cart_url . '?empty-cart=clearcart">Empty Cart</a>';
+            }
         }
 
     }
