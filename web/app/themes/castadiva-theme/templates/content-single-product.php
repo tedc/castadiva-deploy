@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php $cats = wp_get_post_terms(get_the_ID(), 'product_cat');
                     $total = count($cats) - 1; $count = 0; foreach($cats as $cat){
                         $comma = ($count < $total ) ? ', ' : '';
-                        echo '<a class="product-cat product-cat-'.$cat->slug.'" href="'.get_term_link($cat->term_id).'">'.$cat->name.'</a>'.$comma;
+                        echo '<div class="cat"><a class="product-cat product-cat-'.$cat->slug.'" href="'.get_term_link($cat->term_id).'">'.$cat->name.'</a>'.$comma.'</div>';
                         $count++;
                     } ?>                
                 <?php woocommerce_template_single_excerpt(); ?>
