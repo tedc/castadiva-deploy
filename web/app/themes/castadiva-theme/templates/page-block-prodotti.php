@@ -11,18 +11,19 @@
     <ul class="carousel-wrapper" ng-swipe-right="dir(false, pos, <?php echo $total_product; ?>, false, false)" ng-swipe-left="dir(true, pos, <?php echo $total_product; ?>, false, false)">
         <?php while($products->have_posts()) : $products->the_post(); ?>
         <li class="carousel-item product-show-more product <?php echo ($count_product == 0) ? ' current' : ''; ?>" ng-class="{current : pos == <?php echo $count_product; ?>}">
-            <figure class="carousel-img">
+            <figure class="carousel-img product-item-figure">
                 <?php the_post_thumbnail(); ?>
                 <?php get_template_part('templates/product', 'more'); ?>
+                <a href="<?php the_permalink(); ?>" class="permalink"><?php the_title(); ?></a> 
             </figure>
             <div class="carousel-content row-top row-md-top">
                 <h3 class="title">
                     <?php the_title(); ?>
                 </h3>
                 <?php get_template_part('templates/product', 'attributes'); ?>
-                <?php woocommerce_template_single_price(); ?>
-            </div> 
-            <a href="<?php the_permalink(); ?>" class="permalink"><?php the_title(); ?></a>        
+                <?php woocommerce_template_single_price(); ?>      
+                <a href="<?php the_permalink(); ?>" class="permalink"><?php the_title(); ?></a> 
+            </div>        
        </li>
         <?php $count_product++; endwhile; wp_reset_query(); ?>
     </ul>
