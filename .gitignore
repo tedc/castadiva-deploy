@@ -50,3 +50,5 @@ web/app/themes/castadiva-theme/**/**/README.md
 web/app/themes/castadiva-theme/node_modules
 web/app/themes/castadiva-theme/.sass-cache
 web/app/themes/castadiva-theme/source
+
+.DS_Store

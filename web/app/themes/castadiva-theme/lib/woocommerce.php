@@ -35,7 +35,7 @@ function colors() {
         <?php $args = array(); $product_cats = get_terms('product_cat', $args); 
         foreach($product_cats as $cat) : ?>
         <?php if(get_field('color', 'product_cat_'.$cat->term_id) != '') : ?>
-        .product-show-more.product_cat-<?php echo $cat->slug; ?> .title, .product-show-more.product_cat-<?php echo $cat->slug; ?> .price, .product-show-more.product_cat-<?php echo $cat->slug; ?> .product-more .btn-text, .product-content .title, .product-content .price {
+        .product-show-more.product_cat-<?php echo $cat->slug; ?> .product-item-figure:hover .price, .product-show-more.product_cat-<?php echo $cat->slug; ?> .product-more .btn-text {
             color: <?php the_field('color', 'product_cat_'.$cat->term_id); ?>;
         }
         .product-cat-<?php echo $cat->slug; ?> {
