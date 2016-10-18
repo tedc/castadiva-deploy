@@ -27,7 +27,7 @@ wc_print_notices();
 
 // If checkout registration is disabled and not logged in, the user cannot checkout
 if ( ! $checkout->enable_guest_checkout && ! is_user_logged_in() ) {
-	echo apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) );
+	echo apply_filters( 'woocommerce_checkout_must_be_logged_in_message', '<div class="aligncenter row-btm row-lg-btm">'.__( 'You must be logged in to checkout.', 'woocommerce' ) .'</div>' );
 	return;
 }
 

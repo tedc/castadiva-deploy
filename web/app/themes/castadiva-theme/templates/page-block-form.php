@@ -56,7 +56,7 @@ endif;
         </div> 
         <div class="carousel-item">
             <div class="form-container select options" ng-class="{error : (contactForm.subject.$invalid && contactForm.subject.$touched)}">
-                <span class="select-text" ng-bind-html="(!contactForm.subject.$invalid) ? formData.subject : '<?php echo __('Di cosa hai bisgno? (obbligatorio)', 'castadiva'); ?>'"><?php echo __('Di cosa hai bisgno? (obbligatorio)', 'castadiva'); ?></span>
+                <span class="select-text" ng-bind-html="(!contactForm.subject.$invalid) ? formData.subject : '<?php echo __('Di cosa hai bisgno? (obbligatorio)', 'castadiva'); ?>'"><?php echo __('Di cosa hai bisogno? (obbligatorio)', 'castadiva'); ?></span>
                 <select ng-options="opt for opt in opts" ng-init="opts = [<?php $total = count(get_sub_field('subjects')) - 1; $c = 0; while(have_rows('subjects')) : the_row(); ?>'<?php the_sub_field('subject'); ?>'<?php if($c < $total) : ?>,<?php endif; ?><?php $c++; endwhile; ?>]" ng-model="formData.subject" required name="subject" ng-change="isDisabled = contactForm.subject.$invalid">
                     <option value="" selected><?php echo __('Scegli un oggetto', 'castadiva'); ?></option>
                 </select>
