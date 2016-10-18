@@ -77,18 +77,20 @@ if($total > 1) : ?>
             <?php if(get_sub_field('contenuto') != '') : ?>
                 <?php if(get_sub_field('contenuto') == 1) : ?>
                 <?php if(trim(str_replace(array('&nbsp;', '\n'),'',strip_tags($post->post_content))) !== '') : ?>
-                <div class="content row row-md">
+                <div class="content <?php echo (get_sub_field('bottone')) ? 'row-md-top' : 'row-md'; ?>">
                     <?php the_content(); ?>
                 </div>
                 <?php endif; ?>
                     <?php else : ?>
-                <div class="content row row-md">
+                <div class="content <?php echo (get_sub_field('bottone')) ? 'row-md-top' : 'row-md'; ?>">
                     <?php the_sub_field('testo'); ?>
                 </div>
                 <?php endif; ?>
             <?php endif; ?>
-            <?php while(the_flexible_field('bottone')) : ?>      
+            <?php while(the_flexible_field('bottone')) : ?>
+            <div class="row-md-top">
             <?php Extras\btn($text = get_sub_field('btn-text'), $link = get_sub_field('link'), null, null, null, 'inverted-btn'); ?>
+            </div>
             <?php endwhile; ?>
     <?php if($total > 1) : ?>
         <?php if(!is_singular('product')) : ?></div><?php endif; ?>
