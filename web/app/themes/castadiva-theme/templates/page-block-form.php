@@ -68,11 +68,17 @@ endif;
                 <textarea placeholder="Messaggio" ng-model="formData.message" name="message" required ng-focus="isDisabled = contactForm.message.$invalid" ng-blur="isDisabled = contactForm.message.$invalid"></textarea>
             </div>
         </div>
+        <div class="form-message" ng-class="{visible : isSubmitted}">
+            <span class="loading" ng-show="!isContactSent"></span>
+            <div class="content" ng-class="{visible : isContactSent}">
+                <p><?php echo __('Grazie per averci contattato, ti risponderemo prima possibile', 'castadiva'); ?></p>
+            </div>
+        </div>
     </div>
     <nav class="buttons">
         <div class="carousel-nav" ng-init="steps = [contactForm.sender,contactForm.email,contactForm.phone,contactForm.subject,contactForm.message]">
             <span class="arrow arrow-left" ng-click="dir(false, pos, 4, false, false)" ng-class="{inactive : pos == 0}"><span class="arrow-text">&lsaquo;</span></span>
-            <button class="btn" ng-disabled="contactForm.$invalid"><span class="btn-text" ng-bind-html="(contactForm.$invalid) ? (pos + 1) + ' / 5' : '<?php echo __('Invia', 'castadiva'); ?>'"></span></button>
+            <button class="btn steps-btn" ng-disabled="contactForm.$invalid"><span class="btn-text" ng-bind-html="(contactForm.$invalid) ? (pos + 1) + ' / 5' : '<?php echo __('Invia', 'castadiva'); ?>'"></span></button>
             <span class="arrow arrow-right" ng-click="dir(true, pos, 4, steps, false)" ng-class="{inactive : (pos == 4 || isDisabled)}"><span class="arrow-text">&rsaquo;</span></span>
         </div>
     </nav>

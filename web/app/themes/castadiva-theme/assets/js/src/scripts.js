@@ -235,11 +235,11 @@ module.exports = function() {
           speed = isFullSlider ? 1.5 : .5;
           if (!isNewsSlider) {
             $scope.pos = pos;
+            TweenMax.staggerTo($element[0].querySelectorAll('.carousel-item'), speed, {
+              x: "-" + (100 * $scope.pos) + "%",
+              ease: Power3.easeOut
+            }, stagger);
           }
-          TweenMax.staggerTo($element[0].querySelectorAll('.carousel-item'), speed, {
-            x: "-" + (100 * $scope.pos) + "%",
-            ease: Power3.easeOut
-          }, stagger);
           classTimeout = $timeout(function() {
             $timeout.cancel(classTimeout);
             $scope.isCompleted = true;
@@ -271,6 +271,10 @@ module.exports = function() {
             if (cond) {
               $scope.pos = pos;
             }
+            TweenMax.staggerTo($element[0].querySelectorAll('.carousel-item'), speed, {
+              x: "-" + (100 * $scope.pos) + "%",
+              ease: Power3.easeOut
+            }, stagger);
           }
           if (steps) {
             $scope.isDisabled = steps[pos].$invalid ? true : false;
@@ -609,7 +613,6 @@ module.exports = function() {
               },
               transformRequest: transformRequestAsFormPost
             }).then(function(data) {
-              console.log(data.data);
               $scope.isContactSent = true;
               $timeout(function() {
                 $scope.isSubmitted = false;

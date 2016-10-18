@@ -44,11 +44,17 @@ endif;
     <h4 class="title main-title">
         <?php echo __('Richiedi<strong>Informazioni</strong>', 'castadiva'); ?>
 </header>
-<form novalidate ng-submit="onSubmit(contactForm.$valid, '<?php the_permalink(); ?>')" casta-form name="contactForm" >
+<form class="novalidate ng-submit="onSubmit(contactForm.$valid, '<?php the_permalink(); ?>')" casta-form name="contactForm" >
     <div class="form-container">
         <input type="email" name="email" ng-model="formData.email" placeholder="<?php echo __('Inserisci il tuo indirizzo email', 'castadiva'); ?>" required />
     </div>
     <p class="buttons">
         <?php Extras\btn($text = __('Invia', 'castadiva'), $link = null, $btn = true); ?>
     </p>
+    <div class="form-message" ng-class="{visible : isSubmitted}">
+        <span class="loading" ng-show="!isContactSent"></span>
+        <div class="content" ng-class="{visible : isContactSent}">
+            <p><?php echo __('Grazie per averci contattato, ti risponderemo prima possibile', 'castadiva'); ?></p>
+        </div>
+    </div>
 </form>
