@@ -13,16 +13,19 @@
 <article <?php post_class(); ?> id="tour_<?php the_ID(); ?>">
     <figure class="tour-figure">
         <?php the_post_thumbnail(array(600,600, true)); ?>
+        <div class="diamond">
+            <div class="pattern" style="background-image:url(<?php the_field('tour_image'); ?>)"></div>
+        </div>
     </figure>
-    <div class="tour-content-single row-top row-md-top">
+    <div class="tour-content-single" style="background-image:url(<?php the_field('tour_image'); ?>)">
         <h2 class="title">
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
         </h2>
         <div class="row-top row-md-top">
         <?php the_excerpt(); ?>
-        <?php Extras\btn(__('Scopri', 'castadiva'), get_permalink(get_the_ID())); ?>
         </div>
     </div>
+    <?php Extras\btn(__('Scopri', 'castadiva'), get_permalink(get_the_ID())); ?>
     <figure class="diamond" ng-sm from="{y: '100%'}" to="{y: '-100%'}" duration="200%" offset="-100" trigger-hook="onEnter" trigger-element="#tour_<?php the_ID(); ?>">
         <?php the_post_thumbnail(array(600,600, true), array('class'=>'img')); ?>
     </figure>
