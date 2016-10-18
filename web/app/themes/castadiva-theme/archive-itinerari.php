@@ -17,7 +17,8 @@
             <div class="pattern" style="background-image:url(<?php the_field('tour_image'); ?>)"></div>
         </div>
     </figure>
-    <div class="tour-content-single" style="background-image:url(<?php the_field('tour_image'); ?>)">
+    <div class="tour-content-single">
+        <div class="tour-content-map" style="background-image:url(<?php the_field('tour_image'); ?>)"></div>
         <h2 class="title">
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
         </h2>
