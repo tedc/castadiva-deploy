@@ -6,7 +6,7 @@
     </figure>
     <div class="post-content">
         <header>
-            {{post.post_cat | html}}
+            <span ng-bind-html="post.post_cat"></span>
             <h2 class="title news-title">
                 <a ng-href="{{post.link}}" ng-bind-title="post.title.rendered"></a>
             </h2>
@@ -22,9 +22,8 @@
                 </span>
             </div>
         </header>
-        <div class="news-summury">
-            {{post.exerpt | html}}
-            <a ng-href="{{post.link}}" class="read-more"><?php echo __('Leggi tutto', 'castadiva'); ?></a>
+        <div class="news-summury" ng-bind-html="post.exerpt.rendered">
         </div>
+        <a ng-href="{{post.link}}" class="read-more"><?php echo __('Leggi tutto', 'castadiva'); ?></a>
     </div>
 </article>
