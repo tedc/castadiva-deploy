@@ -12,7 +12,7 @@
 <?php while(have_posts()) : the_post(); ?>
 <article <?php post_class(); ?> id="tour_<?php the_ID(); ?>">
     <div class="tour-diamond-header">
-        <div class="pattern" style="background-image:url(<?php echo get_field('pattern_tour')['url']; ?>); background-size: <?php echo get_field('pattern_tour')['width']; ?>px <?php echo get_field('pattern_tour')['height']; ?>px;"></div>
+        <div class="pattern" style="background-image:url(<?php echo get_field('pattern_tour')['url']; ?>); background-size: <?php echo get_field('pattern_tour')['width']/2; ?>px <?php echo get_field('pattern_tour')['height']/2; ?>px;"></div>
     </div>
     <figure class="tour-figure">
         <?php the_post_thumbnail(array(600,600, true)); ?>

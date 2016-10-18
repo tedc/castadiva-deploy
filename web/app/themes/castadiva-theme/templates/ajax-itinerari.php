@@ -1,4 +1,7 @@
 <article ng-class="post.post_class" id="tour_{{post.id}}" ng-repeat="post in posts">
+    <div class="tour-diamond-header">
+        <div class="pattern" ng-style="background-image:url({{acf.pattern_tour.url}}); background-size: {{acf.pattern_tour.width/2}}px  {{acf.pattern_tour.height/2}}px;"></div>
+    </div>
     <figure class="tour-figure">
         <img ng-src="{{post.post_thumbnail}}" />
     </figure>
