@@ -263,7 +263,7 @@ function social_options_page(  ) {
 
 function typekit() {
     echo "<script>WebFontConfig = {typekit: { id: 'gwp8udl' }, active: function() { document.body.classList.remove('loading');}};(function(d) {var wf = d.createElement('script'), s = d.scripts[0];wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js';s.parentNode.insertBefore(wf, s);})(document);</script>";
-    echo "<script>var assetsPath = '".str_replace('//', '/', Assets\asset_path(''))."';var posts_per_page = ".get_option('posts_per_page')."; var baseUrl = '".get_bloginfo('url')."';</script>";
+    echo "<script>var assetsPath = '".get_stylesheet_directory_uri()."/assets/';var posts_per_page = ".get_option('posts_per_page')."; var baseUrl = '".get_bloginfo('url')."';</script>";
 }
 add_action('wp_footer', __NAMESPACE__ . '\\typekit');
 
