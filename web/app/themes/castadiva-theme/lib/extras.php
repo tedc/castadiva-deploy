@@ -378,7 +378,7 @@ function rkv_remove_columns( $columns ) {
 	unset( $columns['wpseo-focuskw'] );
 	return $columns;
 }
-add_filter ( 'manage_edit-post_columns', __NAMESPACE__.'\\rkv_remove_columns' );
+add_filter ( 'manage_edit-product_columns', __NAMESPACE__.'\\rkv_remove_columns' );
 
 
 ## API
