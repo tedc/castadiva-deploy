@@ -80,7 +80,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php do_action( 'woocommerce_pay_order_before_submit' ); ?>
 
-			<?php echo apply_filters( 'woocommerce_pay_order_button_html', '<p class="buttons"><button type="submit" class="btn" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '"><span class="btn-text">' . esc_attr( $order_button_text ) . '</span></button></p>' ); ?>
+			<?php echo apply_filters( 'woocommerce_pay_order_button_html', '<p class="buttons"><button type="submit" class="btn" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '"><span class="btn-text">' . __('Paga<br/>l\'ordine') . '</span></button></p>' ); ?>
 
 			<?php do_action( 'woocommerce_pay_order_after_submit' ); ?>
 
