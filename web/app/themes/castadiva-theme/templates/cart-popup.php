@@ -1,5 +1,5 @@
 <?php use Roots\Sage\Extras; global $woocommerce; ?>
-<div class="modal" id="login-modal" ng-class="{visible : isCartPopup}">
+<div class="modal" id="cart-modal" ng-class="{visible : isCartPopup}">
     <nav class="nav">
         <div class="container">
             <h5 class="title xs-size"><?php echo __('La tua spesa', 'castadiva'); ?></h5>

@@ -24,6 +24,11 @@ use Roots\Sage\Extras;
     <div class="form-container">
         <input type="search" name="s" placeholder="<?php echo __('Ti interessa un prodotto particolare?', 'castadiva'); ?>" value="<?php echo get_search_query(); ?>" />
         <input type="hidden" name="post_type" value="product" />
+        <?php if(is_search()) : ?>
+        <div class="row-md aligncenter search-results">
+            <?php echo __('Hai cercato: ', 'castadiva'); ?><strong><?php echo get_search_query(); ?></strong>
+        </div>
+        <?php endif; ?>
     </div>
     <p class="buttons">
         <?php Extras\btn($text = 'Cerca', $link = null, $btn = true); ?>

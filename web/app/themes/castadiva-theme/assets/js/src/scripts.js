@@ -525,7 +525,11 @@ module.exports = function() {
         };
         type = 'product';
         $rootScope.applyFilters = function(lang) {
-          var checkbox, i, k, ref, sale_price, tag, term, v, value;
+          var checkbox, i, k, obj, ref, sale_price, tag, term, v, value;
+          if ($rootScope.isApplying) {
+            return;
+          }
+          $rootScope.isApplying = true;
           term = $rootScope.filterData.cat.length > 0 ? "&filter[product_cat]=" + ($rootScope.filterData.cat.join()) : '';
           tag = $rootScope.filterData.tag.length > 0 ? "&filter[product_tag]=" + ($rootScope.filterData.tag.join()) : '';
           $rootScope.productTag = tag;
@@ -547,7 +551,18 @@ module.exports = function() {
           }
           checkbox = checkbox !== '' ? "&filter[meta_query][relation]=and" + checkbox : '';
           $rootScope.checkbox = checkbox;
-          getSearch.get(type, term, tag, $rootScope.filterData.orderby, $rootScope.filterData.order, checkbox, lang, offset, $rootScope.search, function(res) {
+          obj = {
+            type: type,
+            term: term,
+            tag: tag,
+            orderby: $rootScope.filterData.orderby,
+            checkbox: checkbox,
+            lang: lang,
+            orer: $rootScope.filterData.order,
+            offset: offset,
+            search: $rootScope.search
+          };
+          getSearch.get(obj, function(res) {
             var elements;
             elements = document.querySelectorAll('.product-show-more');
             angular.forEach(elements, function(i, el) {
@@ -561,6 +576,7 @@ module.exports = function() {
             $rootScope.isOrderFilters = false;
             $rootScope.isFilters = false;
             $rootScope.count = 0;
+            $rootScope.isApplying = false;
           });
         };
       }
@@ -702,8 +718,13 @@ module.exports = function() {
         $rootScope.posts = [];
         $rootScope.count = 0;
         $scope.hideMore = false;
+        $rootScope.search = '';
         $rootScope.loadMorePosts = function(t, c, l, m, s) {
           var obj, order, orderby, tag, tax, term;
+          if ($rootScope.isLoading) {
+            return;
+          }
+          $rootScope.isLoading = true;
           tax = taxonomy[t];
           term = c ? "&filter[" + taxonomy[t] + "]=" + c : '';
           if (t === 'product') {
@@ -732,6 +753,7 @@ module.exports = function() {
           };
           getPosts.get(obj, function(res) {
             $rootScope.posts = $rootScope.posts.concat(res);
+            $rootScope.isLoading = false;
           });
         };
       }
@@ -761,6 +783,7 @@ onResize = function(mv, num, max, items) {
 module.exports = function() {
   var products;
   return products = {
+    scope: true,
     controller: [
       '$scope', "$window", "$element", function($scope, $window, $element) {
         var items, w;
@@ -1312,16 +1335,16 @@ module.exports = function($resource) {
     }
   });
   return getSearch = {
-    get: function(type, term, tag, orderby, order, checkbox, lang, offset, search, cb) {
+    get: function(obj, cb) {
       search.query({
-        type: type,
-        term: term,
-        orderby: orderby,
-        lang: lang,
-        order: order,
-        checkbox: checkbox,
-        offset: offset,
-        search: search
+        type: obj.type,
+        term: obj.term,
+        orderby: obj.orderby,
+        lang: obj.lang,
+        order: obj.order,
+        checkbox: obj.checkbox,
+        offset: obj.offset,
+        search: obj.search
       }).$promise.then(function(result) {
         if (typeof cb !== 'undefined') {
           cb(result);

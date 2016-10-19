@@ -1,6 +1,6 @@
 <?php use Roots\Sage\Extras; $product_count = count(get_posts(array('post_type'=>'product','posts_per_page'=>-1)));
 ?>
-<div class="modal" id="login-modal" ng-class="{visible : isOrderFilters}">
+<div class="modal" id="orderby-modal" ng-class="{visible : isOrderFilters}">
     <nav class="nav">
         <div class="container">
             <h5 class="title xs-size"><?php echo __('Ordina la tua ricerca', 'castadiva'); ?></h5>
@@ -53,8 +53,9 @@
                 </ul>   
             </nav>
             <p class="buttons filters-buttons">
-                <span class="btn" ng-click="applyFilters(<?php echo $product_count; ?>)">
-                    <span class="btn-text" ng-click="$event.stopPropagation()"><?php echo __('Ordina', 'castadiva'); ?></span>
+                <span class="btn" ng-click="$event.stopPropagation(); applyFilters('<?php echo ICL_LANGUAGE_CODE; ?>')">
+                    <span class="btn-text" ng-click="$event.stopPropagation(); applyFilters('<?php echo ICL_LANGUAGE_CODE; ?>')" ng-class="{hidden : isApplying}"><?php echo __('Ordina', 'castadiva'); ?></span>
+                    <span class="btn-loading" ng-class="{visible : isApplying}"></span>
                 </span>
             </p>
         </div>
