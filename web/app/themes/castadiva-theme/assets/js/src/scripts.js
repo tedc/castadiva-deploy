@@ -495,6 +495,7 @@ module.exports = function() {
       '$rootScope', "getSearch", function($rootScope, getSearch) {
         var offset, type;
         offset = posts_per_page;
+        $rootScope.isFiltered = false;
         $rootScope.countFilters = 0;
         $rootScope.filterData = {
           orderby: 'date',
@@ -529,6 +530,7 @@ module.exports = function() {
           if ($rootScope.isApplying) {
             return;
           }
+          $rootScope.isFiltered = true;
           $rootScope.isApplying = true;
           term = $rootScope.filterData.cat.length > 0 ? "&filter[product_cat]=" + ($rootScope.filterData.cat.join()) : '';
           tag = $rootScope.filterData.tag.length > 0 ? "&filter[product_tag]=" + ($rootScope.filterData.tag.join()) : '';
