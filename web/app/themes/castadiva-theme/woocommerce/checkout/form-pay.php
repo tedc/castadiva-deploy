@@ -21,7 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<form id="order_review" method="post" novalidate  action="<?php echo esc_url( wc_get_checkout_url() ); ?>">
+<div class="container">
+<form id="order_review" class="order-pay" method="post" novalidate  action="<?php echo esc_url( wc_get_checkout_url() ); ?>">
 
 	<p class="order-pay-row">
 		<span class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></span>
@@ -88,3 +89,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 </form>
+</div>
