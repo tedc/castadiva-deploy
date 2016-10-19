@@ -369,6 +369,18 @@ function my_acf_init() {
 add_action('acf/init',  __NAMESPACE__.'\\my_acf_init');
 
 
+
+function rkv_remove_columns( $columns ) {
+	// remove the Yoast SEO columns
+	unset( $columns['wpseo-score'] );
+	unset( $columns['wpseo-title'] );
+	unset( $columns['wpseo-metadesc'] );
+	unset( $columns['wpseo-focuskw'] );
+	return $columns;
+}
+add_filter ( 'manage_edit-post_columns', __NAMESPACE__.'\\rkv_remove_columns' );
+
+
 ## API
 
 require_once 'api.php';

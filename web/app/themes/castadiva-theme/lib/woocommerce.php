@@ -112,11 +112,18 @@ function my_html_price($price) {
     $price = str_replace(array('<ins>', '</ins>','&euro;</span>&nbsp;', ',', ':'), array('', '', '&euro;</span>&nbsp;<strong>', '</strong>,', ''), $price);
     return $price;
 }
+add_filter('woocommerce_coupon_discount_amount_html', __NAMESPACE__.'\\my_html_price');
 add_filter('woocommerce_cart_item_price', __NAMESPACE__.'\\my_html_price');
 add_filter('woocommerce_get_price_html', __NAMESPACE__.'\\my_html_price');
 add_filter('woocommerce_cart_subtotal', __NAMESPACE__.'\\my_html_price');
 add_filter('woocommerce_cart_totals_order_total_html', __NAMESPACE__.'\\my_html_price');
 add_filter('woocommerce_cart_shipping_method_full_label', __NAMESPACE__.'\\my_html_price');
+
+function coupon_price($price) {
+	$price = str_replace(array('<span class="woocommerce-Price-amount', '<a'), array('<span class="price"><span class="woocommerce-Price-amount', '</span><br/><a'), $price);
+	return $price;
+}
+add_filter('woocommerce_cart_totals_coupon_html', __NAMESPACE__.'\\coupon_price');
 
 
 function wrap_shipping_price($price) {
