@@ -22,7 +22,7 @@ if($total > 1) : ?>
     <?php 
                // VIDEO
                if(is_singular('product')) : 
-                $term = wp_get_post_terms('product_cat')[0]->term_id;
+                $term = wp_get_post_terms($post->ID, 'product_cat')[0]->term_id;
                 $video = get_field('video', 'product_cat_'.$term);
             ?>
             
