@@ -14,28 +14,21 @@ if($total > 1) : ?>
     <?php $style = (get_sub_field('slider_img') != '') ? ' style="background-image: url('.get_sub_field('slider_img').')"' : ''; ?>
     <?php if($total > 1) : ?>
     <div class="carousel-item <?php echo ($count == 0) ? ' current' : ''; ?> cover" ng-class="{current : pos == <?php echo $count; ?>}"<?php echo $style; ?>>
-        <?php 
-               // VIDEO
-               if(get_sub_field('video') != '') : ?>
-        <?php $file = preg_replace('/\\.[^.\\s]{3,4}$/', '', get_sub_field('video')['url']); ?>
-        <div class="video-cover<?php echo (is_singular('product')) ? ' product-cover' : ''; ?>" style="background-image:url(<?php echo $file; ?>.jpg)">
-            <video class="video-item" ng-video loop poster="<?php echo $file; ?>.jpg">
-                <source src="<?php echo $file; ?>.mp4" type="video/mp4" />
-                <source src="<?php echo $file; ?>.ogv" type="video/ogv" />
-                <source src="<?php echo $file; ?>.webm" type="video/webm" />
-            </video>
-        </div>
-        <?php 
-               // ENDVIDEO
-               endif; ?>
+        
         <?php if(!is_singular('product')) : ?>
         <div class="main-header-content">
         <?php endif; ?>
     <?php else : ?>
     <?php 
                // VIDEO
-               if(get_sub_field('video') != '') : ?>
-        <?php $file = preg_replace('/\\.[^.\\s]{3,4}$/', '', get_sub_field('video')['url']); ?>
+               if(is_singular('product')) : 
+                $term = wp_get_post_terms('product_cat')[0]->term_id;
+                $video = get_field('video', 'product_cat_'.$term);
+            ?>
+            
+            <?php if($video != '') : ?>
+            
+        <?php $file = preg_replace('/\\.[^.\\s]{3,4}$/', '',$video['url']); ?>
         <div class="video-cover<?php echo (is_singular('product')) ? ' product-cover' : ''; ?>" style="background-image:url(<?php echo $file; ?>.jpg)">
             <video class="video-item" ng-video loop poster="<?php echo $file; ?>.jpg">
                 <source src="<?php echo $file; ?>.mp4" type="video/mp4" />
@@ -43,6 +36,7 @@ if($total > 1) : ?>
                 <source src="<?php echo $file; ?>.webm" type="video/webm" />
             </video>
         </div>
+            <?php endif; ?>
         <?php 
                // ENDVIDEO
                else : ?>
