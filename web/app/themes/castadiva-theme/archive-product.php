@@ -27,7 +27,7 @@ if($product_count >= $posts_per_page) :  ?>
 <div class="buttons" ng-show="!hideMore">
     <?php $search = (is_search()) ? ", '".get_search_query()."'" : ""; ?>
     <span class="btn" ng-click="$event.stopPropagation(); loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count . $search; ?>)">
-        <span class="btn-text" ng-class="{hidden: : isLoading}" ng-click="$event.stopPropagation(); loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count . $search; ?>)"><?php echo __('Altri', 'castadiva'); ?></span>
+        <span class="btn-text" ng-class="{hidden : isLoading}" ng-click="$event.stopPropagation(); loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count . $search; ?>)"><?php echo __('Altri', 'castadiva'); ?></span>
         <span class="btn-loading" ng-class="{visible : isLoading}"></span>
     </span>
 </div>
