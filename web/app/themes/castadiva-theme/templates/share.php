@@ -6,13 +6,6 @@
         $btnClass .= ' recipes-btn';
     } ?>
 <nav class="post-tools">
-<?php if(is_singular('product')) : ?>
-<a class="<?php echo $btnClass; ?> add-to-cart" ng-click="$event.preventDefault(); addToCart(cartData)">
-    <span class="btn-text">
-        <?php echo __('Aggiungi', 'castadiva'); ?>
-    </span>
-</a>
-<?php endif; ?>
 <div class="share">
     <a class="<?php echo $btnClass; ?>" ng-click="$event.preventDefault(); isShare = !isShare">
         <span class="btn-text">
