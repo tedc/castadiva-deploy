@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					?>
 				</span>
 				<span class="product-quantity"><?php echo apply_filters( 'woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf( '&times; %s', esc_html( $item['qty'] ) ) . '</strong>', $item ); ?></span>
-				<span class="product-subtotal"><?php echo $order->get_formatted_line_subtotal( $item ); ?></span>
+				<span class="product-subtotal"><?php echo str_replace(array('<ins>', '</ins>','&euro;</span>&nbsp;', ',', ':'), array('', '', '&euro;</span>&nbsp;<strong>', '</strong>,', ''),$order->get_formatted_line_subtotal( $item )); ?></span>
 			</p>
 		<?php endforeach; ?>
 	<?php endif; ?>
