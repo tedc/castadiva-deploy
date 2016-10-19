@@ -23,9 +23,9 @@ $posts_per_page = get_option('posts_per_page');
 </ul>
 <?php 
 // stuff
-if($posts_count >= $posts_per_page) :  ?>
+if($product_count >= $posts_per_page) :  ?>
 <div class="buttons" ng-show="!hideMore">
-    <?php $search (is_search()) ? ", '".get_search_query()."'" : ""; ?>
+    <?php $search = (is_search()) ? ", '".get_search_query()."'" : ""; ?>
     <span class="btn" ng-click="$event.stopPropagation(); loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count . $search; ?>)">
         <span class="btn-text" ng-class="{hidden: : isLoading}" ng-click="$event.stopPropagation(); loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count . $search; ?>)"><?php echo __('Altri', 'castadiva'); ?></span>
         <span class="btn-loading" ng-class="{visible : isLoading}"></span>

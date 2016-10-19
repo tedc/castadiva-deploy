@@ -46,9 +46,9 @@ $posts_per_page = get_option('posts_per_page');
 <?php endwhile; ?>
 <?php 
 // stuff
-if($posts_count >= $posts_per_page) :  ?>
+if($max > $posts_per_page) :  ?>
 <?php get_template_part('templates/ajax', get_post_type()); ?>
-<?php $search (is_search()) ? ", '".get_search_query()."'" : ""; ?>
+<?php $search = (is_search()) ? ", '".get_search_query()."'" : ""; ?>
 <div class="buttons">
     <span class="btn" ng-click="$event.stopPropagation(); loadMorePosts('posts', <?php echo (is_category()) ? get_queried_object()->term_id : 'false'; ?>, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $max . $search; ?>)" ng-show="!hideMore">
         <span class="btn-text" ng-class="{hidden: : isLoading}" ng-click="$event.stopPropagation(); loadMorePosts('posts', <?php echo (is_category()) ? get_queried_object()->term_id : 'false'; ?>, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $max . $search; ?>)"><?php echo __('Altri', 'castadiva'); ?></span>
