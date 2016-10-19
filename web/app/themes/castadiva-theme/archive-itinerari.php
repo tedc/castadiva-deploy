@@ -46,7 +46,7 @@ $posts_per_page = get_option('posts_per_page');
 <?php endwhile; ?>
 <?php 
 // stuff
-if($posts_count > $posts_per_page) :  ?>
+if($posts_count >= $posts_per_page) :  ?>
 <?php get_template_part('templates/ajax', get_post_type()); ?>
 <?php $search (is_search()) ? ", '".get_search_query()."'" : ""; ?>
 <div class="buttons">
