@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php foreach ( $totals as $total ) : ?>
 			<p class="order-details-row">
 				<span scope="row" colspan="2"><?php echo $total['label']; ?></span>
-				<span class="product-total price"><?php echo str_replace(array('<ins>', '</ins>','&euro;</span>&nbsp;', ',', ':'), array('', '', '&euro;</span>&nbsp;<strong>', '</strong>,', '')$total['value']); ?></span>
+				<span class="product-total price"><?php echo str_replace(array('<ins>', '</ins>','&euro;</span>&nbsp;', ',', ':'), array('', '', '&euro;</span>&nbsp;<strong>', '</strong>,', ''), $total['value']); ?></span>
 			</p>
 		<?php endforeach; ?>
 	<?php endif; ?>
