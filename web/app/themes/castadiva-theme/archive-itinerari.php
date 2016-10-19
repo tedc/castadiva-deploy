@@ -1,5 +1,16 @@
 <?php 
     use Roots\Sage\Extras; ?>
+<?php
+global $wp_query;
+$args = array('post_type'=> get_post_type(),'posts_per_page'=>-1);
+$posts_count = $GLOBALS['wp_query']->post_count;
+if(is_search()) {
+    $max = $wp_query->found_posts;
+} else {
+    $max = count(get_posts($args));
+}
+$posts_per_page = get_option('posts_per_page');
+?>
 <header class="main-header">
     <div class="main-header-content">
         <i class="flowers"></i>
@@ -33,10 +44,18 @@
     </figure>
 </article>
 <?php endwhile; ?>
+<?php 
+// stuff
+if($posts_count > $posts_per_page) :  ?>
 <?php get_template_part('templates/ajax', get_post_type()); ?>
-<span class="btn more-btn" ng-click="loadMorePosts('itinerari', 12, false, false, 12)">
-    <span class="btn-text"><?php echo __('Altri<br/>itinerari', 'castadiva'); ?></span>
-</span>
+<?php $search (is_search()) ? ", '".get_search_query()."'" : ""; ?>
+<div class="buttons">
+    <span class="btn" ng-click="loadMorePosts('posts', <?php echo (is_category()) ? get_queried_object()->term_id : 'false'; ?>, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $max . $search; ?>)" ng-show="!hideMore">
+        <span class="btn-text"><?php echo __('Altri', 'castadiva'); ?></span>
+    </span>
+</div>
+<?php endif; ?>
+</section>
 <div class="triangle">
     <div class="pattern-main" ng-sm from="{y: '-100%'}" to="{y : '0%'}" trigger-element=".triangle" duration="150" trigger-hook="1"></div>
 </div>

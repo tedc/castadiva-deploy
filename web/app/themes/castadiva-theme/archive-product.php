@@ -1,8 +1,13 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) exit;
 use Roots\Sage\Extras;
-$product_count = count(get_posts(array('post_type'=>'product','posts_per_page'=>-1)));
+global $wp_query;
 $posts_count = $GLOBALS['wp_query']->post_count;
+if(is_search()) {
+    $product_count = $wp_query->found_posts;
+} else {
+    $product_count = count(get_posts(array('post_type'=>'product','posts_per_page'=>-1)));
+}
 $posts_per_page = get_option('posts_per_page');
 ?>
 <?php if(have_posts()) : ?>
@@ -18,9 +23,10 @@ $posts_per_page = get_option('posts_per_page');
 </ul>
 <?php 
 // stuff
-if($posts_count >= $posts_per_page) :  ?>
+if($posts_count > $posts_per_page) :  ?>
 <div class="buttons" ng-show="!hideMore">
-    <span class="btn" ng-click="loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count; ?>)">
+    <?php $search (is_search()) ? ", '".get_search_query()."'" : ""; ?>
+    <span class="btn" ng-click="loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count . $search; ?>)">
         <span class="btn-text"><?php echo __('Altri', 'castadiva'); ?></span>
     </span>
 </div>

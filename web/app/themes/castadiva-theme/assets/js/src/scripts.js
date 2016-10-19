@@ -547,7 +547,7 @@ module.exports = function() {
           }
           checkbox = checkbox !== '' ? "&filter[meta_query][relation]=and" + checkbox : '';
           $rootScope.checkbox = checkbox;
-          getSearch.get(type, term, tag, $rootScope.filterData.orderby, $rootScope.filterData.order, checkbox, lang, offset, function(res) {
+          getSearch.get(type, term, tag, $rootScope.filterData.orderby, $rootScope.filterData.order, checkbox, lang, offset, $rootScope.search, function(res) {
             var elements;
             elements = document.querySelectorAll('.product-show-more');
             angular.forEach(elements, function(i, el) {
@@ -702,8 +702,8 @@ module.exports = function() {
         $rootScope.posts = [];
         $rootScope.count = 0;
         $scope.hideMore = false;
-        $rootScope.loadMorePosts = function(t, c, l, m) {
-          var order, orderby, tag, tax, term;
+        $rootScope.loadMorePosts = function(t, c, l, m, s) {
+          var obj, order, orderby, tag, tax, term;
           tax = taxonomy[t];
           term = c ? "&filter[" + taxonomy[t] + "]=" + c : '';
           if (t === 'product') {
@@ -713,11 +713,24 @@ module.exports = function() {
           orderby = ($rootScope.filterData.orderby != null) && typeof $rootScope.filterData.orderby !== 'undefined' && $rootScope.filterData.orderby !== '' ? $rootScope.filterData.orderby : 'date';
           order = ($rootScope.filterData.order != null) && typeof $rootScope.filterData.order !== 'undefined' && $rootScope.filterData.order !== '' ? $rootScope.filterData.order : 'desc';
           $rootScope.count += posts_per_page;
+          $rootScope.search = (s != null) && typeof s !== 'undefined' && s !== "" ? "&search=" + s : '';
           $rootScope.hideMore = $rootScope.count >= m - posts_per_page ? true : false;
           if ($rootScope.count >= m) {
             return;
           }
-          getPosts.get(t, $rootScope.count, term, tag, l, posts_per_page, order, orderby, $rootScope.checkbox, function(res) {
+          obj = {
+            types: t,
+            offset: $rootScope.count,
+            term: term,
+            lang: l,
+            more: posts_per_page,
+            tag: tag,
+            order: order,
+            orderby: orderby,
+            checkbox: $rootScope.checkbox,
+            search: $rootScope.search
+          };
+          getPosts.get(obj, function(res) {
             $rootScope.posts = $rootScope.posts.concat(res);
           });
         };
@@ -1221,7 +1234,7 @@ module.exports = function($resource, cacheService) {
 },{}],27:[function(require,module,exports){
 module.exports = function($resource, cacheService) {
   var getPost, post;
-  post = $resource(baseUrl + "/wp-json/wp/v2/:types/?offset=:offset:term:tag&per_page=:more&filter[order]=:order&filter[orderby]=:orderby&lang=:lang:checkbox", {
+  post = $resource(baseUrl + "/wp-json/wp/v2/:types/?offset=:offset:term:tag&per_page=:more&filter[order]=:order&filter[orderby]=:orderby&lang=:lang:checkbox:search", {
     types: '@types',
     offset: '@offset',
     term: '@term',
@@ -1239,29 +1252,30 @@ module.exports = function($resource, cacheService) {
     }
   });
   return getPost = {
-    get: function(types, offset, cat, tag, lang, more, order, orderby, checkbox, cb) {
+    get: function(obj, cb) {
       var cached;
-      cached = cacheService.getData(types + "_" + offset + "_" + cat);
+      cached = cacheService.getData(obj.types + "_" + obj.offset + "_" + obj.term + "_" + obj.search);
       if (cached !== false) {
         if (typeof cb !== 'undefined') {
           cb(cached.data);
         }
       } else {
         post.query({
-          types: types,
-          offset: offset,
-          term: cat,
-          lang: lang,
-          more: more,
-          tag: tag,
-          order: order,
-          orderby: orderby,
-          checkbox: checkbox
+          types: obj.types,
+          offset: obj.offset,
+          term: obj.term,
+          lang: obj.lang,
+          more: obj.more,
+          tag: obj.tag,
+          order: obj.order,
+          orderby: obj.orderby,
+          checkbox: obj.checkbox,
+          search: obj.search
         }).$promise.then(function(result) {
           var exp, now;
           now = new Date();
           exp = now.getTime() + 60 * 60 * 1000;
-          cacheService.setData(types + "_" + offset, {
+          cacheService.setData(obj.types + "_" + obj.offset + "_" + obj.term + "_" + obj.search, {
             created: now.getTime(),
             expiration: exp,
             data: result
@@ -1280,7 +1294,7 @@ module.exports = function($resource, cacheService) {
 module.exports = function($resource) {
   var getSearch, search, self;
   self = this;
-  self.url = baseUrl + "/wp-json/wp/v2/:type/?per_page=:offset:term:tag&filter[orderby]=:orderby&filter[order]=:order&lang=:lang&:checkbox";
+  self.url = baseUrl + "/wp-json/wp/v2/:type/?per_page=:offset:term:tag&filter[orderby]=:orderby&filter[order]=:order&lang=:lang&:checkbox:search";
   search = $resource(self.url, this.url = {
     term: '@term',
     tag: '@tag',
@@ -1288,7 +1302,8 @@ module.exports = function($resource) {
     orderby: '@orderby',
     lang: '@lang',
     order: '@order',
-    offset: '@offset'
+    offset: '@offset',
+    search: '@search'
   }, {
     query: {
       method: 'GET',
@@ -1297,7 +1312,7 @@ module.exports = function($resource) {
     }
   });
   return getSearch = {
-    get: function(type, term, tag, orderby, order, checkbox, lang, offset, cb) {
+    get: function(type, term, tag, orderby, order, checkbox, lang, offset, search, cb) {
       search.query({
         type: type,
         term: term,
@@ -1305,7 +1320,8 @@ module.exports = function($resource) {
         lang: lang,
         order: order,
         checkbox: checkbox,
-        offset: offset
+        offset: offset,
+        search: search
       }).$promise.then(function(result) {
         if (typeof cb !== 'undefined') {
           cb(result);

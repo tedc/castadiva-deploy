@@ -17,7 +17,7 @@ senza additivi chimici o conservanti, garantiscono una sana e corretta alimentaz
 </div>
 <?php else : ?>
 <div class="page-header container content row-lg-top row-top">
-    <h1 class="title<?php if(get_field('centered')) : ?> aligncenter<?php endif; ?>"><?= Titles\title(); ?></h1>
+    <h1 class="title<?php if(get_field('centered') || is_404()) : ?> aligncenter<?php endif; ?>"><?= Titles\title(); ?></h1>
 </div>
 <?php endif; ?>
 <?php endif; ?>

@@ -59,7 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </button>
             </p>
             <?php do_action( 'woocommerce_register_form_end' ); ?>            
-            <?php echo do_shortcode(' [apsl-login-lite login_text="'.__('Oppure registrati con Faebook', 'castadiva').'"]'); ?>
+            <?php echo do_shortcode(' [apsl-login-lite login_text="'.__('Oppure registrati con Facebook', 'castadiva').'"]'); ?>
 		</form>
     
 <?php endif; ?>

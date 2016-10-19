@@ -54,5 +54,5 @@ $current_url = home_url(add_query_arg(array(),$wp->request));
                     <span class="btn-text"><?php echo __('Accedi', 'castadiva'); ?></span>
                 </button>
     </p>
-    <?php echo do_shortcode(' [apsl-login-lite login_text="'.__('Oppure collegati con Faebook', 'castadiva').'"]'); ?>
+    <?php echo do_shortcode(' [apsl-login-lite login_text="'.__('Oppure collegati con Facebook', 'castadiva').'"]'); ?>
 </form>
