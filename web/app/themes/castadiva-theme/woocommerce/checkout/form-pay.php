@@ -53,8 +53,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php endif; ?>
 	<?php if ( $totals = $order->get_order_item_totals() ) : ?>
 		<?php foreach ( $totals as $total ) : ?>
-			<p>
-				<th scope="row" colspan="2"><?php echo $total['label']; ?></th>
+			<p class="order-details-row">
+				<span scope="row" colspan="2"><?php echo $total['label']; ?></span>
 				<span class="product-total"><?php echo $total['value']; ?></span>
 			</p>
 		<?php endforeach; ?>
@@ -81,7 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php do_action( 'woocommerce_pay_order_before_submit' ); ?>
 
-			<?php echo apply_filters( 'woocommerce_pay_order_button_html', '<p class="buttons"><button type="submit" class="btn" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '"><span class="btn-text">' . __('Paga<br/>l\'ordine') . '</span></button></p>' ); ?>
+			<?php echo apply_filters( 'woocommerce_pay_order_button_html', '<p class="order-pay-buttons"><button type="submit" class="btn" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '"><span class="btn-text">' . __('Paga<br/>l\'ordine') . '</span></button></p>' ); ?>
 
 			<?php do_action( 'woocommerce_pay_order_after_submit' ); ?>
 
