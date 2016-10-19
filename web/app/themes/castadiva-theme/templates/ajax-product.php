@@ -6,7 +6,9 @@
         <a ng-href="{{post.link}}" class="btn">
             <span class="btn-text"><?php echo __('Guarda', 'castadiva'); ?></span>
         </a>
+            
         </div>
+        <a class="permalink" ng-href="{{post.link}}"></a>
     </div>
 <div class="offset row row-md">
     <span class="onsale" ng-if="post.product_attrs.onsale"><?php echo __('Offerta', 'castadiva'); ?></span>
@@ -17,7 +19,7 @@
     <span class="light upper attribute" ng-repeat="attr in post.product_attrs.attributes">
         {{attr.value}} {{attr.name}}
     </span>
-    <p class="price" ng-bind-html="post.product_attrs.price" ng-class="{discount : post.product_attrs.onsale}"></p>  
+    <p class="price" ng-bind-html="post.product_attrs.price" ng-class="{discount : post.product_attrs.onsale}"></p>     
+    <a class="permalink" ng-href="{{post.link}}"></a>
 </div>
-<a class="permalink" ng-href="{{post.link}}"></a>
 </li>

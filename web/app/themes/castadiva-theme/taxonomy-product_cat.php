@@ -23,7 +23,7 @@ $posts_per_page = get_option('posts_per_page');
 <header class="main-header"<?php echo $bg; ?>>
     <?php 
                    // VIDEO
-                   if(get_field('video', 'product_cat_'.$cat->term_id) != '' && $kind < 1) : ?>
+                   if(get_field('video', 'product_cat_'.$cat->term_id) != '') : ?>
             <?php $file = preg_replace('/\\.[^.\\s]{3,4}$/', '', get_field('video', 'product_cat_'.$cat->term_id)['url']); ?>
             <div class="video-cover" style="background-image:url(<?php echo $file; ?>.jpg)">
                 <video class="video-item" ng-video loop poster="<?php echo $file; ?>.jpg">
@@ -49,12 +49,21 @@ $posts_per_page = get_option('posts_per_page');
 <?php endwhile; wp_reset_query(); ?>
 <?php get_template_part('templates/ajax', get_post_type()); ?>
 </ul>
+
 <?php 
 // stuff
-if($posts_count >= $posts_per_page) :  ?>
-<div class="buttons">
-    <span class="btn" ng-click="loadMorePosts('product', '<?php echo get_queried_object()->slug; ?>', '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count; ?>)">
-        <span class="btn-text"><?php echo __('Altri', 'castadiva'); ?></span>
+if($product_count >= $posts_per_page) :  ?>
+<div class="row-top row-lg-top aligncenter" ng-show="posts.length == 0">
+    <p><?php echo __('Spiacenti, nessun risultato disponibile per la tua ricerca.', 'castadiva'); ?></p>
+    <p class="buttons">
+        <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn"><span class="btn-text"><?php the_sub_field('button_text'); ?></span></a>
+    </p>
+</div>
+<div class="buttons" ng-show="!hideMore">
+    <?php $search = (is_search()) ? ", '".get_search_query()."'" : ""; ?>
+    <span class="btn" ng-click="$event.stopPropagation(); loadMorePosts('product', '<?php echo get_queried_object()->slug; ?>', '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count . $search; ?>)">
+        <span class="btn-text" ng-class="{hidden : isLoading}" ng-click="$event.stopPropagation(); loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count . $search; ?>)"><?php echo __('Altri', 'castadiva'); ?></span>
+        <span class="btn-loading" ng-class="{visible : isLoading}"></span>
     </span>
 </div>
 <?php endif; endif; ?>

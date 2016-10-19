@@ -21,9 +21,16 @@ $posts_per_page = get_option('posts_per_page');
 <?php endwhile; wp_reset_query(); ?>
 <?php get_template_part('templates/ajax', get_post_type()); ?>
 </ul>
+
 <?php 
 // stuff
 if($product_count >= $posts_per_page) :  ?>
+<div class="row-top row-lg-top aligncenter" ng-show="posts.length == 0">
+    <p><?php echo __('Spiacenti, nessun risultato disponibile per la tua ricerca.', 'castadiva'); ?></p>
+    <p class="buttons">
+        <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn"><span class="btn-text"><?php the_sub_field('button_text'); ?></span></a>
+    </p>
+</div>
 <div class="buttons" ng-show="!hideMore">
     <?php $search = (is_search()) ? ", '".get_search_query()."'" : ""; ?>
     <span class="btn" ng-click="$event.stopPropagation(); loadMorePosts('product', false, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $product_count . $search; ?>)">

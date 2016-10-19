@@ -553,8 +553,8 @@ module.exports = function() {
           $rootScope.checkbox = checkbox;
           obj = {
             type: type,
-            term: term,
-            tag: tag,
+            term: $rootScope.productCat,
+            tag: $rootScope.productTag,
             orderby: $rootScope.filterData.orderby,
             checkbox: checkbox,
             lang: lang,
@@ -1317,7 +1317,7 @@ module.exports = function($resource, cacheService) {
 module.exports = function($resource) {
   var getSearch, search, self;
   self = this;
-  self.url = baseUrl + "/wp-json/wp/v2/:type/?per_page=:offset:term:tag&filter[orderby]=:orderby&filter[order]=:order&lang=:lang&:checkbox:search";
+  self.url = baseUrl + "/wp-json/wp/v2/:type/?per_page=:offset:term:tag&filter[orderby]=:orderby&filter[order]=:order&lang=:lang:checkbox:checkbox";
   search = $resource(self.url, this.url = {
     term: '@term',
     tag: '@tag',
@@ -1330,7 +1330,6 @@ module.exports = function($resource) {
   }, {
     query: {
       method: 'GET',
-      cache: true,
       isArray: true
     }
   });
@@ -1339,6 +1338,7 @@ module.exports = function($resource) {
       search.query({
         type: obj.type,
         term: obj.term,
+        tag: obj.tag,
         orderby: obj.orderby,
         lang: obj.lang,
         order: obj.order,
