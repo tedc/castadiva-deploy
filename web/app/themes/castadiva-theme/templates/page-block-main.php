@@ -1,4 +1,4 @@
-<?php echo $row; $shape_id = 'shapes_'.$row; ?>
+<?php echo $r; $shape_id = 'shapes_'.$r; ?>
 <?php if(get_sub_field('colonne') < 2) : ?>
 <?php while(the_flexible_field('contenuti')) :  ?>
     <?php if(get_row_layout() == 'forme') : ?>

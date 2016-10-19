@@ -1,4 +1,4 @@
-<?php $row = 0; while(have_rows('builder')) : the_row();  ?>
+<?php $r = 0; while(have_rows('builder')) : the_row();  ?>
     <?php if(!is_page_template('template-custom.php') && !is_front_page()) : ?>
     <?php $classes = (get_sub_field('row') != '') ? ' class="'.get_sub_field('row').'"' : ''; ?>
     <section<?php echo $classes; ?>>
@@ -18,4 +18,4 @@
     </section>
     <?php endif; ?>
     <?php endif; ?>
-<?php $row++; endwhile; ?>
+<?php $r++; endwhile; ?>
