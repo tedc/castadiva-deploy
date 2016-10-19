@@ -21,52 +21,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<form id="order_review" method="post">
+<form id="order_review" class="form-container" method="post" novalidate  action="<?php echo esc_url( wc_get_checkout_url() ); ?>">
 
-	<table class="shop_table">
-		<thead>
-			<tr>
-				<th class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></th>
-				<th class="product-quantity"><?php _e( 'Qty', 'woocommerce' ); ?></th>
-				<th class="product-total"><?php _e( 'Totals', 'woocommerce' ); ?></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php if ( sizeof( $order->get_items() ) > 0 ) : ?>
-				<?php foreach ( $order->get_items() as $item_id => $item ) : ?>
+	<p>
+		<th class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></th>
+		<th class="product-quantity"><?php _e( 'Qty', 'woocommerce' ); ?></th>
+		<th class="product-total"><?php _e( 'Totals', 'woocommerce' ); ?></th>
+	</p>
+	<?php if ( sizeof( $order->get_items() ) > 0 ) : ?>
+		<?php foreach ( $order->get_items() as $item_id => $item ) : ?>
+			<?php
+				if ( ! apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
+					continue;
+				}
+			?>
+			<p class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order-item', $item, $order ) ); ?>">
+				<span class="product-name">
 					<?php
-						if ( ! apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
-							continue;
-						}
+						echo apply_filters( 'woocommerce_order_item_name', esc_html( $item['name'] ), $item, false );
+
+						do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order );
+						$order->display_item_meta( $item );
+						do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order );
 					?>
-					<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
-						<td class="product-name">
-							<?php
-								echo apply_filters( 'woocommerce_order_item_name', esc_html( $item['name'] ), $item, false );
-
-								do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order );
-								$order->display_item_meta( $item );
-								do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order );
-							?>
-						</td>
-						<td class="product-quantity"><?php echo apply_filters( 'woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf( '&times; %s', esc_html( $item['qty'] ) ) . '</strong>', $item ); ?></td>
-						<td class="product-subtotal"><?php echo $order->get_formatted_line_subtotal( $item ); ?></td>
-					</tr>
-				<?php endforeach; ?>
-			<?php endif; ?>
-		</tbody>
-		<tfoot>
-			<?php if ( $totals = $order->get_order_item_totals() ) : ?>
-				<?php foreach ( $totals as $total ) : ?>
-					<tr>
-						<th scope="row" colspan="2"><?php echo $total['label']; ?></th>
-						<td class="product-total"><?php echo $total['value']; ?></td>
-					</tr>
-				<?php endforeach; ?>
-			<?php endif; ?>
-		</tfoot>
-	</table>
-
+				</span>
+				<span class="product-quantity"><?php echo apply_filters( 'woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf( '&times; %s', esc_html( $item['qty'] ) ) . '</strong>', $item ); ?></span>
+				<span class="product-subtotal"><?php echo $order->get_formatted_line_subtotal( $item ); ?></span>
+			</p>
+		<?php endforeach; ?>
+	<?php endif; ?>
+	<?php if ( $totals = $order->get_order_item_totals() ) : ?>
+		<?php foreach ( $totals as $total ) : ?>
+			<p>
+				<th scope="row" colspan="2"><?php echo $total['label']; ?></th>
+				<span class="product-total"><?php echo $total['value']; ?></span>
+			</p>
+		<?php endforeach; ?>
+	<?php endif; ?>
+		
 	<div id="payment">
 		<?php if ( $order->needs_payment() ) : ?>
 			<ul class="wc_payment_methods payment_methods methods">
@@ -88,7 +80,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php do_action( 'woocommerce_pay_order_before_submit' ); ?>
 
-			<?php echo apply_filters( 'woocommerce_pay_order_button_html', '<input type="submit" class="button alt" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '" />' ); ?>
+			<?php echo apply_filters( 'woocommerce_pay_order_button_html', '<p class="buttons"><button type="submit" class="btn" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '"><span class="btn-text">' . esc_attr( $order_button_text ) . '</span></button></p>' ); ?>
 
 			<?php do_action( 'woocommerce_pay_order_after_submit' ); ?>
 
