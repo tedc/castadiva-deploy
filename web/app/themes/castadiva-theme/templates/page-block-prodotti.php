@@ -45,10 +45,14 @@
         <?php $count_product++; endwhile; wp_reset_query(); ?>
     </ul>
     <nav class="buttons products-row-buttons">
-        <div class="carousel-nav">
+        <div class="carousel-nav" data-total="<?php echo $total_product; ?>">
+            <?php if($total_product > 0) : ?>
             <span class="arrow arrow-left" ng-click="move(true, <?php echo $total_product; ?>)"><span class="arrow-text">&lsaquo;</span></span>
+            <?php endif; ?>
             <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn"><span class="btn-text"><?php the_sub_field('button_text'); ?></span></a>
+            <?php if($total_product > 0) : ?>
             <span class="arrow arrow-right" ng-click="move(false, <?php echo $total_product; ?>)"><span class="arrow-text">&rsaquo;</span></span>
+            <?php endif; ?>
         </div>
     </nav>
 </div>

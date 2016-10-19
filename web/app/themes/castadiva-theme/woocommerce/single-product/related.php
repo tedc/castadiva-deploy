@@ -55,7 +55,7 @@ if ( $products->have_posts() ) : ?>
             </div>
         </header>    
         <div class="products row-top row-lg-top" ng-products>
-            <ul class="products-row" ng-swipe-right="dir(false, pos, <?php echo $total_product; ?>)" ng-swipe-left="dir(true, pos, <?php echo $total_product; ?>)">
+            <ul class="products-row" ng-swipe-right="move(false, <?php echo $total_product; ?>)" ng-swipe-left="move(true, <?php echo $total_product; ?>)">
                 <?php while($products->have_posts()) : $products->the_post(); ?>
                 <li <?php post_class("products-row-item product-show-more"); ?> ng-class="{current : pos == <?php echo $count_product; ?>}">
                     <?php get_template_part('templates/content', 'product'); ?>      
@@ -63,10 +63,14 @@ if ( $products->have_posts() ) : ?>
                 <?php $count_product++; endwhile; wp_reset_query(); ?>
             </ul>
             <nav class="buttons products-row-buttons">
-                <div class="carousel-nav">
-                    <span class="arrow arrow-left" ng-click="dir(false, pos, <?php echo $total_product; ?>)" ng-class="{inactive : pos == 0}"><span class="arrow-text">&lsaquo;</span></span>
+                <div class="carousel-nav" data-total="<?php echo $total_product; ?>">
+                    <?php if($total_product > 0) : ?>
+                    <span class="arrow arrow-left" ng-click="move(false, <?php echo $total_product; ?>)" ng-class="{inactive : pos == 0}"><span class="arrow-text">&lsaquo;</span></span>
+                    <?php endif; ?>
                     <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn"><span class="btn-text"><?php echo __('Guarda<br/>tutti', 'castadiva'); ?></span></a>
-                    <span class="arrow arrow-right" ng-click="dir(true, pos, <?php echo $total_product; ?>)" ng-class="{inactive : pos == <?php echo $total_product; ?>}"><span class="arrow-text">&rsaquo;</span></span>
+                    <?php if($total_product > 0) : ?>
+                    <span class="arrow arrow-right" ng-click="move(true, <?php echo $total_product; ?>)" ng-class="{inactive : pos == <?php echo $total_product; ?>}"><span class="arrow-text">&rsaquo;</span></span>
+                   <?php endif; ?>
                 </div>
             </nav>
         </div>   
