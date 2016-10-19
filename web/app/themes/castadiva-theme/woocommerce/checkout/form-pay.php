@@ -21,12 +21,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<form id="order_review" class="form-container" method="post" novalidate  action="<?php echo esc_url( wc_get_checkout_url() ); ?>">
+<form id="order_review" method="post" novalidate  action="<?php echo esc_url( wc_get_checkout_url() ); ?>">
 
-	<p>
-		<th class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></th>
-		<th class="product-quantity"><?php _e( 'Qty', 'woocommerce' ); ?></th>
-		<th class="product-total"><?php _e( 'Totals', 'woocommerce' ); ?></th>
+	<p class="order-pay-row">
+		<span class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></span>
+		<span class="product-quantity"><?php _e( 'Qty', 'woocommerce' ); ?></span>
+		<span class="product-total"><?php _e( 'Totals', 'woocommerce' ); ?></span>
 	</p>
 	<?php if ( sizeof( $order->get_items() ) > 0 ) : ?>
 		<?php foreach ( $order->get_items() as $item_id => $item ) : ?>
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					continue;
 				}
 			?>
-			<p class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order-item', $item, $order ) ); ?>">
+			<p class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order-pay-row', $item, $order ) ); ?>">
 				<span class="product-name">
 					<?php
 						echo apply_filters( 'woocommerce_order_item_name', esc_html( $item['name'] ), $item, false );
