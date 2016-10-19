@@ -22,7 +22,7 @@
         ?>
         <ul class="tools-menu">
             <li class="tools-menu-item">
-                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php echo (is_user_logged_in()) ? __('Account','castadiva') : __('Accedi','castadiva'); ?>" ng-click="$event.preventDefault(); isLoginPopup = true;"><?php echo (is_user_logged_in()) ? __('Account','castadiva') : __('Accedi','castadiva'); ?></a>
+                <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php echo (is_user_logged_in()) ? __('Profilo','castadiva') : __('Accedi','castadiva'); ?>" ng-click="$event.preventDefault(); isLoginPopup = true;"><?php echo (is_user_logged_in()) ? __('Profilo','castadiva') : __('Accedi','castadiva'); ?></a>
             </li>
             <?php get_template_part('templates/cart', 'btn'); ?>
         </ul>  
