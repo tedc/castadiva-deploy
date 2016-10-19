@@ -28,7 +28,7 @@ if($product_count >= $posts_per_page) :  ?>
 <div class="row-top row-lg-top aligncenter" ng-show="posts.length == 0">
     <p><?php echo __('Spiacenti, nessun risultato disponibile per la tua ricerca.', 'castadiva'); ?></p>
     <p class="buttons">
-        <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn"><span class="btn-text"><?php the_sub_field('button_text'); ?></span></a>
+        <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn"><span class="btn-text"><?php echo __('Vai allo<br/>shop', 'castadiva'); ?></span></a>
     </p>
 </div>
 <div class="buttons" ng-show="!hideMore">

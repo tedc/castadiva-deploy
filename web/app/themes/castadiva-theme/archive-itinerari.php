@@ -49,12 +49,6 @@ $posts_per_page = get_option('posts_per_page');
 // stuff
 if($max > $posts_per_page) :  ?>
 <?php get_template_part('templates/ajax', get_post_type()); ?>
-<div class="row-top row-lg-top aligncenter" ng-show="posts.length == 0">
-    <p><?php echo __('Spiacenti, nessun risultato disponibile per la tua ricerca.', 'castadiva'); ?></p>
-    <p class="buttons">
-        <a href="<?php echo post_type_archive_link( 'itinerari' ); ?>" class="btn"><span class="btn-text"><?php the_sub_field('button_text'); ?></span></a>
-    </p>
-</div>
 <?php $search = (is_search()) ? ", '".get_search_query()."'" : ""; ?>
 <div class="buttons">
     <span class="btn" ng-click="$event.stopPropagation(); loadMorePosts('posts', <?php echo (is_category()) ? get_queried_object()->term_id : 'false'; ?>, '<?php echo ICL_LANGUAGE_CODE; ?>', <?php echo $max . $search; ?>)" ng-show="!hideMore">
