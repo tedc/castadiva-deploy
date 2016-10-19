@@ -1317,7 +1317,7 @@ module.exports = function($resource, cacheService) {
 module.exports = function($resource) {
   var getSearch, search, self;
   self = this;
-  self.url = baseUrl + "/wp-json/wp/v2/:type/?per_page=:offset:term:tag&filter[orderby]=:orderby&filter[order]=:order&lang=:lang:checkbox:checkbox";
+  self.url = baseUrl + "/wp-json/wp/v2/:type/?per_page=:offset:term:tag&filter[orderby]=:orderby&filter[order]=:order&lang=:lang:checkbox:search";
   search = $resource(self.url, this.url = {
     term: '@term',
     tag: '@tag',
@@ -1346,6 +1346,7 @@ module.exports = function($resource) {
         offset: obj.offset,
         search: obj.search
       }).$promise.then(function(result) {
+        console.log(obj.checkbox);
         if (typeof cb !== 'undefined') {
           cb(result);
         }
