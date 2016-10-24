@@ -50,7 +50,7 @@
                     <li class="filters-list-item row-btm row-s-btm">
                         <input type="checkbox" id="filter_in_stock" />
                         <label for="filter_in_stock" ng-click="isInStock=!isInStock;filters(filterData.check.instock, 1, isInStock)">
-                            <span class="filters-list-text"><?php echo __('Attualmente non disponibili', 'castadiva'); ?></span>
+                            <span class="filters-list-text"><?php echo __('In riordino', 'castadiva'); ?></span>
                         </label>
                     </li>
                     <li class="filters-list-item row-btm row-s-btm">

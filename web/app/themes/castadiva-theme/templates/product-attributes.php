@@ -29,7 +29,7 @@ $attributes = $product->get_attributes();
 ob_start();
 
 ?>
-<?php if( $product->has_weight() ) : $has_row = true; ?><p class="light upper attribute"><?php echo wc_format_localized_decimal( $product->get_weight() ) . ' ' . esc_attr( get_option( 'woocommerce_weight_unit' ) ); ?></p><?php endif; ?>
+<?php if( $product->has_weight() ) : $has_row = true; ?><p class="light upper attribute"><?php echo wc_format_localized_decimal( $product->get_weight() ) . '&nbsp;' . esc_attr( get_option( 'woocommerce_weight_unit' ) ); ?></p><?php endif; ?>
 <?php foreach($attributes as $attribute) : $has_row = true; ?>
   <p class="light upper attribute"><?php
 				if ( $attribute['is_taxonomy'] ) {
@@ -44,7 +44,7 @@ ob_start();
 					echo apply_filters( 'woocommerce_attribute', wptexturize( implode( ', ', $values )  ), $attribute, $values );
 
 				}
-			?> <?php echo wc_attribute_label( $attribute['name'] ); ?> 
+			?>&nbsp;<?php echo wc_attribute_label( $attribute['name'] ); ?> 
     </p>
 <?php endforeach; ?>
 <?php

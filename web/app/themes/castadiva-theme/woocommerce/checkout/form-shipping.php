@@ -27,10 +27,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<h3 id="ship-to-different-address">
 			<input id="ship-to-different-address-checkbox" class="input-checkbox" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> type="checkbox" name="ship_to_different_address" value="1" />
-            <label for="ship-to-different-address-checkbox" class="checkbox" ng-click="isShippingAddress=!isShippingAddress"><?php _e( 'Ship to a different address?', 'woocommerce' ); ?></label>
+            <label for="ship-to-different-address-checkbox" class="checkbox address-checkbox" ng-click="isShippingAddress=!isShippingAddress"><span><?php _e( 'Ship to a different address?', 'woocommerce' ); ?></span></label>
 		</h3>
 
-		<div class="shipping_address" ng-class="{visible : isShippingAddress}">
+		<div class="shipping_address checkout-addresses" ng-class="{visible : isShippingAddress}">
 
 			<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
             <?php foreach ( $checkout->checkout_fields['shipping'] as $key => $field ) : ?>
@@ -62,4 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php endif; ?>
 
 	<?php do_action( 'woocommerce_after_order_notes', $checkout ); ?>
+</div>
+</div>
+
 </div>

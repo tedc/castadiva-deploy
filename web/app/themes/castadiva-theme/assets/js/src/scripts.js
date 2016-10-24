@@ -8,18 +8,18 @@ module.exports = function() {
       if (className !== 'added') {
         return;
       }
-      width = element[0].offsetWidth / 16;
+      width = element[0].offsetWidth / 18;
       cartBtnHtml = "<a href='" + wc_add_to_cart_params.cart_url + "' class='btn go-to-cart' style='display:none'><span class='btn-text'>" + go_to_cart + "</span></a>";
-      cartBtn = angular.element(cartBtnHtml);
+      cartBtn = angular.element(document.querySelector('.btn-go-to-shop'));
       element.after(cartBtn);
-      TweenMax.set(cartBtn, {
-        clearProps: 'display'
+      TweenMax.set('.btn-go-to-shop', {
+        display: 'inline-block'
       });
-      TweenMax.set(cartBtn, {
+      TweenMax.set('.btn-go-to-shop', {
         width: 0,
         autoAlpha: false
       });
-      TweenMax.to(cartBtn, .5, {
+      TweenMax.to('.btn-go-to-shop', .5, {
         width: width + "em",
         autoAlpha: true,
         onComplete: function() {
@@ -34,12 +34,14 @@ module.exports = function() {
       if (className !== 'added') {
         return;
       }
-      cartBtn = cartBtn !== null ? cartBtn : angular.element(document.querySelector('.btn.go-to-cart'));
+      cartBtn = cartBtn !== null ? cartBtn : '.btn-go-to-shop';
       return TweenMax.to(cartBtn, .5, {
         width: "0em",
         autoAlpha: false,
         onComplete: function() {
-          cartBtn.remove();
+          TweenMax.set(cartBtn, {
+            display: 'none'
+          });
           done();
         }
       });
@@ -149,7 +151,7 @@ var castadiva;
 
 castadiva = angular.module('castadiva');
 
-castadiva.animation('.single_add_to_cart_button', [require('./cart-btn.coffee')]).animation('.cart-table-item', [require('./cart-remove-item.coffee')]).animation('.checkout_coupon', [require('./shipping.coffee')]).animation('.shipping_address', [require('./shipping.coffee')]).animation('.cart-menu-total-text', [require('./cart-count.coffee')]).animation('.cart-wrapper', [require('./cart.coffee')]);
+castadiva.animation('.single_add_to_cart_button', [require('./cart-btn.coffee')]).animation('.cart-table-item', [require('./cart-remove-item.coffee')]).animation('.checkout_coupon', [require('./shipping.coffee')]).animation('.checkout-addresses', [require('./shipping.coffee')]).animation('.cart-menu-total-text', [require('./cart-count.coffee')]).animation('.cart-wrapper', [require('./cart.coffee')]);
 
 
 },{"./cart-btn.coffee":1,"./cart-count.coffee":2,"./cart-remove-item.coffee":3,"./cart.coffee":4,"./shipping.coffee":6}],6:[function(require,module,exports){
@@ -297,7 +299,7 @@ module.exports = function() {
   var cart;
   return cart = {
     controller: [
-      '$scope', '$rootScope', "$http", "transformRequestAsFormPost", "cacheService", "cacheSessionService", "$cookies", function($scope, $rootScope, $http, transformRequestAsFormPost, cacheService, cacheSessionService, $cookies) {
+      '$scope', '$rootScope', "$http", "transformRequestAsFormPost", "cacheService", "cacheSessionService", "$cookies", "$timeout", function($scope, $rootScope, $http, transformRequestAsFormPost, cacheService, cacheSessionService, $cookies, $timeout) {
         var cart_created, cart_data, cart_expiration, cart_hash, cart_hash_key, cart_timeout, cookie_hash, day_in_ms, err, error, refresh_cart_fragment, set_cart_creation_timestamp, set_cart_hash, set_local_fragment, timestamp_now, wc_fragments;
         $scope.parsePrice = function(price) {
           var tmp, total;
@@ -320,6 +322,14 @@ module.exports = function() {
             val = "<span class='amount'>€ <strong>" + val + "</strong>,000</span>";
           }
           return val;
+        };
+        $scope.updateCart = function() {
+          var form, updateBtn;
+          updateBtn = angular.element(document.querySelector('[name="update_cart"]'));
+          form = document.getElementById('cart-form');
+          $timeout(function() {
+            return updateBtn[0].click();
+          }, 0);
         };
         $scope.isAdding = false;
         $scope.addToCart = function(data) {

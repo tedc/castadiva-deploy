@@ -4,7 +4,7 @@
 //use Automattic\WooCommerce\Client;
 //use Automattic\WooCommerce\HttpClient\HttpClientException;
 use Roots\Sage\Assets;
-  
+
 add_filter('woocommerce_show_page_title', '__return_false');
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);
 
@@ -22,35 +22,35 @@ function my_mini_cart() {
 add_filter('woocommerce_add_to_cart_fragments', __NAMESPACE__ . '\\my_mini_cart');
 
 function my_added_msg() { ?>
-    <script>
-    var go_to_cart = '<?php echo __('Vai al<br />Carrello', 'castadiva'); ?>';
-    </script>
+<script>
+var go_to_cart = '<?php echo __('Continua<br />la spesa', 'castadiva'); ?>';
+</script>
 <?php }
 
 add_action('wp_footer', __NAMESPACE__.'\\my_added_msg');
 
 function colors() {
-    ?>
-    <style type="text/css">
-        <?php $args = array(); $product_cats = get_terms('product_cat', $args); 
-        foreach($product_cats as $cat) : ?>
-        <?php if(get_field('color', 'product_cat_'.$cat->term_id) != '') : ?>
-        .product-show-more.product_cat-<?php echo $cat->slug; ?>:hover .price, .product-show-more.product_cat-<?php echo $cat->slug; ?> .product-more .btn-text {
-            color: <?php the_field('color', 'product_cat_'.$cat->term_id); ?>;
-        }
-        .product-cat-<?php echo $cat->slug; ?> {
-            color: <?php the_field('color', 'product_cat_'.$cat->term_id); ?>;
-        }
-        <?php endif; ?>
-        <?php if(get_field('pattern', 'product_cat_'.$cat->term_id) != '') : ?>
-        .product-show-more.product_cat-<?php echo $cat->slug; ?> .product-more .pattern:before, .product_cat-<?php echo $cat->slug; ?> .related-header {
-            background-image: url(<?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['url']; ?>);
-            -moz-background-size: <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['width']/2; ?>px <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['height']/2; ?>px;
-            background-size: <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['width']/2; ?>px <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['height']/2; ?>px;
-        }
-        <?php endif; ?>
-        <?php endforeach; ?>
-    </style>
+?>
+<style type="text/css">
+    <?php $args = array(); $product_cats = get_terms('product_cat', $args); 
+                   foreach($product_cats as $cat) : ?>
+    <?php if(get_field('color', 'product_cat_'.$cat->term_id) != '') : ?>
+    .product-show-more.product_cat-<?php echo $cat->slug; ?>:hover .price, .product-show-more.product_cat-<?php echo $cat->slug; ?> .product-more .btn-text {
+        color: <?php the_field('color', 'product_cat_'.$cat->term_id); ?>;
+    }
+    .product-cat-<?php echo $cat->slug; ?> {
+        color: <?php the_field('color', 'product_cat_'.$cat->term_id); ?>;
+    }
+    <?php endif; ?>
+    <?php if(get_field('pattern', 'product_cat_'.$cat->term_id) != '') : ?>
+    .product-show-more.product_cat-<?php echo $cat->slug; ?> .product-more .pattern:before, .product_cat-<?php echo $cat->slug; ?> .related-header {
+        background-image: url(<?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['url']; ?>);
+        -moz-background-size: <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['width']/2; ?>px <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['height']/2; ?>px;
+        background-size: <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['width']/2; ?>px <?php echo get_field('pattern', 'product_cat_'.$cat->term_id)['height']/2; ?>px;
+    }
+    <?php endif; ?>
+    <?php endforeach; ?>
+</style>
 <?php }
 
 add_action('wp_head', __NAMESPACE__.'\\colors');
@@ -62,12 +62,12 @@ add_action('wp_head', __NAMESPACE__.'\\colors');
  * Manage WooCommerce styles and scripts.
  */
 function grd_woocommerce_script_cleaner() {
-	
-	// Remove the generator tag
-	remove_action( 'wp_head', array( $GLOBALS['woocommerce'], 'generator' ) );
 
-	// Unless we're in the store, remove all the cruft!
-	wp_dequeue_style( 'woocommerce_frontend_styles' );
+    // Remove the generator tag
+    remove_action( 'wp_head', array( $GLOBALS['woocommerce'], 'generator' ) );
+
+    // Unless we're in the store, remove all the cruft!
+    wp_dequeue_style( 'woocommerce_frontend_styles' );
     wp_dequeue_style( 'woocommerce-general');
     wp_dequeue_style( 'woocommerce-layout' );
     wp_dequeue_style( 'woocommerce-smallscreen' );
@@ -120,8 +120,8 @@ add_filter('woocommerce_cart_totals_order_total_html', __NAMESPACE__.'\\my_html_
 add_filter('woocommerce_cart_shipping_method_full_label', __NAMESPACE__.'\\my_html_price');
 
 function coupon_price($price) {
-	$price = str_replace(array('<span class="woocommerce-Price-amount', '<a'), array('<span class="price"><span class="woocommerce-Price-amount', '</span><br/><a'), $price);
-	return $price;
+    $price = str_replace(array('<span class="woocommerce-Price-amount', '<a'), array('<span class="price"><span class="woocommerce-Price-amount', '</span><br/><a'), $price);
+    return $price;
 }
 add_filter('woocommerce_cart_totals_coupon_html', __NAMESPACE__.'\\coupon_price');
 
@@ -135,169 +135,170 @@ add_filter('woocommerce_cart_shipping_method_full_label', __NAMESPACE__.'\\wrap_
 // FILTER HTML INPUTS
 
 function my_woocommerce_form_field( $key, $args, $value = null, $name = null, $shipping = false ) {
-		$defaults = array(
-			'type'              => 'text',
-			'label'             => '',
-			'description'       => '',
-			'placeholder'       => '',
-			'maxlength'         => false,
-			'required'          => false,
-			'autocomplete'      => false,
-			'id'                => $key,
-			'class'             => array(),
-			'label_class'       => array(),
-			'input_class'       => array(),
-			'return'            => false,
-			'options'           => array(),
-			'custom_attributes' => array(),
-			'validate'          => array(),
-			'default'           => '',
-		);
-    
-        $ngName = ($name != null) ? $name .'.' : '';
-		$args = wp_parse_args( $args, $defaults );
-		$args = apply_filters( 'woocommerce_form_field_args', $args, $key, $value );
-		if ( $args['required'] ) {
-			$args['class'][] = 'validate-required';
-			if($name == 'checkout') {
-				$required_field = ($shipping) ? ' ng-required="isShippingAddress"' : ' required';
-			} else {
-				$required_field = ' required';
-			}
-            $required_text_end = ' ('.__('Campo obbligatorio','castadiva').')';
-			$required = ' <abbr class="required" title="' . esc_attr__( 'required', 'woocommerce' ) . '">*</abbr>';
-		} else {
-            $required_text_end = '';
-            $required_field = '';
-			$required = '';
-		}
-		$args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
-		$args['autocomplete'] = ( $args['autocomplete'] ) ? 'autocomplete="' . esc_attr( $args['autocomplete'] ) . '"' : '';
-		if ( is_string( $args['label_class'] ) ) {
-			$args['label_class'] = array( $args['label_class'] );
-		}
-        $ngInit = '';
-		if ( is_null( $value ) ) {
-			$value = $args['default'];
-		} else {
-		    $ngInit = ' ng-init="' .esc_attr( $key ). '=\''.$value.'\'"';
-		}
-		// Custom attribute handling
-		$custom_attributes = array();
-		if ( ! empty( $args['custom_attributes'] ) && is_array( $args['custom_attributes'] ) ) {
-			foreach ( $args['custom_attributes'] as $attribute => $attribute_value ) {
-				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
-			}
-		}
-		if ( ! empty( $args['validate'] ) ) {
-			foreach ( $args['validate'] as $validate ) {
-				$args['class'][] = 'validate-' . $validate;
-			}
-		}
-    
-		$field = '';
-		$label_id = $args['id'];
-		$field_container = '<div class="form-row row %1$s" id="%2$s">%3$s</div>';
-        $args['placeholder'] = ($args['placeholder']!='') ? $args['placeholder'] . $required_text_end : $args['label']. $required_text_end;
-		switch ( $args['type'] ) {
-			case 'country' :
-				$countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
-				if ( 1 === sizeof( $countries ) ) {
-					$field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . ' class="country_to_state" />';
-				} else {
-                    $ngInit = 
-					$field = '<div class="select options"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Paese', 'castadiva' )  . $required_text_end. '\'" ng-class="{error : ('.$name.'.' . esc_attr( $key ) . '.$dirty && '.$name.'.' . esc_attr( $key ) . '.$invalid)}"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . $args['autocomplete'] . ' class="country_to_state country_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . '>' . '<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
-					foreach ( $countries as $ckey => $cvalue ) {
-						$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
-					}
-					$field .= '</select><i class="select-arrow select-arrow-inv"></i></div>';
-					$field .= '<noscript><input type="submit" name="woocommerce_checkout_update_totals" value="' . esc_attr__( 'Update country', 'woocommerce' ) . '" /></noscript>';
-				}
-				break;
-			case 'state' :
-				/* Get Country */
-				$country_key = 'billing_state' === $key ? 'billing_country' : 'shipping_country';
-				$current_cc  = WC()->checkout->get_value( $country_key );
-				$states      = WC()->countries->get_states( $current_cc );
-				if ( is_array( $states ) && empty( $states ) ) {
-					$field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" />';
-				} elseif ( is_array( $states ) ) {
-					$field .= '<div class="select options" ng-class="{error : ('.$name.'.' . esc_attr( $key ) . '.$dirty && '.$name.'.' . esc_attr( $key ) . '.$invalid)}"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Provincia', 'castadiva' )  . $required_text_end. '\'"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="state_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . $required_field .'>
+    $defaults = array(
+        'type'              => 'text',
+        'label'             => '',
+        'description'       => '',
+        'placeholder'       => '',
+        'maxlength'         => false,
+        'required'          => false,
+        'autocomplete'      => false,
+        'id'                => $key,
+        'class'             => array(),
+        'label_class'       => array(),
+        'input_class'       => array(),
+        'return'            => false,
+        'options'           => array(),
+        'custom_attributes' => array(),
+        'validate'          => array(),
+        'default'           => '',
+    );
+
+    $ngName = ($name != null) ? $name .'.' : '';
+    $args = wp_parse_args( $args, $defaults );
+    $args = apply_filters( 'woocommerce_form_field_args', $args, $key, $value );
+    if ( $args['required'] ) {
+        $args['class'][] = 'validate-required';
+        if($name == 'checkout') {
+            $required_field = ($shipping) ? ' ng-required="isShippingAddress"' : ' required';
+        } else {
+            $required_field = ' required';
+        }
+        $required_text_end = ' ('.__('Campo obbligatorio','castadiva').')';
+        $required = ' <abbr class="required" title="' . esc_attr__( 'required', 'woocommerce' ) . '">*</abbr>';
+    } else {
+        $required_text_end = '';
+        $required_field = '';
+        $required = '';
+    }
+    $args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
+    $args['autocomplete'] = ( $args['autocomplete'] ) ? 'autocomplete="' . esc_attr( $args['autocomplete'] ) . '"' : '';
+    if ( is_string( $args['label_class'] ) ) {
+        $args['label_class'] = array( $args['label_class'] );
+    }
+    $ngInit = '';
+    if ( is_null( $value ) ) {
+        $value = $args['default'];
+    } else {
+        $ngInit = ' ng-init="' .esc_attr( $key ). '=\''.$value.'\'"';
+    }
+    // Custom attribute handling
+    $custom_attributes = array();
+    if ( ! empty( $args['custom_attributes'] ) && is_array( $args['custom_attributes'] ) ) {
+        foreach ( $args['custom_attributes'] as $attribute => $attribute_value ) {
+            $custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+        }
+    }
+    if ( ! empty( $args['validate'] ) ) {
+        foreach ( $args['validate'] as $validate ) {
+            $args['class'][] = 'validate-' . $validate;
+        }
+    }
+    $field = '';
+    $label_id = $args['id'];
+    $field_container = '<div class="form-row row %1$s" id="%2$s">%3$s</div>';
+    $args['placeholder'] = ($args['placeholder']!='') ? $args['placeholder'] . $required_text_end : $args['label']. $required_text_end;
+    switch ( $args['type'] ) {
+        case 'country' :
+            $countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
+            if ( 1 === sizeof( $countries ) ) {
+                $field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . ' class="country_to_state" />';
+            } else {
+                $ngInit = 
+                    $field = '<div class="select options"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Paese', 'castadiva' )  . $required_text_end. '\'" ng-class="{error : ('.$name.'.' . esc_attr( $key ) . '.$dirty && '.$name.'.' . esc_attr( $key ) . '.$invalid)}"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . $args['autocomplete'] . ' class="country_to_state country_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . '>' . '<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
+                foreach ( $countries as $ckey => $cvalue ) {
+                    $field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
+                }
+                $field .= '</select><i class="select-arrow select-arrow-inv"></i></div>';
+                $field .= '<noscript><input type="submit" name="woocommerce_checkout_update_totals" value="' . esc_attr__( 'Update country', 'woocommerce' ) . '" /></noscript>';
+            }
+            break;
+        case 'state' :
+            /* Get Country */
+            $country_key = 'billing_state' === $key ? 'billing_country' : 'shipping_country';
+            $current_cc  = WC()->checkout->get_value( $country_key );
+            $states      = WC()->countries->get_states( $current_cc );
+            if ( is_array( $states ) && empty( $states ) ) {
+                $field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" />';
+            } elseif ( is_array( $states ) ) {
+                $field .= '<div class="select options" ng-class="{error : ('.$name.'.' . esc_attr( $key ) . '.$dirty && '.$name.'.' . esc_attr( $key ) . '.$invalid)}"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Provincia', 'castadiva' )  . $required_text_end. '\'"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="state_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit .' data-placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . $required_field .'>
 						<option value="">' . __( 'Select a state&hellip;', 'woocommerce' ) . '</option>';
-					foreach ( $states as $ckey => $cvalue ) {
-						$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
-					}
-					$field .= '</select><i class="select-arrow select-arrow-inv"></i></div>';
-				} else {
-					$field .= '<input type="text" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $value ) . '"  placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . ' name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . ' />';
-				}
-				break;
-			case 'textarea' :
-				$field .= '<textarea name="' . esc_attr( $key ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' ' . ( empty( $args['custom_attributes']['rows'] ) ? ' rows="2"' : '' ) . ( empty( $args['custom_attributes']['cols'] ) ? ' cols="5"' : '' ) . implode( ' ', $custom_attributes ) . $ngInit . '>' . esc_textarea( $value ) . '</textarea>';
-				break;
-			case 'checkbox' :
-				$field = '<input type="' . esc_attr( $args['type'] ) . '" class="input-checkbox ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="1" ' . checked( $value, 1, false ) . ' />';
-                $field .= '<label class="checkbox ' . implode( ' ', $args['label_class'] ) . '" ' . implode( ' ', $custom_attributes ) . '>'
-						 . $args['label'] . $required . '</label>';
-				break;
-			case 'password' :
-			case 'text' :
-			case 'email' :
-			case 'tel' :
-			case 'number' :
-				$field .= '<input ng-model="'. esc_attr( $key ) .'" type="' . esc_attr( $args['type'] ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' '.$required_field.' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . ' />';
-				break;
-			case 'select' :
-				$options = $field = '';
-				if ( ! empty( $args['options'] ) ) {
-					foreach ( $args['options'] as $option_key => $option_text ) {
-						if ( '' === $option_key ) {
-							// If we have a blank option, select2 needs a placeholder
-							if ( empty( $args['placeholder'] ) ) {
-								$args['placeholder'] = $option_text ? $option_text : __( 'Choose an option', 'woocommerce' );
-							}
-							$custom_attributes[] = 'data-allow_clear="true"';
-						}
-						$options .= '<option value="' . esc_attr( $option_key ) . '" ' . selected( $value, $option_key, false ) . '>' . esc_attr( $option_text ) . '</option>';
-					}
-					$field .= '<div class="select options"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Select&hellip;', 'woocommerce' )  .'\'" ng-class="{error : ('.$name.'.' . esc_attr( $key ) . '.$dirty && '.$name.'.' . esc_attr( $key ) . '.$invalid)}"><<select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . $ngInit . '>
+                foreach ( $states as $ckey => $cvalue ) {
+                    $field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
+                }
+                $field .= '</select><i class="select-arrow select-arrow-inv"></i></div>';
+            } else {
+                $field .= '<input type="text" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $value ) . '"  placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . ' name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . ' />';
+            }
+            break;
+        case 'textarea' :
+            $field .= '<textarea name="' . esc_attr( $key ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' ' . $args['autocomplete'] . ' ' . ( empty( $args['custom_attributes']['rows'] ) ? ' rows="2"' : '' ) . ( empty( $args['custom_attributes']['cols'] ) ? ' cols="5"' : '' ) . implode( ' ', $custom_attributes ) . $ngInit . '>' . esc_textarea( $value ) . '</textarea>';
+            break;
+        case 'checkbox' :
+            $field = '<input type="' . esc_attr( $args['type'] ) . '" class="input-checkbox ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="1" ' . checked( $value, 1, false ) . ' />';
+            $field .= '<label class="checkbox ' . implode( ' ', $args['label_class'] ) . '" ' . implode( ' ', $custom_attributes ) . '>'
+                . $args['label'] . $required . '</label>';
+            break;
+        case 'password' :
+        case 'text' :
+        case 'email' :
+        case 'tel' :
+        case 'number' :
+            $field .= '<input ng-model="'. esc_attr( $key ) .'" type="' . esc_attr( $args['type'] ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' '.$required_field.' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . ' />';
+            break;
+        case 'select' :
+            $options = $field = '';
+            if ( ! empty( $args['options'] ) ) {
+                foreach ( $args['options'] as $option_key => $option_text ) {
+                    if ( '' === $option_key ) {
+                        // If we have a blank option, select2 needs a placeholder
+                        if ( empty( $args['placeholder'] ) ) {
+                            $args['placeholder'] = $option_text ? $option_text : __( 'Choose an option', 'woocommerce' );
+                        }
+                        $custom_attributes[] = 'data-allow_clear="true"';
+                    }
+                    $options .= '<option value="' . esc_attr( $option_key ) . '" ' . selected( $value, $option_key, false ) . '>' . esc_attr( $option_text ) . '</option>';
+                }
+                $field .= '<div class="select options"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Select&hellip;', 'woocommerce' )  .'\'" ng-class="{error : ('.$name.'.' . esc_attr( $key ) . '.$dirty && '.$name.'.' . esc_attr( $key ) . '.$invalid)}"><<select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['autocomplete'] . $ngInit . '>
 							' . $options . '
 						</select><i class="select-arrow select-arrow-inv"></i></div>';
-				}
-				break;
-			case 'radio' :
-				$label_id = current( array_keys( $args['options'] ) );
-				if ( ! empty( $args['options'] ) ) {
-					foreach ( $args['options'] as $option_key => $option_text ) {
-						$field .= '<input type="radio" class="input-radio ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $option_key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '_' . esc_attr( $option_key ) . '"' . checked( $value, $option_key, false ) . ' />';
-						$field .= '<label for="' . esc_attr( $args['id'] ) . '_' . esc_attr( $option_key ) . '" class="radio ' . implode( ' ', $args['label_class'] ) . '">' . $option_text . '</label>';
-					}
-				}
-				break;
-		}
-		if ( ! empty( $field ) ) {
-			$field_html = '';
-			if ( $args['label'] && 'checkbox' != $args['type'] ) {
-				
-			}
-			$field_html .= $field;
-			if ( $args['description'] ) {
-				$field_html .= '<span class="description">' . esc_html( $args['description'] ) . '</span>';
-			}
-			$container_class = 'form-row ' . esc_attr( implode( ' ', $args['class'] ) );
-			$container_id = esc_attr( $args['id'] ) . '_field';
-			$field = sprintf( $field_container, $container_class, $container_id, $field_html ) ;
-		}
-		$field = apply_filters( 'woocommerce_form_field_' . $args['type'], $field, $key, $args, $value );
-		if ( $args['return'] ) {
-			return $field;
-		} else {
-			echo $field;
-		}
-	}
+            }
+            break;
+        case 'radio' :
+            $label_id = current( array_keys( $args['options'] ) );
+            if ( ! empty( $args['options'] ) ) {
+                foreach ( $args['options'] as $option_key => $option_text ) {
+                    $field .= '<input type="radio" class="input-radio ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $option_key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '_' . esc_attr( $option_key ) . '"' . checked( $value, $option_key, false ) . ' />';
+                    $field .= '<label for="' . esc_attr( $args['id'] ) . '_' . esc_attr( $option_key ) . '" class="radio ' . implode( ' ', $args['label_class'] ) . '">' . $option_text . '</label>';
+                }
+            }
+            break;
+    
+    }
+    if ( ! empty( $field ) ) {
+        $field_html = '';
+        if ( $args['label'] && 'checkbox' != $args['type'] ) {
+
+        }
+        $field_html .= $field;
+        if ( $args['description'] ) {
+            $field_html .= '<span class="description">' . esc_html( $args['description'] ) . '</span>';
+        }
+        $container_class = 'form-row ' . esc_attr( implode( ' ', $args['class'] ) );
+        $container_id = esc_attr( $args['id'] ) . '_field';
+        $field = sprintf( $field_container, $container_class, $container_id, $field_html ) ;
+    }
+    $field = apply_filters( 'woocommerce_form_field_' . $args['type'], $field, $key, $args, $value );
+    if ( $args['return'] ) {
+        return $field;
+    } else {
+        echo $field;
+    }
+}
 function add_ng_model_quantity($args, $product) {
     $new_array = array(
-        'ng_model' => apply_filters( 'woocommerce_quantity_input_max', '', $product )
+        'ng_model' => apply_filters( 'woocommerce_quantity_input_max', '', $product ),
+        'ng_change' => ''
     );
     array_push($args, $new_array);
     return $args;
@@ -312,7 +313,7 @@ function checkout_steps() {
 }
 
 function cart_item_after() {
-     echo '</div></div>';
+    echo '</div></div>';
 }
 
 add_action('woocommerce_before_cart', __NAMESPACE__.'\\checkout_steps');
@@ -332,11 +333,11 @@ add_action('woocommerce_after_checkout_billing_form', __NAMESPACE__.'\\closing_w
 add_action('woocommerce_after_checkout_shipping_form', __NAMESPACE__.'\\closing_wrapper_after');
 
 function my_after_cart() {
-    ?>
-    </div>   
-    <div class="cart-wrapper" ng-show="miniCartItems.count < 1">
-        <?php wc_get_template('cart/cart-empty.php'); ?>
-    </div>
+?>
+</div>   
+<div class="cart-wrapper" ng-show="miniCartItems.count < 1">
+    <?php wc_get_template('cart/cart-empty.php'); ?>
+</div>
 <?php }
 
 
@@ -365,9 +366,9 @@ add_action('woocommerce_review_order_after_submit', __NAMESPACE__.'\\closing_wra
 // PAYPAL ICON
 
 function replacePayPalIcon($iconUrl) {
-	return Assets\asset_path('/img/paypal.png');
+    return Assets\asset_path('/img/paypal.png');
 }
- 
+
 add_filter('woocommerce_paypal_icon', __NAMESPACE__.'\\replacePayPalIcon');
 
 function coupon_message($msg) {
@@ -390,9 +391,9 @@ function set_my_api() {
             'verify_ssl' => false
         ]
     );
-//    $results = $woocommerce->get('products');
+    //    $results = $woocommerce->get('products');
     try {
-        
+
         // Array of response results.
         $results = $woocommerce->get('products');
         // Example: ['customers' => [[ 'id' => 8, 'created_at' => '2015-05-06T17:43:51Z', 'email' => ...
@@ -429,31 +430,31 @@ add_filter( 'registration_redirect', __NAMESPACE__.'\\wpse_19692_registration_re
 
 add_filter('woocommerce_registration_errors', 'registration_errors_validation', 10,3);
 function registration_errors_validation($reg_errors, $sanitized_user_login, $user_email) {
-	global $woocommerce;
-	extract( $_POST );
+    global $woocommerce;
+    extract( $_POST );
 
-	if ( strcmp( $password, $password2 ) !== 0 ) {
-		return new WP_Error( 'registration-error', __( 'Passwords do not match.', 'woocommerce' ) );
-	}
-	return $reg_errors;
+    if ( strcmp( $password, $password2 ) !== 0 ) {
+        return new WP_Error( 'registration-error', __( 'Passwords do not match.', 'woocommerce' ) );
+    }
+    return $reg_errors;
 }
 
 add_action( 'woocommerce_register_form', 'wc_register_form_password_repeat' );
 function wc_register_form_password_repeat() {
-	?>
-	<p class="frow-btm row-md-btm">
-		<input type="password" class="input-text" name="password2" id="reg_password2" ng-init="password2 =(registerForm.password2.$error.pattern && registerForm.password2.$touched && registerForm.password2.$dirty) ? '<?php echo __('La password non corrisponde', 'castadiva'); ?>' : password2" placeholder="<?php echo __('Conferma password (obbligatorio)', 'castadiva'); ?>" ng-pattern="password" ng-model="password2" required />
-        <span class="password-error" ng-show="(registerForm.password2.$error.pattern && registerForm.password2.$touched && registerForm.password2.$dirty)" ng-bind-html="'<?php echo __('La password non corrisponde', 'castadiva'); ?>'"></span>
-	</p>
-	<?php
-}
+?>
+<p class="frow-btm row-md-btm">
+    <input type="password" class="input-text" name="password2" id="reg_password2" ng-init="password2 =(registerForm.password2.$error.pattern && registerForm.password2.$touched && registerForm.password2.$dirty) ? '<?php echo __('La password non corrisponde', 'castadiva'); ?>' : password2" placeholder="<?php echo __('Conferma password (obbligatorio)', 'castadiva'); ?>" ng-pattern="password" ng-model="password2" required />
+    <span class="password-error" ng-show="(registerForm.password2.$error.pattern && registerForm.password2.$touched && registerForm.password2.$dirty)" ng-bind-html="'<?php echo __('La password non corrisponde', 'castadiva'); ?>'"></span>
+</p>
+<?php
+                                            }
 
 add_filter( 'wp_login_failed', __NAMESPACE__. '\\my_login_fail', 10, 1 );  // hook failed login
 
 function my_login_fail( $user ) {
-	global $wp;
-	$current_url = wp_get_referer();
-	$string = "?login_error";
+    global $wp;
+    $current_url = wp_get_referer();
+    $string = "?login_error";
     //redirect to custom login page and append login error flag
     $redirect = str_replace($string, '', $current_url) . $string;
     wp_redirect($redirect);
@@ -462,31 +463,118 @@ function my_login_fail( $user ) {
 
 // Hook in
 add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 
 // Our hooked in function - $fields is passed via the filter!
 function custom_override_checkout_fields( $fields ) {
-    
-     
+
+
     if(ICL_LANGUAGE_CODE == 'it') {
         $fields['billing']['billing_cf'] = array(
-        'label'     => __('Codice Fiscale o P.Iva', 'castadiva'),
-    'placeholder'   => _x('Codice Fiscale o P.Iva', 'placeholder', 'castadiva'),
-    'required'  => true,
-    'class'     => array('form-row-wide'),
-    'clear'     => true
-     );
+            'label'     => __('Codice Fiscale o P.Iva', 'castadiva'),
+            'placeholder'   => _x('Codice Fiscale o P.Iva', 'placeholder', 'castadiva'),
+            'required'  => true,
+            'class'     => array('form-row-wide'),
+            'clear'     => true, 
+            'default'           => '',
+        );
     }
-    
-        return $fields;
-     
+    return $fields;
+
 }
 
+// Add Codice fiscale o P.Iva and SSN fields in billing address display
+add_filter( 'woocommerce_order_formatted_billing_address', 'custom_add_vat_ssn_formatted_billing_address', 10, 2 );
+function custom_add_vat_ssn_formatted_billing_address( $fields, $order ) {
+	$fields['cf'] = $order->billing_cf;
+
+	return $fields;
+}
+
+add_filter( 'woocommerce_my_account_my_address_formatted_address', 'custom_my_account_my_address_formatted_address', 10, 3 );
+function custom_my_account_my_address_formatted_address( $fields, $customer_id, $type ) {
+	if ( $type == 'billing' ) {
+		$fields['cf'] =  get_user_meta( $customer_id, 'billing_cf', true );
+	}
+
+	return $fields;
+}
+
+add_filter( 'woocommerce_address_to_edit', 'custom_address_to_edit' );
+function custom_address_to_edit( $address ) {
+    global $wp_query;
+    if(is_wc_endpoint_url('edit-address') && $wp_query->query_vars['edit-address'] != _x( 'billing', 'edit-address-slug', 'woocommerce' )) {
+        return $address;
+    }
+	if ( ! isset( $address['cf'] ) ) {
+    	$address['billing_cf'] = array(
+        	'label'       => __( 'Codice fiscale o P.Iva', 'castadiva' ),
+            'placeholder' => _x( 'Codice fiscale o P.Iva', 'placeholder', 'castadiva' ),
+            'required'    => true, //change to false if you do not need this field to be required
+            'class'       => array( 'form-row-first' ),
+            'value'       => strtoupper( get_user_meta( get_current_user_id(), 'billing_cf', true ) )
+        );
+    }
+
+    return $address;
+}
+
+add_filter( 'woocommerce_formatted_address_replacements', 'custom_formatted_address_replacements', 10, 2 );
+function custom_formatted_address_replacements( $address, $args ) {
+	$address['{cf}'] = '';
+	if ( ! empty( $args['cf'] ) ) {
+		$address['{=}'] = __( 'Codice fiscale o P.Iva', 'castadiva' ) . ' ' . $args['cf'];
+	}
+
+
+	return $address;
+}
+//
+//add_filter( 'woocommerce_localisation_address_formats', 'custom_localisation_address_format' );
+//function custom_localisation_address_format( $formats ) {
+//	$formats['IT'] .= "\n\n{vat}\n{ssn}";
+//
+//	return $formats;
+//}
+
+add_filter( 'woocommerce_admin_billing_fields', 'custom_admin_billing_fields' );
+function custom_admin_billing_fields( $fields ) {
+	$fields['vat'] = array(
+		'label' => __( 'Codice fiscale o P.Iva', 'castadiva' ),
+		'show'  => true
+	);
+
+	return $fields;
+}
+
+add_filter( 'woocommerce_found_customer_details', 'custom_found_customer_details' );
+function custom_found_customer_details( $customer_data ) {
+	$customer_data['billing_cf'] = get_user_meta( $_POST['user_id'], 'billing_cf', true );
+
+	return $customer_data;
+}
+
+add_filter( 'woocommerce_customer_meta_fields', 'custom_customer_meta_fields' );
+function custom_customer_meta_fields( $fields ) {
+	$fields['billing']['fields']['cf'] = array(
+		'label'       => __( 'Codice fiscale o P.Iva', 'castadiva' )
+	);
+
+	return $fields;
+}
 /**
  * Display field value on the order edit page
  */
- 
-add_action( 'woocommerce_admin_order_data_after_shipping_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
+
+add_filter('woocommerce_email_order_meta_keys', 'my_custom_order_meta_keys');
+
+function my_custom_order_meta_keys( $keys ) {
+     $keys[] = 'billing_cf'; // This will look for a custom field called 'Tracking Code' and add it to emails
+     return $keys;
+}
+
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
 
 function my_custom_checkout_field_display_admin_order_meta($order){
-    echo '<p><strong>'.__('Phone From Checkout Form').':</strong> ' . get_post_meta( $order->id, '_shipping_phone', true ) . '</p>';
+    echo '<p><strong>'.__('Codice fiscale o P.Iva').':</strong> ' .strtoupper(  get_post_meta( $order->id, 'billing_cf', true ) ) . '</p>';
 }

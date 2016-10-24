@@ -28,7 +28,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 
 
-<form action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
+<form id="cart-form" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
 
 <?php do_action( 'woocommerce_before_cart_table' ); ?>
     
@@ -84,7 +84,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 									'input_value' => $cart_item['quantity'],
 									'max_value'   => $_product->backorders_allowed() ? '' : $_product->get_stock_quantity(),
 									'min_value'   => '0',
-                                    'ng_model'    => 'quantity['. $_product->id . ']'
+                                    'ng_model'    => 'quantity['. $_product->id . ']',
+					               'ng_change' => 'updateCart()'
 								), $_product, false );
 							}
 
@@ -125,8 +126,12 @@ do_action( 'woocommerce_before_cart' ); ?>
                 <?php do_action( 'woocommerce_cart_coupon' ); ?>
             <?php } ?>
             <nav class="cart-buttons">
-                <?php Extras\btn($text = __( 'Svuota', 'castadiva' ), $link = wc_get_cart_url() .'?empty-cart=clearcart', $btn = false, $name= null, $size = 'xs-size'); ?> 
-                <?php Extras\btn($text = __( 'Aggiorna', 'castadiva' ), $link = null, $btn = true, $name="update_cart",$size = 'xs-size'); ?>
+                <button class="btn xs-size" name="update_cart" type="submit" value="<?php echo  __( 'Aggiorna', 'castadiva' ); ?>">
+                    <span class="btn-text"><?php echo  __( 'Aggiorna', 'castadiva' ); ?></span>
+                </button>
+                <a class="btn xs-size" href="<?php echo esc_url( wc_get_checkout_url() ) ;?>">
+                    <span class="btn-text"><?php echo  __( 'Concludi<br/>l\'ordine', 'castadiva' ); ?></span>
+                </a>
             </nav>
         </div>
         <?php do_action( 'woocommerce_cart_actions' ); ?>

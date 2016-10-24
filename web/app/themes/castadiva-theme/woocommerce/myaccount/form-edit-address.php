@@ -29,7 +29,7 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 	<?php wc_get_template( 'myaccount/my-address.php' ); ?>
 <?php else : ?>
 
-	<form method="post">
+	<form method="post" novalidate action="" name="billingAddress">
 
 		<h3 class="title aligncenter row-btm"><?php echo apply_filters( 'woocommerce_my_account_edit_address_title', $page_title ); ?></h3>
         <div class="form-row-container">
@@ -37,7 +37,7 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 
         <?php foreach ( $address as $key => $field ) : ?>
 
-            <?php my_woocommerce_form_field( $key, $field, ! empty( $_POST[ $key ] ) ? wc_clean( $_POST[ $key ] ) : $field['value'] ); ?>
+            <?php my_woocommerce_form_field( $key, $field, ! empty( $_POST[ $key ] ) ? wc_clean( $_POST[ $key ] ) : $field['value'], 'billingAddress', false ); ?>
 
         <?php endforeach; ?>
 

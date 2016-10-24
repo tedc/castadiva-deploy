@@ -20,9 +20,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 $ngModel = esc_attr( $ng_model ) != '' ? ' ng-model="'.esc_attr( $ng_model ).'" ng-init="' .esc_attr( $ng_model ). '='.esc_attr( $input_value ). '"': '';
+$ngChange = esc_attr( $ng_change ) != '' ? ' ng-blur="'.esc_attr( $ng_change ).'"' : '';
+$ngClick = esc_attr( $ng_change ) != '' ? '; '.esc_attr( $ng_change ).'"' : '';
+$ngModel = $ngModel . $ngChange;
 ?>
 <div class="quantity">
-<span class="minus" ng-click="<?php echo esc_attr( $ng_model ); ?> = <?php echo esc_attr( $ng_model ); ?> > <?php echo esc_attr( $min_value ); ?> ? <?php echo esc_attr( $ng_model ); ?> - 1 : <?php echo esc_attr( $min_value ); ?>">-</span>
+<span class="minus" ng-click="<?php echo esc_attr( $ng_model ); ?> = <?php echo esc_attr( $ng_model ); ?> > <?php echo esc_attr( $min_value ); ?> ? <?php echo esc_attr( $ng_model ); ?> - 1 : <?php echo esc_attr( $min_value ); ?><?php echo $ngClick; ?>">-</span>
 <input type="number" step="<?php echo esc_attr( $step ); ?>" min="<?php echo esc_attr( $min_value ); ?>" max="<?php echo esc_attr( $max_value ); ?>" name="<?php echo esc_attr( $input_name ); ?>" value="<?php echo esc_attr( $input_value ); ?>" title="<?php echo esc_attr_x( 'Qty', 'Product quantity input tooltip', 'woocommerce' ) ?>" class="input-text qty text" size="4" pattern="<?php echo esc_attr( $pattern ); ?>" inputmode="<?php echo esc_attr( $inputmode ); ?>"<?php echo $ngModel; ?> />
-<span ng-click="<?php echo esc_attr( $ng_model ); ?> = <?php if(esc_attr( $max_value ) != '') : ?><?php echo esc_attr( $ng_model ); ?> < <?php echo esc_attr( $max_value ); ?> && <?php endif; ?><?php echo esc_attr( $ng_model ); ?> + 1">+</span>
+<span ng-click="<?php echo esc_attr( $ng_model ); ?> = <?php if(esc_attr( $max_value ) != '') : ?><?php echo esc_attr( $ng_model ); ?> < <?php echo esc_attr( $max_value ); ?> && <?php endif; ?><?php echo esc_attr( $ng_model ); ?> + 1<?php echo $ngClick; ?>">+</span>
 </div>
