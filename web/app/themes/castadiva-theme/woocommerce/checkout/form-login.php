@@ -29,10 +29,12 @@ if ( is_user_logged_in() || 'no' === get_option( 'woocommerce_enable_checkout_lo
 //wc_print_notice( $info_message, 'notice' );
 ?>
 
+<?php $register_url = ' Altrimenti procedi alla registrazione <a href="'. get_permalink( get_option('woocommerce_myaccount_page_id') ).'" title="'.__('Registrati','castadiva').'">'.__('procedi alla regristrazione','castadiva').'</a>'; ?>
+
 <?php
 	woocommerce_login_form(
 		array(
-			'message'  => __( 'If you have shopped with us before, please enter your details in the boxes below. If you are a new customer, please proceed to the Billing &amp; Shipping section.', 'woocommerce' ),
+			'message'  => __( 'Se hai precedentemente acquistato da noi, inserisci i tuoi dettagli nei campi qui sotto.', 'castaadiva' ).$register_url,
 			'redirect' => wc_get_page_permalink( 'checkout' ),
 			'hidden'   => true
 		)

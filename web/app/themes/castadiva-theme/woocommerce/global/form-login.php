@@ -45,8 +45,11 @@ $current_url = home_url(add_query_arg(array(),$wp->request));
             <input name="rememberme" type="checkbox" id="rememberme" value="forever" /><label for="rememberme" class="inline"><?php _e( 'Remember me', 'woocommerce' ); ?></label>
         </p>
         <p class="lost_password">
-            <a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php _e( 'Lost your password?', 'woocommerce' ); ?></a><br />
+            <a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php _e( 'Lost your password?', 'woocommerce' ); ?></a>
+            <?php if(!is_checkout()) : ?>
+            <br />
             <?php echo __('Non hai ancora un utente?', 'castadiva'); ?> <a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Registrati','castadiva'); ?>"><?php _e('Registrati','castadiva'); ?></a>.
+            <?php endif; ?>
         </p>
     </div>
     <p class="buttons">
