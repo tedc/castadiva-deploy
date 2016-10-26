@@ -386,10 +386,13 @@ module.exports = function() {
         };
         ajax_checkout = function() {
           var data, formData, url;
-          if (typeof wc_checkout_params === "undefined" || wc_checkout_params === null) {
+          if (typeof current_user_country === "undefined" || current_user_country === null) {
             return;
           }
-          if (wc_checkout_params.is_checkout === '1') {
+          if (typeof wc_checkout_params !== "undefined" && wc_checkout_params !== null) {
+            if (wc_checkout_params.is_checkout !== '1') {
+              return;
+            }
             formData = {
               billing_country: $scope.billing_country,
               billing_state: $scope.billing_state,
@@ -424,18 +427,31 @@ module.exports = function() {
               post_data: $httpParamSerializerJQLike(formData)
             };
             url = get_url(wc_checkout_params, 'update_order_review');
-            $http.post(url, data, {
-              headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-              },
-              transformRequest: transformRequestAsFormPost
-            }).then(function(response) {
-              var div, total;
-              div = document.querySelector('.checkout-order-review');
-              total = response.data.fragments['.woocommerce-checkout-review-order-table'];
-              updateCartTotal(div, total);
-            });
+          } else {
+            data = {
+              security: sercurity_update,
+              s_country: current_user_country,
+              post_data: $httpParamSerializerJQLike({
+                billing_country: current_user_country
+              })
+            };
+            url = user_ajax_url + "update_order_review";
           }
+          $http.post(url, data, {
+            headers: {
+              "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+            },
+            transformRequest: transformRequestAsFormPost
+          }).then(function(response) {
+            var cart_total, cart_total_div, div, total;
+            div = document.querySelector('.checkout-order-review');
+            total = response.data.fragments['.woocommerce-checkout-review-order-table'];
+            cart_total = response.data.fragments.cart_total_updated;
+            console.log(response.data.fragments.cart_total_updated);
+            updateCartTotal(div, total);
+            cart_total_div = document.querySelector('.cart-collaterals');
+            updateCartTotal(cart_total_div, cart_total);
+          });
         };
         updateCartTotal = function(div, total) {
           var cartTotals;

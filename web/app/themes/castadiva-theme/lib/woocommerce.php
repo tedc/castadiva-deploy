@@ -24,6 +24,11 @@ add_filter('woocommerce_add_to_cart_fragments', __NAMESPACE__ . '\\my_mini_cart'
 function my_added_msg() { ?>
 <script>
 var go_to_cart = '<?php echo __('Continua<br />la spesa', 'castadiva'); ?>';
+<?php if(is_user_logged_in()) : ?>
+var current_user_country = '<?php echo get_user_meta(get_current_user_id(), 'billing_country', true); ?>';
+var sercurity_update = '<?php echo wp_create_nonce( 'update-order-review' ); ?>';
+var user_ajax_url = '<?php echo esc_url( wc_get_checkout_url() ); ?>?wc-ajax=';
+<?php endif; ?>
 </script>
 <?php }
 
@@ -515,4 +520,22 @@ function my_hide_shipping_when_free_is_available( $rates ) {
 }
 add_filter( 'woocommerce_package_rates', 'my_hide_shipping_when_free_is_available', 100 );
 
+function my_checkout_update_filters($args) {
+    if ( ! defined( 'WOOCOMMERCE_CART' ) ) {
+			define( 'WOOCOMMERCE_CART', true );
+		}
+
+		WC()->cart->calculate_totals();
+    ob_start();
+    wc_get_template( 'cart/cart-totals.php' );
+    $fragment = ob_get_contents();
+    ob_end_clean();
+    $args['cart_total_updated'] = $fragment;
+
+	return $args;
+    die();
+}
+
+
+add_filter('woocommerce_update_order_review_fragments', 'my_checkout_update_filters');
 require_once 'cf.php';
