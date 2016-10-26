@@ -477,7 +477,8 @@ function custom_override_checkout_fields( $fields ) {
             'required'  => true,
             'class'     => array('form-row-wide'),
             'clear'     => true, 
-            'default'           => '',
+            'description' => '',
+            'default'     => '',
         );
     }
     return $fields;
@@ -496,11 +497,24 @@ function custom_add_vat_ssn_formatted_billing_address( $fields, $order ) {
  * This is to save user input into database
  * hook: woocommerce_save_account_details
  */
+
+add_filter( 'woocommerce_process_myaccount_field_billing_cf' , 'validate_edit_address' );
+function validate_edit_address() {
+
+    $variable = $_POST['billing_cf'];
+    if( strlen($variable) > 16){     
+        wc_add_notice( __( '<strong>Error</strong>' ), 'error' );
+    }
+    if( strlen($variable) < 16){     
+        wc_add_notice( __( '<strong>Error</strong>' ), 'error' );
+    }
+    return $variable ; 
+} 
 add_action( 'woocommerce_save_account_details', 'my_woocommerce_save_account_details');
  
 function my_woocommerce_save_account_details( $user_id ) {
-    $semail = ! empty( $_POST['billing_cf'] ) ? wc_clean( $_POST['billing_cf'] ) : '';
-	update_user_meta( $user_id, 'billing_cf',  $_POST[ 'billing_cf' ] ); 
+    $cf = ! empty( $_POST['billing_cf'] ) ? wc_clean( $_POST['billing_cf'] ) : '';
+    update_user_meta( $user_id, 'billing_cf',  $cf ); 
 } // end func
 
 add_filter( 'woocommerce_my_account_my_address_formatted_address', 'custom_my_account_my_address_formatted_address', 10, 3 );
@@ -510,6 +524,27 @@ function custom_my_account_my_address_formatted_address( $fields, $customer_id, 
 	}
 
 	return $fields;
+}
+
+add_action( 'user_profile_update_errors','wooc_validate_custom_field', 10, 1 );
+
+// or
+
+add_action( 'woocommerce_save_account_details_errors','wooc_validate_custom_field', 10, 1 );
+
+// with something like:
+
+function wooc_validate_custom_field( $args )
+{
+    if ( isset( $_POST['billing_cf'] ) ) // Your custom field
+    {
+        if( strlen($_POST['billing_cf']) > 16){
+            $args->add( 'error', __( 'Codice fiscale troppo lungo', 'castadiva' ),'');
+        }
+        if( strlen($_POST['billing_cf']) < 16){
+            $args->add( 'error', __( 'Codice fiscale troppo corto', 'castadiva' ),'');
+        }
+    }
 }
 
 add_filter( 'woocommerce_address_to_edit', 'custom_address_to_edit' );
@@ -528,6 +563,7 @@ function custom_address_to_edit( $address ) {
             'placeholder' => _x( 'Codice fiscale o P.Iva', 'placeholder', 'castadiva' ),
             'required'    => true, //change to false if you do not need this field to be required
             'class'       => array( 'form-row-first' ),
+            'description' => '',
             'value'       => strtoupper( get_user_meta( get_current_user_id(), 'billing_cf', true ) )
         );
     }
@@ -554,7 +590,7 @@ function custom_formatted_address_replacements( $address, $args ) {
 
 add_filter( 'woocommerce_admin_billing_fields', 'custom_admin_billing_fields' );
 function custom_admin_billing_fields( $fields ) {
-	$fields['cf'] = array(
+	$fields['billing_cf'] = array(
 		'label' => __( 'Codice fiscale o P.Iva', 'castadiva' ),
 		'show'  => true
 	);
@@ -571,8 +607,9 @@ function custom_found_customer_details( $customer_data ) {
 
 add_filter( 'woocommerce_customer_meta_fields', 'custom_customer_meta_fields' );
 function custom_customer_meta_fields( $fields ) {
-	$fields['billing']['fields']['cf'] = array(
-		'label'       => __( 'Codice fiscale o P.Iva', 'castadiva' )
+	$fields['billing']['fields']['billing_cf'] = array(
+		'label'       => __( 'Codice fiscale o P.Iva', 'castadiva' ),
+        'description' => ''
 	);
 
 	return $fields;

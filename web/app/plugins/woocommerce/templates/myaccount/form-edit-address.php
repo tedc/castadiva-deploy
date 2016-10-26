@@ -36,7 +36,7 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 
 		<?php foreach ( $address as $key => $field ) : ?>
 
-			<?php my_woocommerce_form_field( $key, $field, ! empty( $_POST[ $key ] ) ? wc_clean( $_POST[ $key ] ) : $field['value'] ); ?>
+			<?php woocommerce_form_field( $key, $field, ! empty( $_POST[ $key ] ) ? wc_clean( $_POST[ $key ] ) : $field['value'] ); ?>
 
 		<?php endforeach; ?>
 

@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<p class="aligncenter"><?php
+<p><?php
 	printf(
 		__( 'Order #%1$s was placed on %2$s and is currently %3$s.', 'woocommerce' ),
 		'<mark class="order-number">' . $order->get_order_number() . '</mark>',
