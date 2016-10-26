@@ -82,7 +82,7 @@ function grd_woocommerce_script_cleaner() {
     //wp_dequeue_script( 'wc-add-to-cart' );
     //wp_dequeue_script( 'wc-cart-fragments' );
     wp_dequeue_script( 'wc-credit-card-form' );
-    wp_dequeue_script( 'wc-checkout' );
+    //wp_dequeue_script( 'wc-checkout' );
     wp_dequeue_script( 'wc-add-to-cart-variation' );
     wp_dequeue_script( 'wc-cart' );
     wp_dequeue_script( 'wc-chosen' );
@@ -201,11 +201,12 @@ function my_woocommerce_form_field( $key, $args, $value = null, $name = null, $s
     switch ( $args['type'] ) {
         case 'country' :
             $countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
+            $ngChange = ($name == 'checkout') ? ' ng-change="updateCheckout(' . esc_attr( $key ) . ', isShippingAddress)"' : '';
             if ( 1 === sizeof( $countries ) ) {
                 $field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . ' class="country_to_state" />';
             } else {
                 $ngInit = 
-                    $field = '<div class="select options"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Paese', 'castadiva' )  . $required_text_end. '\'" ng-class="{error : ('.$name.'.' . esc_attr( $key ) . '.$dirty && '.$name.'.' . esc_attr( $key ) . '.$invalid)}"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . $args['autocomplete'] . ' class="country_to_state country_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . '>' . '<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
+                    $field = '<div class="select options"><span class="select-text" ng-bind-html="(' . esc_attr( $key ) . ') ? ' . esc_attr( $key ) . ' : \'' . __( 'Paese', 'castadiva' )  . $required_text_end. '\'" ng-class="{error : ('.$name.'.' . esc_attr( $key ) . '.$dirty && '.$name.'.' . esc_attr( $key ) . '.$invalid)}"></span><select ng-model="' . esc_attr( $key ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . $args['autocomplete'] . ' class="country_to_state country_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . $ngChange . '>' . '<option value="">' . __( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
                 foreach ( $countries as $ckey => $cvalue ) {
                     $field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
                 }
@@ -491,6 +492,17 @@ function custom_add_vat_ssn_formatted_billing_address( $fields, $order ) {
 	return $fields;
 }
 
+/**
+ * This is to save user input into database
+ * hook: woocommerce_save_account_details
+ */
+add_action( 'woocommerce_save_account_details', 'my_woocommerce_save_account_details');
+ 
+function my_woocommerce_save_account_details( $user_id ) {
+    $semail = ! empty( $_POST['billing_cf'] ) ? wc_clean( $_POST['billing_cf'] ) : '';
+	update_user_meta( $user_id, 'billing_cf',  $_POST[ 'billing_cf' ] ); 
+} // end func
+
 add_filter( 'woocommerce_my_account_my_address_formatted_address', 'custom_my_account_my_address_formatted_address', 10, 3 );
 function custom_my_account_my_address_formatted_address( $fields, $customer_id, $type ) {
 	if ( $type == 'billing' ) {
@@ -503,10 +515,14 @@ function custom_my_account_my_address_formatted_address( $fields, $customer_id, 
 add_filter( 'woocommerce_address_to_edit', 'custom_address_to_edit' );
 function custom_address_to_edit( $address ) {
     global $wp_query;
+    
     if(is_wc_endpoint_url('edit-address') && $wp_query->query_vars['edit-address'] != _x( 'billing', 'edit-address-slug', 'woocommerce' )) {
+        $address['shipping_state']['type'] = 'text';
         return $address;
     }
-	if ( ! isset( $address['cf'] ) ) {
+	
+    $address['billing_state']['type'] = 'text';
+    if ( ! isset( $address['cf'] ) ) {
     	$address['billing_cf'] = array(
         	'label'       => __( 'Codice fiscale o P.Iva', 'castadiva' ),
             'placeholder' => _x( 'Codice fiscale o P.Iva', 'placeholder', 'castadiva' ),
@@ -515,7 +531,7 @@ function custom_address_to_edit( $address ) {
             'value'       => strtoupper( get_user_meta( get_current_user_id(), 'billing_cf', true ) )
         );
     }
-
+    
     return $address;
 }
 
@@ -523,9 +539,8 @@ add_filter( 'woocommerce_formatted_address_replacements', 'custom_formatted_addr
 function custom_formatted_address_replacements( $address, $args ) {
 	$address['{cf}'] = '';
 	if ( ! empty( $args['cf'] ) ) {
-		$address['{=}'] = __( 'Codice fiscale o P.Iva', 'castadiva' ) . ' ' . $args['cf'];
+		$address['{cf}'] = __( 'Codice fiscale o P.Iva', 'castadiva' ) . ' ' . $args['cf'];
 	}
-
 
 	return $address;
 }
@@ -539,7 +554,7 @@ function custom_formatted_address_replacements( $address, $args ) {
 
 add_filter( 'woocommerce_admin_billing_fields', 'custom_admin_billing_fields' );
 function custom_admin_billing_fields( $fields ) {
-	$fields['vat'] = array(
+	$fields['cf'] = array(
 		'label' => __( 'Codice fiscale o P.Iva', 'castadiva' ),
 		'show'  => true
 	);

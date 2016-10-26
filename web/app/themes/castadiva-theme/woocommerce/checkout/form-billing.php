@@ -30,12 +30,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php else : ?>
 <h3>
-    	<input id="billing-address-checkbox" class="input-checkbox" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> type="checkbox" name="billing-address-checkbox" value="1" />
+    	<input id="billing-address-checkbox" class="input-checkbox" ng-checked="checkout.$invalid" type="checkbox" name="billing-address-checkbox" value="1" />
             <label for="billing-address-checkbox" class="checkbox address-checkbox" ng-click="showAddress=!showAddress"><span><?php _e( 'Billing Details', 'woocommerce' ); ?></span></label>	
    </h3>
 
 	<?php endif; ?>
-	<div class="checkout-addresses billing_address" ng-class="{visible : showAddress}">
+	<div class="checkout-addresses billing_address" ng-class="{visible : (showAddress || checkout.$invalid)}">
 	<?php do_action( 'woocommerce_before_checkout_billing_form', $checkout ); ?>
 	<?php foreach ( $checkout->checkout_fields['billing'] as $key => $field ) : ?>
 

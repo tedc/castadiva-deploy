@@ -60,7 +60,7 @@ if ( ! $product->is_purchasable() ) {
 	 	<button class="single_add_to_cart_button btn alt" ng-disabled="productCart.quantity.$invalid" ng-class="{added : isAdded}"><span class="btn-text" ng-class="{hidden : isAdding}" ng-bind-html="(isAdded) ? '<?php echo __('Aggiorna il<br/>carrello', 'castadiva'); ?>' : '<?php echo __('Aggiungi al<br/>carrello', 'castadiva'); ?>' "><?php echo __('Aggiungi al<br/>carrello', 'castadiva'); ?></span>
 	 	    <span class="btn-loading" ng-class="{visible : isAdding}"></span>
 	 	</button>
-	 	<a class="btn btn-go-to-shop" href="<?php echo esc_url( wc_get_checkout_url() ) ;?>">
+	 	<a class="btn btn-go-to-shop" href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ) ;?>">
 	 		<span class="btn-text"><?php echo __('Continua<br />la spesa', 'castadiva'); ?></span>
 	 	</a>
 	 	</p>

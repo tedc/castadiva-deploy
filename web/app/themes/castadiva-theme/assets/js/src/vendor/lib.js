@@ -1872,6 +1872,27 @@
   
 /*!
 {
+  "name": "input[search] search event",
+  "property": "search",
+  "tags": ["input","search"],
+  "authors": ["Calvin Webster"],
+  "notes": [{
+    "name": "Wufoo demo",
+    "href": "https://www.wufoo.com/html5/types/5-search.html?"
+  }, {
+    "name": "CSS Tricks",
+    "href": "https://css-tricks.com/webkit-html5-search-inputs/"
+  }]
+}
+!*/
+/* DOC
+There is a custom `search` event implemented in webkit browsers when using an `input[search]` element.
+*/
+
+  Modernizr.addTest('inputsearchevent',  hasEvent('search'));
+
+/*!
+{
   "name": "Web Animation API",
   "property": "animation",
   "tags": ["webanimations"],
@@ -2028,27 +2049,6 @@ Check if browser implements ECMAScript 6 `String.prototype.contains` per specifi
       return false;
     }
   });
-
-/*!
-{
-  "name": "input[search] search event",
-  "property": "search",
-  "tags": ["input","search"],
-  "authors": ["Calvin Webster"],
-  "notes": [{
-    "name": "Wufoo demo",
-    "href": "https://www.wufoo.com/html5/types/5-search.html?"
-  }, {
-    "name": "CSS Tricks",
-    "href": "https://css-tricks.com/webkit-html5-search-inputs/"
-  }]
-}
-!*/
-/* DOC
-There is a custom `search` event implemented in webkit browsers when using an `input[search]` element.
-*/
-
-  Modernizr.addTest('inputsearchevent',  hasEvent('search'));
 
 /*!
 {
