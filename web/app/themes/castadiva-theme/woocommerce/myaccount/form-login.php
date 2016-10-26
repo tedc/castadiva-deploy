@@ -17,7 +17,7 @@
  */
 
 use Roots\Sage\Extras;
-
+global $woocommerce;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -29,8 +29,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 <?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?>
-        <h2 class="title aligncenter"><?php _e( 'Register', 'woocommerce' ); ?></h2>         
-    	<form method="post" class="register" novalidate action="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" name="registerForm">
+        <h2 class="title aligncenter"><?php _e( 'Register', 'woocommerce' ); ?></h2>        
+        <?php $link = (is_checkout()) $woocommerce->cart->get_checkout_url() ? : get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>
+    	<form method="post" class="register" novalidate action="<?php echo $link; ?>" name="registerForm">
 			<?php do_action( 'woocommerce_register_form_start' ); ?>
             <div class="form-container row-top row-md-top">
                 <?php if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) : ?>
