@@ -38,7 +38,14 @@ if($product_count >= $posts_per_page) :  ?>
         <span class="btn-loading" ng-class="{visible : isLoading}"></span>
     </span>
 </div>
-<?php endif; endif; ?>
+<?php endif; else : ?>
+<div class="row-top row-lg-top aligncenter" ng-hide="(posts.length != 0 && isFiltered)">
+    <p><?php echo __('Spiacenti, nessun risultato disponibile per la tua ricerca.', 'castadiva'); ?></p>
+    <p class="buttons">
+        <a href="<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) ); ?>" class="btn"><span class="btn-text"><?php echo __('Vai allo<br/>shop', 'castadiva'); ?></span></a>
+    </p>
+</div>
+<?php endif; ?>
 </div>
 <?php get_template_part('templates/filters'); ?>
 <?php get_template_part('templates/orderby'); ?>

@@ -467,8 +467,8 @@ add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 
 // Our hooked in function - $fields is passed via the filter!
 function custom_override_checkout_fields( $fields ) {
-
-
+    $fields['billing']['billing_state']['type'] = 'text';
+    $fields['shipping']['shipping_state']['type'] = 'text';
     if(ICL_LANGUAGE_CODE == 'it') {
         $fields['billing']['billing_cf'] = array(
             'label'     => __('Codice Fiscale o P.Iva', 'castadiva'),
