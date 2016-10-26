@@ -419,6 +419,9 @@ module.exports = function() {
             var cartTotals, div, total;
             total = response.data.fragments['.woocommerce-checkout-review-order-table'];
             div = document.querySelector('.checkout-order-review');
+            if (div != null) {
+              return;
+            }
             cartTotals = angular.element(div);
             div.removeChild(div.querySelector('.cart-totals'));
             cartTotals.prepend(total);
@@ -630,7 +633,7 @@ module.exports = function() {
             orderby: $rootScope.filterData.orderby,
             checkbox: checkbox,
             lang: lang,
-            orer: $rootScope.filterData.order,
+            order: $rootScope.filterData.order,
             offset: offset,
             search: $rootScope.search
           };
@@ -644,7 +647,8 @@ module.exports = function() {
               item.remove();
             });
             $rootScope.posts = res;
-            $rootScope.hideMore = res.length <= posts_per_page ? true : false;
+            $rootScope.hideMore = res.length >= posts_per_page ? false : true;
+            console.log($rootScope.hideMore);
             $rootScope.isOrderFilters = false;
             $rootScope.isFilters = false;
             $rootScope.count = 0;
