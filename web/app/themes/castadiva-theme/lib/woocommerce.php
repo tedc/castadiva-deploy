@@ -245,7 +245,12 @@ function my_woocommerce_form_field( $key, $args, $value = null, $name = null, $s
         case 'email' :
         case 'tel' :
         case 'number' :
-            $field .= '<input ng-model="'. esc_attr( $key ) .'" type="' . esc_attr( $args['type'] ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' '.$required_field.' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . ' />';
+            $my_field = '<input ng-model="'. esc_attr( $key ) .'" type="' . esc_attr( $args['type'] ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . $args['maxlength'] . ' '.$required_field.' ' . $args['autocomplete'] . ' value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . $ngInit . ' />';
+            if( esc_attr( $key ) == 'billing_cf') {
+                $field .= (ICL_LANGUAGE_CODE == 'it') ? $my_field : '';
+            } else {
+                $field .= $my_field;
+            }
             break;
         case 'select' :
             $options = $field = '';
@@ -464,91 +469,20 @@ function my_login_fail( $user ) {
 
 // Hook in
 add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
-add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 
 // Our hooked in function - $fields is passed via the filter!
 function custom_override_checkout_fields( $fields ) {
     $fields['billing']['billing_state']['type'] = 'text';
     $fields['shipping']['shipping_state']['type'] = 'text';
-    if(ICL_LANGUAGE_CODE == 'it') {
-        $fields['billing']['billing_cf'] = array(
-            'label'     => __('Codice Fiscale o P.Iva', 'castadiva'),
-            'placeholder'   => _x('Codice Fiscale o P.Iva', 'placeholder', 'castadiva'),
-            'required'  => true,
-            'class'     => array('form-row-wide'),
-            'clear'     => true, 
-            'description' => '',
-            'default'     => '',
-        );
-    }
     return $fields;
 
 }
 
-// Add Codice fiscale o P.Iva and SSN fields in billing address display
-add_filter( 'woocommerce_order_formatted_billing_address', 'custom_add_vat_ssn_formatted_billing_address', 10, 2 );
-function custom_add_vat_ssn_formatted_billing_address( $fields, $order ) {
-	$fields['cf'] = $order->billing_cf;
 
-	return $fields;
-}
 
-/**
- * This is to save user input into database
- * hook: woocommerce_save_account_details
- */
-
-add_filter( 'woocommerce_process_myaccount_field_billing_cf' , 'validate_edit_address' );
-function validate_edit_address() {
-
-    $variable = $_POST['billing_cf'];
-    if( strlen($variable) > 16){     
-        wc_add_notice( __( '<strong>Error</strong>' ), 'error' );
-    }
-    if( strlen($variable) < 16){     
-        wc_add_notice( __( '<strong>Error</strong>' ), 'error' );
-    }
-    return $variable ; 
-} 
-add_action( 'woocommerce_save_account_details', 'my_woocommerce_save_account_details');
  
-function my_woocommerce_save_account_details( $user_id ) {
-    $cf = ! empty( $_POST['billing_cf'] ) ? wc_clean( $_POST['billing_cf'] ) : '';
-    update_user_meta( $user_id, 'billing_cf',  $cf ); 
-} // end func
-
-add_filter( 'woocommerce_my_account_my_address_formatted_address', 'custom_my_account_my_address_formatted_address', 10, 3 );
-function custom_my_account_my_address_formatted_address( $fields, $customer_id, $type ) {
-	if ( $type == 'billing' ) {
-		$fields['cf'] =  get_user_meta( $customer_id, 'billing_cf', true );
-	}
-
-	return $fields;
-}
-
-add_action( 'user_profile_update_errors','wooc_validate_custom_field', 10, 1 );
-
-// or
-
-add_action( 'woocommerce_save_account_details_errors','wooc_validate_custom_field', 10, 1 );
-
-// with something like:
-
-function wooc_validate_custom_field( $args )
-{
-    if ( isset( $_POST['billing_cf'] ) ) // Your custom field
-    {
-        if( strlen($_POST['billing_cf']) > 16){
-            $args->add( 'error', __( 'Codice fiscale troppo lungo', 'castadiva' ),'');
-        }
-        if( strlen($_POST['billing_cf']) < 16){
-            $args->add( 'error', __( 'Codice fiscale troppo corto', 'castadiva' ),'');
-        }
-    }
-}
-
-add_filter( 'woocommerce_address_to_edit', 'custom_address_to_edit' );
-function custom_address_to_edit( $address ) {
+add_filter( 'woocommerce_address_to_edit', 'reset_address_to_edit' );
+function reset_address_to_edit( $address ) {
     global $wp_query;
     
     if(is_wc_endpoint_url('edit-address') && $wp_query->query_vars['edit-address'] != _x( 'billing', 'edit-address-slug', 'woocommerce' )) {
@@ -557,76 +491,8 @@ function custom_address_to_edit( $address ) {
     }
 	
     $address['billing_state']['type'] = 'text';
-    if ( ! isset( $address['cf'] ) ) {
-    	$address['billing_cf'] = array(
-        	'label'       => __( 'Codice fiscale o P.Iva', 'castadiva' ),
-            'placeholder' => _x( 'Codice fiscale o P.Iva', 'placeholder', 'castadiva' ),
-            'required'    => true, //change to false if you do not need this field to be required
-            'class'       => array( 'form-row-first' ),
-            'description' => '',
-            'value'       => strtoupper( get_user_meta( get_current_user_id(), 'billing_cf', true ) )
-        );
-    }
     
     return $address;
 }
 
-add_filter( 'woocommerce_formatted_address_replacements', 'custom_formatted_address_replacements', 10, 2 );
-function custom_formatted_address_replacements( $address, $args ) {
-	$address['{cf}'] = '';
-	if ( ! empty( $args['cf'] ) ) {
-		$address['{cf}'] = __( 'Codice fiscale o P.Iva', 'castadiva' ) . ' ' . $args['cf'];
-	}
-
-	return $address;
-}
-//
-//add_filter( 'woocommerce_localisation_address_formats', 'custom_localisation_address_format' );
-//function custom_localisation_address_format( $formats ) {
-//	$formats['IT'] .= "\n\n{vat}\n{ssn}";
-//
-//	return $formats;
-//}
-
-add_filter( 'woocommerce_admin_billing_fields', 'custom_admin_billing_fields' );
-function custom_admin_billing_fields( $fields ) {
-	$fields['billing_cf'] = array(
-		'label' => __( 'Codice fiscale o P.Iva', 'castadiva' ),
-		'show'  => true
-	);
-
-	return $fields;
-}
-
-add_filter( 'woocommerce_found_customer_details', 'custom_found_customer_details' );
-function custom_found_customer_details( $customer_data ) {
-	$customer_data['billing_cf'] = get_user_meta( $_POST['user_id'], 'billing_cf', true );
-
-	return $customer_data;
-}
-
-add_filter( 'woocommerce_customer_meta_fields', 'custom_customer_meta_fields' );
-function custom_customer_meta_fields( $fields ) {
-	$fields['billing']['fields']['billing_cf'] = array(
-		'label'       => __( 'Codice fiscale o P.Iva', 'castadiva' ),
-        'description' => ''
-	);
-
-	return $fields;
-}
-/**
- * Display field value on the order edit page
- */
-
-add_filter('woocommerce_email_order_meta_keys', 'my_custom_order_meta_keys');
-
-function my_custom_order_meta_keys( $keys ) {
-     $keys[] = 'billing_cf'; // This will look for a custom field called 'Tracking Code' and add it to emails
-     return $keys;
-}
-
-add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
-
-function my_custom_checkout_field_display_admin_order_meta($order){
-    echo '<p><strong>'.__('Codice fiscale o P.Iva').':</strong> ' .strtoupper(  get_post_meta( $order->id, 'billing_cf', true ) ) . '</p>';
-}
+require_once 'cf.php';
