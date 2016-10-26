@@ -10,8 +10,8 @@ if(is_search()) {
 }
 $posts_per_page = get_option('posts_per_page');
 ?>
-<?php if(have_posts()) : ?>
 <?php get_product_search_form(); ?>
+<?php if(have_posts()) : ?>
 <div ng-load-more>
 <ul class="grid-4 container flx wrap row-btm<?php if($posts_count < $posts_per_page){?> row-lg-btm<?php } ?> products">
 <?php $my_query = new WP_Query(); while(have_posts()) : the_post(); ?>
