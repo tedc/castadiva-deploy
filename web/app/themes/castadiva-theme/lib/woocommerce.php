@@ -515,8 +515,7 @@ function hide_table_rate_shipping_when_free_is_available( $available_methods ) {
                 unset( $available_methods[ $method_id ] );
          }
     }   
-
     return $available_methods;
- }
+}
 
 require_once 'cf.php';
