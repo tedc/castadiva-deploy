@@ -1,6 +1,6 @@
 <?php
 global $wp_query;
-$args = (taxonomy_exists(get_queried_object()->taxonomy)) ? array('post_type'=>get_post_type(),'posts_per_page'=>-1, "tax_query" => array(array(
+$args = (is_tax() && taxonomy_exists(get_queried_object()->taxonomy)) ? array('post_type'=>get_post_type(),'posts_per_page'=>-1, "tax_query" => array(array(
     "taxonomy" => get_queried_object()->taxonomy,
     "field" => 'term_id',
     "terms" => get_queried_object()->term_id)
