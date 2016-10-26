@@ -58,7 +58,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php
 				}
 			}
-        $total_price = str_replace(array('<ins>', '</ins>','&euro;</span>&nbsp;', ','), array('', '', '&euro;</span>&nbsp;<strong>', '</strong>,'), WC()->cart->get_cart_subtotal());
+//        ob_start();
+//
+//		woocommerce_cart_totals();
+//		woocommerce_cart_totals();
+		$total_price = str_replace(array('<ins>', '</ins>','&euro;</span>&nbsp;', ','), array('', '', '&euro;</span>&nbsp;<strong>', '</strong>,'), WC()->cart->get_cart_subtotal());
             $order_total = apply_filters( 'woocommerce_cart_totals_order_total_html',
                                          apply_filters( 'woocommerce_cart_total', wc_price( WC()->cart->total ) ) 
                         );

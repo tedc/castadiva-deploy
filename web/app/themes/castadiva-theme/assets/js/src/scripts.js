@@ -300,7 +300,7 @@ module.exports = function() {
   return cart = {
     controller: [
       '$scope', '$rootScope', "$http", "transformRequestAsFormPost", "cacheService", "cacheSessionService", "$cookies", "$timeout", "$httpParamSerializerJQLike", function($scope, $rootScope, $http, transformRequestAsFormPost, cacheService, cacheSessionService, $cookies, $timeout, $httpParamSerializerJQLike) {
-        var ajax_checkout, cart_created, cart_data, cart_expiration, cart_hash, cart_hash_key, cart_timeout, cookie_hash, day_in_ms, err, error, refresh_cart_fragment, set_cart_creation_timestamp, set_cart_hash, set_local_fragment, timestamp_now, wc_fragments;
+        var ajax_checkout, cart_created, cart_data, cart_expiration, cart_hash, cart_hash_key, cart_timeout, cookie_hash, day_in_ms, err, error, refresh_cart_fragment, set_cart_creation_timestamp, set_cart_hash, set_local_fragment, timestamp_now, updateCartTotal, update_cart_totals, wc_fragments;
         $scope.parsePrice = function(price) {
           var tmp, total;
           price.replace('&nbsp;', '');
@@ -372,69 +372,86 @@ module.exports = function() {
           $scope.isRemoved = id;
           $http.get(url).then(function(response) {
             refresh_cart_fragment();
+            update_cart_totals();
+          });
+        };
+        update_cart_totals = function() {
+          var url;
+          url = get_url(wc_cart_fragments_params, 'get_cart_totals');
+          $http.get(url).then(function(response) {
+            var div;
+            div = document.querySelector('.cart-collaterals');
+            updateCartTotal(div, response.data);
           });
         };
         ajax_checkout = function() {
           var data, formData, url;
-          formData = {
-            billing_country: $scope.billing_country,
-            billing_state: $scope.billing_state,
-            billing_postcode: $scope.billing_postcode,
-            billing_city: $scope.billing_city,
-            billing_address: $scope.billing_address_1,
-            billing_address_2: $scope.billing_address_2,
-            shipping_country: $scope.shipping_country,
-            shipping_state: $scope.shipping_state,
-            shipping_postcode: $scope.shipping_postcode,
-            shipping_city: $scope.shipping_city,
-            shipping_address: $scope.shipping_address_1,
-            shipping_address_2: $scope.shipping_address_2
-          };
-          if ($scope.is_shipping) {
-            formData['ship_to_different_address'] = 1;
+          if (typeof wc_checkout_params === "undefined" || wc_checkout_params === null) {
+            return;
           }
-          data = {
-            security: wc_checkout_params.update_order_review_nonce,
-            country: $scope.billing_country,
-            state: $scope.billing_state,
-            postcode: $scope.billing_postcode,
-            city: $scope.billing_city,
-            address: $scope.billing_address_1,
-            address_2: $scope.billing_address_2,
-            s_country: $scope.isShippingAddress ? $scope.shipping_country : $scope.billing_country,
-            s_state: $scope.isShippingAddress ? $scope.shipping_state : $scope.billing_state,
-            s_postcode: $scope.isShippingAddress ? $scope.shipping_postcode : $scope.billing_postcode,
-            s_city: $scope.isShippingAddress ? $scope.shipping_city : $scope.billing_city,
-            s_address: $scope.isShippingAddress ? $scope.shipping_address : $scope.billing_address,
-            s_address_2: $scope.isShippingAddress ? $scope.shipping_address_2 : $scope.billing_address_2,
-            post_data: $httpParamSerializerJQLike(formData)
-          };
-          url = get_url(wc_checkout_params, 'update_order_review');
-          $http.post(url, data, {
-            headers: {
-              "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
-            },
-            transformRequest: transformRequestAsFormPost
-          }).then(function(response) {
-            var cartTotals, div, total;
-            total = response.data.fragments['.woocommerce-checkout-review-order-table'];
-            div = document.querySelector('.checkout-order-review');
-            if (div != null) {
-              return;
+          if (wc_checkout_params.is_checkout === '1') {
+            formData = {
+              billing_country: $scope.billing_country,
+              billing_state: $scope.billing_state,
+              billing_postcode: $scope.billing_postcode,
+              billing_city: $scope.billing_city,
+              billing_address: $scope.billing_address_1,
+              billing_address_2: $scope.billing_address_2,
+              shipping_country: $scope.shipping_country,
+              shipping_state: $scope.shipping_state,
+              shipping_postcode: $scope.shipping_postcode,
+              shipping_city: $scope.shipping_city,
+              shipping_address: $scope.shipping_address_1,
+              shipping_address_2: $scope.shipping_address_2
+            };
+            if ($scope.is_shipping) {
+              formData['ship_to_different_address'] = 1;
             }
-            cartTotals = angular.element(div);
-            div.removeChild(div.querySelector('.cart-totals'));
-            cartTotals.prepend(total);
-          });
+            data = {
+              security: wc_checkout_params.update_order_review_nonce,
+              country: $scope.billing_country,
+              state: $scope.billing_state,
+              postcode: $scope.billing_postcode,
+              city: $scope.billing_city,
+              address: $scope.billing_address_1,
+              address_2: $scope.billing_address_2,
+              s_country: $scope.isShippingAddress ? $scope.shipping_country : $scope.billing_country,
+              s_state: $scope.isShippingAddress ? $scope.shipping_state : $scope.billing_state,
+              s_postcode: $scope.isShippingAddress ? $scope.shipping_postcode : $scope.billing_postcode,
+              s_city: $scope.isShippingAddress ? $scope.shipping_city : $scope.billing_city,
+              s_address: $scope.isShippingAddress ? $scope.shipping_address : $scope.billing_address,
+              s_address_2: $scope.isShippingAddress ? $scope.shipping_address_2 : $scope.billing_address_2,
+              post_data: $httpParamSerializerJQLike(formData)
+            };
+            url = get_url(wc_checkout_params, 'update_order_review');
+            $http.post(url, data, {
+              headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+              },
+              transformRequest: transformRequestAsFormPost
+            }).then(function(response) {
+              var div, total;
+              div = document.querySelector('.checkout-order-review');
+              total = response.data.fragments['.woocommerce-checkout-review-order-table'];
+              updateCartTotal(div, total);
+            });
+          }
+        };
+        updateCartTotal = function(div, total) {
+          var cartTotals;
+          if ((div == null) || typeof div === 'undefined') {
+            return;
+          }
+          cartTotals = angular.element(div);
+          div.removeChild(div.querySelector('.cart-totals'));
+          cartTotals.prepend(total);
         };
         $rootScope.$on('update_checkout', function() {
           return $timeout(function() {
             return ajax_checkout();
           }, 0);
         });
-        if ((typeof wc_checkout_params !== "undefined" && wc_checkout_params !== null) && wc_checkout_params.is_checkout === '1') {
-          $rootScope.$broadcast('update_checkout');
-        }
+        $rootScope.$broadcast('update_checkout');
         $scope.updateCheckout = function(value) {
           $rootScope.$broadcast('update_checkout');
         };

@@ -495,4 +495,28 @@ function reset_address_to_edit( $address ) {
     return $address;
 }
 
+
+// Hide table rate shipping option when free shipping is available
+add_filter( 'woocommerce_available_shipping_methods', 'hide_table_rate_shipping_when_free_is_available' , 10, 1 );
+
+/**
+ *  Hide Table Rate shipping option when free shipping is available
+ *
+ * @param array $available_methods
+ */
+function hide_table_rate_shipping_when_free_is_available( $available_methods ) {
+
+    if( isset( $available_methods['free_shipping'] ) ) {
+
+         foreach( $available_methods as $method_id => $method ) {
+
+            // check if method starts with 'table_rate' and remove it
+            if ( ! strncmp( $method_id, 'table_rate-', 11 ) )
+                unset( $available_methods[ $method_id ] );
+         }
+    }   
+
+    return $available_methods;
+ }
+
 require_once 'cf.php';

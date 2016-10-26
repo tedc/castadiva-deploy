@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="cart-totals row-top row-md-top <?php if ( WC()->customer->has_calculated_shipping() ) echo 'calculated_shipping'; ?>">	   
     <p class="cart-subtotal">
         <span><?php _e( 'Subtotal', 'woocommerce' ); ?></span>
-        <span class="price" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>" ng-bind-html="miniCartItems.total"><?php wc_cart_totals_subtotal_html(); ?></span>
+        <span class="price" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>"><?php wc_cart_totals_subtotal_html(); ?></span>
     </p>
 
     <?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
@@ -84,9 +84,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
     <div class="cart-order-total">
         <strong><?php _e( 'Total', 'woocommerce' ); ?></strong>
-        <span data-title="<?php esc_attr_e( 'Total', 'woocommerce' ); ?>" class="price" ng-bind-html="(parsePrice(miniCartItems.order_total) == 0 && miniCartItems.count > 0) ? tmpTotal : miniCartItems.order_total" ng-init='tmpTotal = <?php echo json_encode(apply_filters( 'woocommerce_cart_totals_order_total_html',
-                                         apply_filters( 'woocommerce_cart_total', wc_price( WC()->cart->total ) ) 
-                        )); ?>'><?php wc_cart_totals_order_total_html();  ?></span>
+        <span data-title="<?php esc_attr_e( 'Total', 'woocommerce' ); ?>" class="price"><?php wc_cart_totals_order_total_html();  ?></span>
     </div>
 
     <?php do_action( 'woocommerce_cart_totals_after_order_total' ); ?>
