@@ -46,7 +46,7 @@ $woocommerce_loop['columns'] = apply_filters( 'woocommerce_related_products_colu
 
 $count_product = 0; 
 
-print_r(count($products));
+print_r(count($posts_per_page));
 
 if ( $products->have_posts() ) : $total_product = count($products) - 1; ?>
    
