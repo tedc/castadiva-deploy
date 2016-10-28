@@ -383,7 +383,7 @@ add_filter ( 'manage_edit-product_columns', __NAMESPACE__.'\\rkv_remove_columns'
 
 
 function force_flush() {
-	flush_rewrite_rules()
+	flush_rewrite_rules();
 }
 add_action('init', __NAMESPACE__.'\\force_flush');
 
