@@ -44,10 +44,10 @@ $products                    = new WP_Query( $args );
 $woocommerce_loop['name']    = 'related';
 $woocommerce_loop['columns'] = apply_filters( 'woocommerce_related_products_columns', $columns );
 
-$count_product = 0; $total_product = count($products) - 1; 
+$count_product = 0; 
 
-if ( $products->have_posts() ) : ?>
-
+if ( $products->have_posts() ) : $total_product = count($products) - 1; ?>
+   
 	<div class="related products row row-lg">
         <header class="related-header container trapeze pattern">
             <div class="row row-md">
