@@ -46,9 +46,16 @@ $woocommerce_loop['columns'] = apply_filters( 'woocommerce_related_products_colu
 
 $count_product = 0; 
 
-print_r(count($products));
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+print_r($posts_per_page);
+>>>>>>> 7ef3b685c9bfcf71cd5a551c512dd71bef8e504c
+=======
+print_r($posts_per_page);
+>>>>>>> 7ef3b685c9bfcf71cd5a551c512dd71bef8e504c
 
-if ( $products->have_posts() ) : $total_product = count($products) - 1; ?>
+if ( $products->have_posts() ) : $total_product = $posts_per_page - 1; ?>
    
 	<div class="related products row row-lg">
         <header class="related-header container trapeze pattern">
