@@ -46,6 +46,8 @@ $woocommerce_loop['columns'] = apply_filters( 'woocommerce_related_products_colu
 
 $count_product = 0; 
 
+print_($products);
+
 if ( $products->have_posts() ) : $total_product = count($products) - 1; ?>
    
 	<div class="related products row row-lg">
