@@ -7,7 +7,7 @@
             <span class="checkout-step-point">
                 <span class="checkout-step-point-text">1</span>
             </span>
-            <p class="checkout-step-text"><?php echo __('Il tuo carrello'); ?></p>
+            <p class="checkout-step-text"><?php echo __('Il tuo carrello', 'castdiva'); ?></p>
         </li>
         <li class="checkout-step<?php if(is_checkout() && !(is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'order-pay' ))) : ?> active<?php endif; ?>">
             <span class="checkout-step-point">
@@ -15,11 +15,11 @@
             </span>
             <p class="checkout-step-text"><?php echo __('Il tuoi dati'); ?></p>
         </li>
-        <li class="checkout-step<?php if(is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'order-pay' )) : ?> active<?php endif; ?>">
+        <li class="checkout-step<?php if(is_wc_endpoint_url( 'order-received', 'castadiva' ) || is_wc_endpoint_url( 'order-pay' )) : ?> active<?php endif; ?>">
             <span class="checkout-step-point">
                 <span class="checkout-step-point-text">3</span>
             </span>
-            <p class="checkout-step-text"><?php echo __('Pagamento completato'); ?></p>
+            <p class="checkout-step-text"><?php echo __('Pagamento completato', 'castadiva'); ?></p>
         </li>
     </ul>
 </div>
