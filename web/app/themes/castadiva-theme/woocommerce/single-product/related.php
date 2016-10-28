@@ -44,7 +44,7 @@ $products                    = new WP_Query( $args );
 $woocommerce_loop['name']    = 'related';
 $woocommerce_loop['columns'] = apply_filters( 'woocommerce_related_products_columns', $columns );
 
-$count_product = 0; $total_product = count($posts_per_page) - 1; 
+$count_product = 0; $total_product = count($products) - 1; 
 
 if ( $products->have_posts() ) : ?>
 
