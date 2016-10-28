@@ -57,7 +57,6 @@ if($max > $posts_per_page) :  ?>
     </span>
 </div>
 <?php endif; ?>
-</section>
 <div class="triangle">
     <div class="pattern-main" ng-sm from="{y: '-100%'}" to="{y : '0%'}" trigger-element=".triangle" duration="150" trigger-hook="1"></div>
 </div>
