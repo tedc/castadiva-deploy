@@ -6,7 +6,7 @@
     </h2>
 </header>
 <?php endwhile; ?>
-<?php $args = get_sub_field('prodotti'); $count_product = 0; $total_product = count($args) - 1; $products = new WP_Query(array('post_type' => 'product', 'post__in' => $args)); if(get_sub_field('is_carousel')) : ?>
+<?php $args = get_sub_field('prodotti'); $count_product = 0; $total_product = count($args) - 1; $products = new WP_Query(array('post_type' => 'product', 'post__in' => $args)); print_r($products); if(get_sub_field('is_carousel')) : ?>
 <div class="carousel products" ng-carousel>
     <ul class="carousel-wrapper" ng-swipe-right="dir(false, pos, <?php echo $total_product; ?>, false, false)" ng-swipe-left="dir(true, pos, <?php echo $total_product; ?>, false, false)">
         <?php while($products->have_posts()) : $products->the_post(); ?>
@@ -37,7 +37,6 @@
 </div>
 <?php else : ?>
 <div class="products" ng-products>
-    <?php print_r( $args); ?>
     <ul class="products-row" ng-swipe-left="move(true, <?php echo $total_product; ?>)" ng-swipe-right="move(false, <?php echo $total_product; ?>)">
         <?php while($products->have_posts()) : $products->the_post(); ?>
         <li <?php post_class("products-row-item product-show-more"); ?>>
