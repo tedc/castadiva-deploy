@@ -31,6 +31,6 @@ use Roots\Sage\Extras;
         <?php endif; ?>
     </div>
     <p class="buttons">
-        <?php Extras\btn($text = 'Cerca', $link = null, $btn = true); ?>
+        <?php Extras\btn($text = _('Cerca', 'castadiva'), $link = null, $btn = true); ?>
     </p>
 </form>

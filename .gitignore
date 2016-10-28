@@ -52,3 +52,17 @@ web/app/themes/castadiva-theme/.sass-cache
 web/app/themes/castadiva-theme/source
 
 .DS_Store
+
+web/app/.DS_Store
+
+web/.DS_Store
+
+web/app/.DS_Store
+
+web/app/plugins/.DS_Store
+
+web/app/plugins/shortcodes-ultimate/.DS_Store
+
+web/app/plugins/soil/.DS_Store
+
+web/app/themes/castadiva-theme/lib/Instaphp/.DS_Store
