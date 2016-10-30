@@ -55,7 +55,7 @@ if ( $products->have_posts() ) : $total_product = $posts_per_page - 1; ?>
             </div>
         </header>    
         <div class="products row-top row-lg-top" ng-products>
-            <ul class="products-row" ng-swipe-right="move(false, <?php echo $total_product; ?>)" ng-swipe-left="move(true, <?php echo $total_product; ?>)">
+            <ul class="products-row" ng-swipe-right="move(true, <?php echo $total_product; ?>)" ng-swipe-left="move(false, <?php echo $total_product; ?>)">
                 <?php while($products->have_posts()) : $products->the_post(); ?>
                 <li <?php post_class("products-row-item product-show-more"); ?> ng-class="{current : pos == <?php echo $count_product; ?>}">
                     <?php get_template_part('templates/content', 'product'); ?>      

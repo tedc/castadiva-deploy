@@ -29,7 +29,7 @@ if ( is_user_logged_in() || 'no' === get_option( 'woocommerce_enable_checkout_lo
 //wc_print_notice( $info_message, 'notice' );
 ?>
 
-<?php $register_url = ' Altrimenti <a href="'. get_permalink( get_option('woocommerce_myaccount_page_id') ).'" title="'.__('Registrati','castadiva').'">'.__('procedi alla registrazione','castadiva').'</a>'; ?>
+<?php $register_url = ' Altrimenti <a class="register-link" href="'. get_permalink( get_option('woocommerce_myaccount_page_id') ).'" title="'.__('Registrati','castadiva').'">'.__('procedi alla registrazione','castadiva').'</a>.'; ?>
 
 <?php
 	woocommerce_login_form(

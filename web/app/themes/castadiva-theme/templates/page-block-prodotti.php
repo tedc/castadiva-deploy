@@ -37,7 +37,7 @@
 </div>
 <?php else : ?>
 <div class="products" ng-products>
-    <ul class="products-row" ng-swipe-left="move(true, <?php echo $total_product; ?>)" ng-swipe-right="move(false, <?php echo $total_product; ?>)">
+    <ul class="products-row" ng-swipe-left="move(false, <?php echo $total_product; ?>)" ng-swipe-right="move(true, <?php echo $total_product; ?>)">
         <?php while($products->have_posts()) : $products->the_post(); ?>
         <li <?php post_class("products-row-item product-show-more"); ?>>
             <?php get_template_part('templates/content', 'product'); ?>
