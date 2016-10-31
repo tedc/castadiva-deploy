@@ -447,7 +447,6 @@ module.exports = function() {
             div = document.querySelector('.checkout-order-review');
             total = response.data.fragments['.woocommerce-checkout-review-order-table'];
             cart_total = response.data.fragments.cart_total_updated;
-            console.log(response.data.fragments.cart_total_updated);
             updateCartTotal(div, total);
             cart_total_div = document.querySelector('.cart-collaterals');
             updateCartTotal(cart_total_div, cart_total);
@@ -721,6 +720,16 @@ module.exports = function() {
     controller: [
       "$scope", "transformRequestAsFormPost", "$http", "$timeout", function($scope, transformRequestAsFormPost, $http, $timeout) {
         $scope.formData = {};
+        $scope.tab = function(event, valid) {
+          $timeout(function() {
+            return $scope.isDisabled = !valid;
+          }, 0);
+          if (event.keyCode === 9) {
+            if (!valid) {
+              event.preventDefault();
+            }
+          }
+        };
         return $scope.onSubmit = function(isValid, url) {
           var frmdata;
           frmdata = $scope.formData;

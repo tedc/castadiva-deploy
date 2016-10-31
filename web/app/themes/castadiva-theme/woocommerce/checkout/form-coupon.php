@@ -35,7 +35,7 @@ if ( empty( WC()->cart->applied_coupons )) {
 	wc_print_notice( $info_message, 'notice' );
 }
 ?>
-    <form class="checkout_coupon" method="post" ng-class="{'visible' : isCouponActive}">
+    <form class="checkout_coupon" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" method="post" ng-class="{'visible' : isCouponActive}">
         <div class="coupon form-container row-top row-md-top">
         <input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" id="coupon_code" value="" />
         <button type="submit" class="btn-plain" name="apply_coupon" value="<?php esc_attr_e( 'Apply Coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Applica', 'castadiva' ); ?></button>

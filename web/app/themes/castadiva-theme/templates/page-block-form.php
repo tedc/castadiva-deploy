@@ -41,23 +41,23 @@ endif;
     <div class="carousel-wrapper form-carousel" ng-swipe-right="dir(false, pos, 4, false, false)" ng-swipe-left="dir(true, pos, 4, steps, false)" ng-class="{'message-slide' : pos == 4}">
         <div class="carousel-item">
             <div class="form-container">
-                <input type="text" placeholder="Nome e cognome (campo obbligatorio)" ng-model="formData.sender" name="sender" required ng-focus="isDisabled = contactForm.sender.$invalid" ng-blur="isDisabled = contactForm.sender.$invalid" />
+                <input type="text" placeholder="<?php _e('Nome e cognome (campo obbligatorio)', 'castadiva'); ?>" ng-model="formData.sender" name="sender" required ng-focus="tab($event, contactForm.sender.$valid)" ng-blur="tab($event, contactForm.sender.$valid)" ng-keydown="tab($event, contactForm.sender.$valid)" />
             </div>
         </div>
         <div class="carousel-item">
             <div class="form-container">
-                <input type="email" placeholder="Indirizzo e-mail (campo obbligatorio)" ng-model="formData.email" name="email" required ng-focus="isDisabled = contactForm.email.$invalid" ng-blur="isDisabled = contactForm.email.$invalid" />
+                <input type="email" placeholder="<?php _e('Indirizzo e-mail (campo obbligatorio)', 'castadiva'); ?>" ng-model="formData.email" name="email" required ng-chance="isDisabled = contactForm.email.$invalid" ng-focus="tab($event, contactForm.email.$valid)" ng-blur="tab($event, contactForm.email.$valid)" ng-keydown="tab($event, contactForm.email.$valid)" />
             </div>
         </div>
         <div class="carousel-item">
             <div class="form-container">
-                <input type="tel" placeholder="Telefono" ng-model="formData.phone" name="phone" />
+                <input type="tel" placeholder="<?php _e('Telefono', 'castadiva'); ?>" ng-model="formData.phone" name="phone" ng-focus="tab($event, contactForm.tel.$valid)" ng-blur="tab($event, contactForm.tel.$valid)" ng-keydown="tab($event, contactForm.sender.$valid)" />
             </div>
         </div> 
         <div class="carousel-item">
             <div class="form-container select options" ng-class="{error : (contactForm.subject.$invalid && contactForm.subject.$touched)}">
                 <span class="select-text" ng-bind-html="(!contactForm.subject.$invalid) ? formData.subject : '<?php echo __('Di cosa hai bisogno? (obbligatorio)', 'castadiva'); ?>'"><?php echo __('Di cosa hai bisogno? (obbligatorio)', 'castadiva'); ?></span>
-                <select ng-options="opt for opt in opts" ng-init="opts = [<?php $total = count(get_sub_field('subjects')) - 1; $c = 0; while(have_rows('subjects')) : the_row(); ?>'<?php the_sub_field('subject'); ?>'<?php if($c < $total) : ?>,<?php endif; ?><?php $c++; endwhile; ?>]" ng-model="formData.subject" required name="subject" ng-change="isDisabled = contactForm.subject.$invalid">
+                <select ng-keydown="tab($event, contactForm.subject.$valid)" ng-focus="pos = 3" ng-options="opt for opt in opts" ng-init="opts = [<?php $total = count(get_sub_field('subjects')) - 1; $c = 0; while(have_rows('subjects')) : the_row(); ?>'<?php the_sub_field('subject'); ?>'<?php if($c < $total) : ?>,<?php endif; ?><?php $c++; endwhile; ?>]" ng-model="formData.subject" required name="subject" ng-change="isDisabled = contactForm.subject.$invalid">
                     <option value="" selected><?php echo __('Scegli un oggetto', 'castadiva'); ?></option>
                 </select>
                 <i class="select-arrow select-arrow-inv"></i>
@@ -65,7 +65,7 @@ endif;
         </div>
         <div class="carousel-item">
             <div class="form-container">
-                <textarea placeholder="Messaggio" ng-model="formData.message" name="message" required ng-focus="isDisabled = contactForm.message.$invalid" ng-blur="isDisabled = contactForm.message.$invalid"></textarea>
+                <textarea placeholder="<?php _e('Messaggio', 'castadiva'); ?>" ng-model="formData.message" name="message" required ng-focus="tab($event, contactForm.message.$valid)" ng-blur="tab($event, contactForm.message.$valid)" ng-keydown="tab($event, contactForm.email.$)" ng-keydown="tab($event, contactForm.message.$valid)"></textarea>
             </div>
         </div>
         <div class="form-message" ng-class="{visible : isSubmitted}">
