@@ -13,7 +13,7 @@
             <span class="checkout-step-point">
                 <span class="checkout-step-point-text">2</span>
             </span>
-            <p class="checkout-step-text"><?php echo __('Il tuoi dati'); ?></p>
+            <p class="checkout-step-text"><?php echo __('I tuoi dati'); ?></p>
         </li>
         <li class="checkout-step<?php if(is_wc_endpoint_url( 'order-received', 'castadiva' ) || is_wc_endpoint_url( 'order-pay' )) : ?> active<?php endif; ?>">
             <span class="checkout-step-point">
