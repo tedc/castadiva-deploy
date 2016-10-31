@@ -38,7 +38,7 @@ function template($body) {
 endif;
 ?>
 <form novalidate ng-submit="onSubmit(contactForm.$valid, '<?php the_permalink(); ?>')" casta-form name="contactForm" ng-carousel>
-    <div class="carousel-wrapper form-carousel" ng-swipe-right="dir(false, pos, 4, false, false)" ng-swipe-left="dir(true, pos, 4, steps, false)" ng-class="{'message-slide' : pos == 4}">
+    <div class="carousel-wrapper form-carousel" ng-swipe-right="isDisabled = (pos==4) && contactForm.subject.$valid ? false : true; dir(false, pos, 4, false, false)" ng-swipe-left="dir(true, pos, 4, steps, false)" ng-class="{'message-slide' : pos == 4}">
         <div class="carousel-item">
             <div class="form-container">
                 <input type="text" placeholder="<?php _e('Nome e cognome (campo obbligatorio)', 'castadiva'); ?>" ng-model="formData.sender" name="sender" required ng-focus="tab($event, contactForm.sender.$valid)" ng-blur="tab($event, contactForm.sender.$valid)" ng-keydown="tab($event, contactForm.sender.$valid)" />
@@ -77,7 +77,7 @@ endif;
     </div>
     <nav class="buttons">
         <div class="carousel-nav form-carousel-nav" ng-init="steps = [contactForm.sender,contactForm.email,contactForm.phone,contactForm.subject,contactForm.message]">
-            <span class="arrow arrow-left" ng-click="dir(false, pos, 4, false, false)" ng-class="{inactive : pos == 0}"><span class="arrow-text">&lsaquo;</span></span>
+            <span class="arrow arrow-left" ng-click="isDisabled = (pos==4) && contactForm.subject.$valid ? false : true; dir(false, pos, 4, false, false)" ng-class="{inactive : pos == 0}"><span class="arrow-text">&lsaquo;</span></span>
             <button class="btn steps-btn" ng-disabled="contactForm.$invalid"><span class="btn-text" ng-bind-html="(contactForm.$invalid) ? (pos + 1) + ' / 5' : '<?php echo __('Invia', 'castadiva'); ?>'"></span></button>
             <span class="arrow arrow-right" ng-click="dir(true, pos, 4, steps, false)" ng-class="{inactive : (pos == 4 || isDisabled)}"><span class="arrow-text">&rsaquo;</span></span>
         </div>
