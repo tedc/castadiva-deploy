@@ -51,7 +51,7 @@ endif;
         </div>
         <div class="carousel-item">
             <div class="form-container">
-                <input type="tel" placeholder="<?php _e('Telefono', 'castadiva'); ?>" ng-model="formData.phone" name="phone" ng-focus="tab($event, contactForm.tel.$valid)" ng-blur="tab($event, contactForm.tel.$valid)" ng-keydown="tab($event, contactForm.sender.$valid)" />
+                <input type="tel" placeholder="<?php _e('Telefono', 'castadiva'); ?>" ng-model="formData.phone" name="phone" ng-focus="isDisabled=false" />
             </div>
         </div> 
         <div class="carousel-item">
